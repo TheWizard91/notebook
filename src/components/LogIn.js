@@ -24,7 +24,7 @@ function LogIn() {
       setError("")
       setLoading(true)
       await login(emailRef.current.value, passwordRef.current.value)
-      navigate("/Login")
+      navigate("/notebook")
     } catch {
       setError("Failed to log in")
     }
