@@ -1,5 +1,5 @@
 {
-  "homepage": "https://thewizard91.github.io/notebook/",
+  "homepage": "https://thewizard91.github.io/notebook",
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
@@ -23,6 +23,12 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
