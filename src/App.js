@@ -24,7 +24,7 @@ class App extends Component {
                   <AuthProvider>
                     <Routes>
                       {/* <PrivateRoute exact path="/" element={<PrivateRoute />} /> */}
-                      <Route exact path="/" element={<Dashboard />} />
+                      <Route exact path="/dasboard" element={<Dashboard />} />
                       <Route exact path='/' element={<PrivateRoute/>} >
                         <Route exact path='/' element={<LogIn/>}/>
                       </Route>

@@ -20,6 +20,8 @@ function Dashboard() {
     } catch {
       setError("failed to log out")
     }
+
+    console.log("email of current user is: "+currentUser.email)
   }
   return (
     <div>

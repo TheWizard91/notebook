@@ -10,7 +10,7 @@ import db from "../firebase/firestore"
 
 import React, { useRef, useState, useEffect } from "react"
 // import { Form, Button, Card, Alert } from "react-bootstrap"
-import { useAuth, logout } from "../contexts/AuthContext"
+import { useAuth, logout, signOut } from "../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
 
 
@@ -33,7 +33,7 @@ function Notebook() {
     e.preventDefault()
     // TODO: Use realtime database instead as storage is only for media type of bjects.
     // alert("post: "+inputRef.current.value)
-    realtimeDB.ref("dataName").set({
+    realtimeDB.ref(currentUser.uid).set({
       post: inputRef.current.value
     }).catch(alert)
 
@@ -52,7 +52,7 @@ function Notebook() {
 
   // Fetch the required data using the get() method
   const Fetchdata = ()=>{
-    db.collection("Users").get().then((querySnapshot) => {
+    db.collection("users").get().then((querySnapshot) => {
          
         // Loop through the data and store
         // it in array to display

@@ -1,10 +1,10 @@
-import React, {useRef, useState, useEffect} from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import RegisterForm from "./RegisterForm"
 import { Form, Button, Card, Alert } from "react-bootstrap"
-import {useAuth} from "../contexts/AuthContext"
+import { useAuth } from "../contexts/AuthContext"
 import {Link, useNavigate} from "react-router-dom"
 import LogIn from "./LogIn"
-import {Placeholder} from 'semantic-ui-react'
+import { Placeholder } from 'semantic-ui-react'
 // import ImageLoader from "./ImageLoader"
 // import {initializeApp} from "firebase/app"
 // import {getFirestore} from "firebase/firestore"
@@ -15,7 +15,10 @@ import db from "../firebase/firestore"
 import { PhotoPlaceholder } from 'react-placeholder-image';
 import { CustomPlaceholder } from 'react-placeholder-image';
 
-// import {setDoc, doc} from "../firebase/firebase"
+import { setDoc, doc } from "../firebase/firebase"
+import realtimeDB from '../firebase/realtimeDatabase';
+
+// import { setCurrentUserUID } from "../contexts/AuthContext"
 
 function SignUp() {
 
@@ -24,12 +27,15 @@ function SignUp() {
   const emailRef = useRef()
   const passwordRef = useRef()
   const passwordConfirmationRef = useRef()
-  const {signup} = useAuth()
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
+  const { signup } = useAuth()
+  const { currentUser } = useAuth(null)
+  const [ error, setError ] = useState("")
+  const [ loading, setLoading ] = useState(false)
   const navigate = useNavigate()
 
-  const [selectedImage, setSelectedImage] = useState(null)
+  // const [ selectedImage, setSelectedImage ] = useState(null)
+
+  // const currentUserUID = setCurrentUserUID(currentUser)
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -45,14 +51,26 @@ function SignUp() {
       setError("")
       setLoading(true)
 
+      // Create user in authetication first so we have it created with the uid
       await signup(emailRef.current.value, passwordRef.current.value)
-      db.collection("Users").add({
+
+      // Create user in the database.
+      db.collection("users").doc(firstNameRef.current.value).set({
         firstName: firstNameRef.current.value,
         lastName: lastNameRef.current.value,
         email: emailRef.current.value,
-        password: passwordRef.current.value
+        password: passwordRef.current.value,
+        id: currentUser.uid,
       })
 
+      // realtimeDB.ref(currentUser.uid).set({
+      //   firstName: firstNameRef.current.value,
+      //   lastName: lastNameRef.current.value,
+      //   email: emailRef.current.value,
+      //   password: passwordRef.current.value,
+      //   id: currentUser.uid,
+      // }).catch(alert)
+      // console.log(currentUser.uid)
       navigate("/")
 
     } catch {
@@ -60,8 +78,7 @@ function SignUp() {
       setError("Failed to create an account")
 
     }
-
-    // alert("first name: "+firstNameRef.current.value+" and last name: "+lastNameRef.current.value)
+    
     setLoading(false)
   }
 
