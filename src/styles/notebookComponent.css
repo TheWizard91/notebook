@@ -1,0 +1,21 @@
+#ui-card {
+    height: 300px;
+    width: 1000px;
+}
+
+#ui-segment {
+    height: 200px;
+    width: 400px;
+}
+
+@media all and (max-width: 400px) {
+    .notebook-element {
+        height: 300px;
+        width: 350px;
+    }
+
+    .input-element {
+        height: 200px;
+        width: 300px;
+    }
+}

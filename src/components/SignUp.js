@@ -37,7 +37,7 @@ function SignUp() {
 
   // const currentUserUID = setCurrentUserUID(currentUser)
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault()
 
     // Vasditaion checks
@@ -52,7 +52,7 @@ function SignUp() {
       setLoading(true)
 
       // Create user in authetication first so we have it created with the uid
-      await signup(emailRef.current.value, passwordRef.current.value)
+      signup(emailRef.current.value, passwordRef.current.value)
 
       // Create user in the database.
       db.collection("users").doc(firstNameRef.current.value).set({

@@ -13,6 +13,8 @@ import React, { useRef, useState, useEffect } from "react"
 import { useAuth, logout, signOut } from "../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
 
+import "../styles/notebookComponent.css"
+import "../App.css"
 
 function Notebook() {
 
@@ -69,7 +71,6 @@ function Notebook() {
     setError("")
 
     try{
-      navigate("/login")
       await logout()
       navigate("/login")
       // alert("Email: "+currentUser.email+" logged out")
@@ -82,10 +83,16 @@ function Notebook() {
       <div className="computer only row">
       <div className="column"></div>
     </div>
-      <div 
+    {/* Media Queries */}
+    <link rel="stylesheet" href="/home/emmanuel/Desktop/ReactJSProjects/Diary/frontend/src/styles/notebookComponent.css" />
+    
+      <div
+        id = "notebook-element" 
         className="ui card"
         style = {{  height: 300, width: 1000 }}
         >
+          {/* 
+        style = {{  height: 300, width: 1000 }} */}
         <h2 className ="text-center mb-4">Notebook</h2>
         {/* <div class="content">
           <div class="right floated meta">14h</div>
@@ -95,15 +102,18 @@ function Notebook() {
           <img />
         </div> */}
 
-        <div class="six wide tablet eight wide computer column">
+        <div className="six wide tablet eight wide computer column">
           <input 
+            id = "input-element"
             className = "ui segment"
             type = "text"
             ref = { inputRef }
             name = "message"
             onChange = { handleChange }
             placeholder =  'Type here...'
-            style = {{  height: 200, width: 400 }}/>
+            style = {{  height: 200, width: 400 }}/> 
+            {/* 
+            style = {{  height: 200, width: 400 }} */}
         </div>
         {/* <div class="six wide tablet eight wide computer column"> */}
           <Button 
