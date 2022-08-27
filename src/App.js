@@ -23,7 +23,7 @@ class App extends Component {
                 <Router>
                   <AuthProvider>
                     <Routes>
-                      <Route path="/" exact={true} element={<LogIn />} />
+                      {/* <Route path="/" exact={true} element={<LogIn />} /> */}
                       <Route path="/login" exact={true} element={<LogIn />} />
                       {/* <PrivateRoute exact path="/" element={<PrivateRoute />} /> */}
                       <Route exact path="/dasboard" element={<Dashboard />} />
@@ -35,7 +35,7 @@ class App extends Component {
                       </Route> */}
                       <Route path="/signup" element={<SignUp />} />
                       <Route path="/forgot-password" element={<ForgotPassword />} />
-                      <Route path="/notebook" element = { <Notebook /> } />
+                      <Route path="/" element = { <Notebook /> } />
                     </Routes>
                   </AuthProvider>
                 </Router>
