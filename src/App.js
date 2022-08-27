@@ -45,6 +45,7 @@ class App extends Component {
                         <Route path='/update-profile' element={<UpdateProfile/>}/>
                       </Route>
                       <Route path="/signup" element={<SignUp />} />
+                      <Route path="/" exact = { true } element={<LogIn />} />
                       <Route path="/login" element={<LogIn />} />
                       <Route path="/forgot-password" element={<ForgotPassword />} />
                       <Route path="/notebook" element = { <Notebook /> } />
