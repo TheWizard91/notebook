@@ -50,18 +50,18 @@ class App extends Component {
                       <Route path="/forgot-password" element={ <ForgotPassword /> } />
                       <Route path="/notebook" element = { <Notebook /> } /> */}
 
-                      {/* <Route path="/" exact = { true } element={ <LogIn /> } />
+                      <Route path="/" exact = { true } element={ <LogIn /> } />
                       <Route path="/login" element={ <LogIn /> } />
                       <Route exact path="/dashboard" element={<Dashboard />} />
-                      <Route exact path='/' element={<PrivateRoute/>} >
+                      {/* <Route exact path='/' element={<PrivateRoute/>} >
                         <Route exact path='/' element={<LogIn/>}/>
-                      </Route>
-                      <Route path='/' element={ <PrivateRouteTwo/> } >
+                      </Route> */}
+                      {/* <Route path='/' element={ <PrivateRouteTwo/> } >
                         <Route path='/update-profile' element={ <UpdateProfile/> }/>
-                      </Route>
+                      </Route> */}
                       <Route path="/signup" element={ <SignUp /> } />
                       <Route path="/forgot-password" element={ <ForgotPassword /> } />
-                      <Route path="/notebook" element = { <Notebook /> } /> */}
+                      <Route path="/notebook" element = { <Notebook /> } />
                     </Routes>
                   </AuthProvider>
                 </Router>
