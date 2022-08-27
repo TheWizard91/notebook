@@ -23,19 +23,31 @@ class App extends Component {
                 <Router>
                   <AuthProvider>
                     <Routes>
-                      {/* <Route path="/" exact={true} element={<LogIn />} /> */}
-                      <Route path="/login" exact={true} element={<LogIn />} />
+                      {/* <Route path="/" exact={true} element={<LogIn />} />
+                      <Route path="/login" exact={true} element={<LogIn />} /> */}
                       {/* <PrivateRoute exact path="/" element={<PrivateRoute />} /> */}
-                      <Route exact path="/dasboard" element={<Dashboard />} />
+                      {/* <Route exact path="/dasboard" element={<Dashboard />} /> */}
                       {/* <Route exact path='/' element={<PrivateRoute/>} >
                         <Route exact path='/' element={<LogIn/>}/>
                       </Route> */}
                       {/* <Route path='/' element={<PrivateRouteTwo/>} >
                         <Route path='/update-profile' element={<UpdateProfile/>}/>
                       </Route> */}
-                      <Route path="/signup" element={<SignUp />} />
+                      {/* <Route path="/signup" element={<SignUp />} />
                       <Route path="/forgot-password" element={<ForgotPassword />} />
-                      <Route path="/" element = { <Notebook /> } />
+                      <Route path="/" element = { <Notebook /> } /> */}
+                      {/* <PrivateRoute exact path="/" element={<PrivateRoute />} /> */}
+                      {/* <Route exact path="/" element={<Dashboard />} /> */}
+                      <Route exact path='/' element={<PrivateRoute/>} >
+                        <Route exact path='/' element={<LogIn/>}/>
+                      </Route>
+                      <Route path='/' element={<PrivateRouteTwo/>} >
+                        <Route path='/update-profile' element={<UpdateProfile/>}/>
+                      </Route>
+                      <Route path="/signup" element={<SignUp />} />
+                      <Route path="/login" element={<LogIn />} />
+                      <Route path="/forgot-password" element={<ForgotPassword />} />
+                      <Route path="/notebook" element = { <Notebook /> } />
                     </Routes>
                   </AuthProvider>
                 </Router>
