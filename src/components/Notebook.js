@@ -16,6 +16,9 @@ import { Link, useNavigate } from "react-router-dom"
 import "../styles/notebookComponent.css"
 import "../App.css"
 
+
+// import cogoToast from "cogo-toast"
+
 function Notebook() {
 
   // const [post, setPost] = useState("");
@@ -30,6 +33,10 @@ function Notebook() {
   const navigate = useNavigate()
 
   const [info , setInfo] = useState([]);
+
+  // cogoToast.info("Hi from the developer if you have just eneterd the website, please press teh logout button first make, make an account, login and be back here. Else post something!",
+  //  { position: 'top-center', heading: 'Information' });
+
 
   const sendPost = (e) => {
     e.preventDefault()
@@ -79,7 +86,8 @@ function Notebook() {
     }
   }
   return (
-    <div className = "ui centered grid">
+    <div 
+      className = "ui centered grid">
       <div className="computer only row">
       <div className="column"></div>
     </div>
@@ -89,11 +97,21 @@ function Notebook() {
       <div
         id = "notebook-element" 
         className="ui card"
-        style = {{  height: 300, width: 1000 }}
         >
           {/* 
         style = {{  height: 300, width: 1000 }} */}
-        <h2 className ="text-center mb-4">Notebook</h2>
+        <h2 
+          className = "text-center mb-4">
+            Notebook
+        </h2>
+
+
+        {/* <div 
+          class="ui button" 
+          data-tooltip="Hi from the developer if you have just eneterd the website, please press the logout button first make, make an account, login and be back here. Else post something!" 
+          data-position="top center">
+          Top Center
+        </div> */}
         {/* <div class="content">
           <div class="right floated meta">14h</div>
           <img class="ui avatar image" src="/images/avatar/large/elliot.jpg" /> Elliot
@@ -111,31 +129,33 @@ function Notebook() {
             name = "message"
             onChange = { handleChange }
             placeholder =  'Type here...'
-            style = {{  height: 200, width: 400 }}/> 
+          /> 
             {/* 
             style = {{  height: 200, width: 400 }} */}
         </div>
         {/* <div class="six wide tablet eight wide computer column"> */}
           <Button 
             basic name = "cloud"
-              color = "blue"
-              className = "ui incon basic button"
-              type = "submit"
-              size = "big"
-              onClick = { sendPost }>  
+            color = "blue"
+            className = "ui incon basic button"
+            type = "submit"
+            size = "big"
+            onClick = { sendPost }
+            data-tooltip="App under cunstruction so if you just entered the website, please logout and create an account first." 
+            data-position="top center">  
               <i className = "cloud icon"></i>
           </Button>
         {/* </div> */}
       </div>
       <Button 
-            basic name = "logout"
-              color = "blue"
-              className = "ui incon basic button"
-              type = "submit"
-              size = "big"
-              onClick = { logginout }>  
-              <i className = "logout icon"></i>
-          </Button>
+        basic name = "logout"
+        color = "blue"
+        className = "ui incon basic button"
+        type = "submit"
+        size = "big"
+        onClick = { logginout }>  
+          <i className = "logout icon"></i>
+      </Button>
     </div>
   )
 }

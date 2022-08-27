@@ -1,9 +1,9 @@
-#ui-card {
+.notebook-element {
     height: 300px;
     width: 1000px;
 }
 
-#ui-segment {
+.input-element {
     height: 200px;
     width: 400px;
 }
