@@ -53,9 +53,9 @@ class App extends Component {
                       <Route path="/" exact = { true } element={ <LogIn /> } />
                       <Route path="/login" element={ <LogIn /> } />
                       <Route exact path="/dashboard" element={<Dashboard />} />
-                      {/* <Route exact path='/' element={<PrivateRoute/>} >
+                      <Route exact path='/' element={<PrivateRoute/>} >
                         <Route exact path='/' element={<LogIn/>}/>
-                      </Route> */}
+                      </Route>
                       {/* <Route path='/' element={ <PrivateRouteTwo/> } >
                         <Route path='/update-profile' element={ <UpdateProfile/> }/>
                       </Route> */}
