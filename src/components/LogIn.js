@@ -16,7 +16,7 @@ function LogIn() {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
-
+  // alert(currentUser.uid)
   async function handleSubmit(e) {
     e.preventDefault()
 

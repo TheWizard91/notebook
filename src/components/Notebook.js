@@ -40,8 +40,7 @@ function Notebook() {
 
   const sendPost = (e) => {
     e.preventDefault()
-    // TODO: Use realtime database instead as storage is only for media type of bjects.
-    // alert("post: "+inputRef.current.value)
+    // TODO: Try to start from the login page.
     realtimeDB.ref(currentUser.uid).set({
       post: inputRef.current.value
     }).catch(alert)
@@ -60,7 +59,7 @@ function Notebook() {
   });
 
   // Fetch the required data using the get() method
-  const Fetchdata = ()=>{
+  const Fetchdata = () =>{
     db.collection("users").get().then((querySnapshot) => {
          
         // Loop through the data and store
@@ -96,7 +95,7 @@ function Notebook() {
     
       <div
         id = "notebook-element" 
-        className="ui card"
+        className="ui card" 
         >
           {/* 
         style = {{  height: 300, width: 1000 }} */}
@@ -142,20 +141,23 @@ function Notebook() {
             size = "big"
             onClick = { sendPost }
             data-tooltip="App under cunstruction so if you just entered the website, please logout and create an account first." 
-            data-position="top center">  
-              <i className = "cloud icon"></i>
+            data-position="top center" 
+            > <i className = "cloud icon"></i>
+          </Button>
+          <Button 
+            id = "log-out-button"
+            basic name = "logout"
+            color = "blue"
+            className = "ui incon basic button"
+            type = "submit"
+            size = "big"
+            onClick = { logginout }
+            data-position="top center" >  
+              <i className = "logout icon"></i>
           </Button>
         {/* </div> */}
       </div>
-      <Button 
-        basic name = "logout"
-        color = "blue"
-        className = "ui incon basic button"
-        type = "submit"
-        size = "big"
-        onClick = { logginout }>  
-          <i className = "logout icon"></i>
-      </Button>
+      
     </div>
   )
 }

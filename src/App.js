@@ -17,24 +17,25 @@ import Notebook from "./components/Notebook"
 class App extends Component {
   render() {
     return (
-        <Container className="d-flex align-items-center justify-content-center"
-          style={{ minHeight: "100vh" }}>
-            <div className="w-100" style={{ maxWidth: "400px" }}>
+        <Container className = "d-flex align-items-center justify-content-center"
+          style = {{ minHeight: "100vh" }}>
+            <div className = "w-100" style = {{ maxWidth: "400px" }}>
                 <Router>
                   <AuthProvider>
                     <Routes>
                       {/* <Route exact path="/dashboard" element={<Dashboard />} /> */}
-                      <Route exact path="/dashboard" element={<Dashboard />} />
-                      <Route exact path='/' element={<PrivateRoute/>} >
-                        <Route exact path='/' element={<LogIn/>}/>
+                      <Route exact path = "/dashboard" element = { <Dashboard /> } />
+                      {/* <Route exact path = '/' element = { <PrivateRoute/> } >
+                        <Route exact path = '/' element = { <LogIn/> }/>
+                      </Route> */}
+                      <Route path = '/' element = { <PrivateRouteTwo/> } >
+                        <Route path = '/update-profile' element = { <UpdateProfile/> }/>
                       </Route>
-                      <Route path='/' element={ <PrivateRouteTwo/> } >
-                        <Route path='/update-profile' element={ <UpdateProfile/> }/>
-                      </Route>
-                      <Route path="/signup" element={ <SignUp /> } />
-                      <Route path="/login" element={ <LogIn /> } />
-                      <Route path="/forgot-password" element={ <ForgotPassword /> } />
-                      <Route path="/notebook" element = { <Notebook /> } />
+                      <Route path = "/signup" element = { <SignUp /> } />
+                      <Route exact path = '/'exact={true} element = { <LogIn/> }/>
+                      <Route path = "/login" exact={true}element = { <LogIn /> } />
+                      <Route path = "/forgot-password" element = { <ForgotPassword /> } />
+                      <Route path = "/notebook" element = { <Notebook /> } />
                     </Routes>
                   </AuthProvider>
                 </Router>
