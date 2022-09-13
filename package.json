@@ -1,6 +1,5 @@
 {
     "version": "1.0.0",
-    "main": "lib.js",
     "name": "frontend",
     "source": "src/index.html",
     "private": "true",
