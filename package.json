@@ -4,10 +4,8 @@
     "source": "src/index.html",
     "private": "true",
     "scripts": {
-      "dev": "parcel index.html",
-      "build": "parcel build index.html",
-      "generate": "parcel generate",
-      "start": "parcel start"
+      "dev": "parcel",
+      "build": "parcel build"
     },
     "homepage": "https://github.com/TheWizard91/notebook#readme",
     "devDependencies": {
