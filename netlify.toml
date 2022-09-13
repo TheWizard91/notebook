@@ -1,3 +1,9 @@
 [build]
-  command = "next build && next export"
-  publish = "out"
+    command = "public build"
+    publish = "/build"
+    base = "/"
+
+[[redirects]]
+    from = "/*"
+    to = "/src/index.html"
+    status = 200
