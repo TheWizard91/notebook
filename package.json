@@ -4,10 +4,10 @@
   "private": "true",
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "generate": "nuxt generate",
-    "start": "nuxt start"
+    "dev": "parcel",
+    "build": "parcel build",
+    "generate": "parcel generate",
+    "start": "parcel start"
   },
   "homepage": "https://github.com/TheWizard91/notebook#readme",
   "devDependencies": {
