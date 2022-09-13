@@ -68,7 +68,7 @@ export default function UpdateProfile() {
   // }
 
   useEffect(() => {
-    db.collection("Users")
+    db.collection("users")
       .get()
       .then((querySnapshot) => {
         const data = []
