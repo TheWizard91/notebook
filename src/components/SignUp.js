@@ -27,8 +27,7 @@ function SignUp() {
   const emailRef = useRef()
   const passwordRef = useRef()
   const passwordConfirmationRef = useRef()
-  const { signup } = useAuth()
-  // const { currentUser } = useAuth()
+  const { currentUser, signup } = useAuth()
   const [ error, setError ] = useState("")
   const [ loading, setLoading ] = useState(false)
   const navigate = useNavigate()
@@ -40,7 +39,7 @@ function SignUp() {
 
   // const currentUserUID = setCurrentUserUID(currentUser)
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault()
 
     // Vasditaion checks
@@ -55,36 +54,38 @@ function SignUp() {
       setLoading(true)
 
       // Create user in authetication first so we have it created with the uid
-      await signup(emailRef.current.value, passwordRef.current.value)
+      signup(emailRef.current.value, passwordRef.current.value)
 
       // Create user in the database. // using user's name: firstNameRef.current.value
-      // db.collection("users").doc(firstNameRef.current.value).set({
-      //   firstName: firstNameRef.current.value,
-      //   lastName: lastNameRef.current.value,
-      //   email: emailRef.current.value,
-      //   password: passwordRef.current.value,
-      //   // id: currentUser.uid,
-      // })
-      db.collection("users").add({
+      db.collection("users").doc(currentUser.uid).set({
         firstName: firstNameRef.current.value,
         lastName: lastNameRef.current.value,
         email: emailRef.current.value,
-        password: passwordRef.current.value
+        password: passwordRef.current.value,
+        // id: currentUser.uid,
       })
+
+      // db.collection("users").add({
+      //   firstName: firstNameRef.current.value,
+      //   lastName: lastNameRef.current.value,
+      //   email: emailRef.current.value,
+      //   password: passwordRef.current.value
+      // })
+
       // for id currentUser.uid
       // realtimeDB.ref(firstNameRef.current.value).set({
       //   firstName: firstNameRef.current.value,
       //   lastName: lastNameRef.current.value,
       //   email: emailRef.current.value,
       //   password: passwordRef.current.value,
-      //   // id: currentUser.uid,
+      //   id: currentUser.uid,
       // }).catch(alert)
 
       // console.log("users id: "+currentUser.uid+" and users name: "+firstNameRef.current.value)
       navigate("/")
 
     } catch {
-      console(useAuth().uid)
+
       setError("Failed to create an account")
 
     }

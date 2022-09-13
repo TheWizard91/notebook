@@ -19,7 +19,7 @@ import "../App.css"
 
 // import cogoToast from "cogo-toast"
 
-function Notebook() {
+function Note() {
 
   // const [post, setPost] = useState("");
   const inputRef = useRef(null)
@@ -79,7 +79,6 @@ function Notebook() {
     try{
       await logout()
       navigate("/login")
-      // alert("Email: "+currentUser.email+" logged out")
     } catch {
       setError("failed to log out")
     }
@@ -128,11 +127,10 @@ function Notebook() {
             name = "message"
             onChange = { handleChange }
             placeholder =  'Type here...'
-          /> 
-            {/* 
-            style = {{  height: 200, width: 400 }} */}
+          />
         </div>
         {/* <div class="six wide tablet eight wide computer column"> */}
+          <div class="ui buttons">
           <Button 
             basic name = "cloud"
             color = "blue"
@@ -142,8 +140,9 @@ function Notebook() {
             onClick = { sendPost }
             data-tooltip="App under cunstruction so if you just entered the website, please logout and create an account first." 
             data-position="top center" 
-            > <i className = "cloud icon"></i>
+            > <i className = "send icon"></i>
           </Button>
+          <div className = "or"></div>
           <Button 
             id = "log-out-button"
             basic name = "logout"
@@ -155,6 +154,8 @@ function Notebook() {
             data-position="top center" >  
               <i className = "logout icon"></i>
           </Button>
+          </div>
+
         {/* </div> */}
       </div>
       
@@ -162,4 +163,4 @@ function Notebook() {
   )
 }
 
-export default Notebook
+export default Note

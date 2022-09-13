@@ -4,7 +4,7 @@ import { Form, Button, Card, Alert } from "react-bootstrap"
 import {useAuth} from "../contexts/AuthContext"
 import SignUp from "./SignUp"
 import {Link, useNavigate} from "react-router-dom"
-import Notebook from "./Notebook"
+import Note from "./Note"
 
 function LogIn() {
 
