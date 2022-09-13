@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "source": "public/index.html",
+  "source": "index.html",
   "dependencies": {
     "bootstrap": "^5.2.0",
     "firebase": "^9.9.2",
