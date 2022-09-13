@@ -2,9 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-
   "source": "public/index.html",
-  
   "dependencies": {
     "bootstrap": "^5.2.0",
     "firebase": "^9.9.2",
@@ -20,15 +18,13 @@
   "scripts": {
     "start": "parcel",
     "build": "parcel build"
-    
   },
   "devDependencies": {
+    "@parcel/transformer-sass": "^2.0.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "http-server": "^14.1.1",
-
-    "@parcel/transformer-sass": "^2.0.1",
-    "parcel": "^2.0.1",
+    "parcel": "^2.7.0",
     "prettier": "^2.4.1"
   },
   "browserslist": [
