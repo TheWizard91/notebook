@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
 
-  "source": "src/index.html",
+  "source": "public/index.html",
   
   "dependencies": {
     "bootstrap": "^5.2.0",
