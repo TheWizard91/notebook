@@ -2,8 +2,3 @@
   command = "parcel build"
   publish = "out"
 
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-
-[[plugins]]
-  package = "netlify-plugin-cache-nextjs"
