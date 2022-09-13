@@ -4,7 +4,7 @@ import { Form, Button, Card, Alert } from "react-bootstrap"
 import {useAuth} from "../contexts/AuthContext"
 import {Link, useNavigate} from "react-router-dom"
 import LogIn from "./LogIn"
-import {Placeholder} from 'semantic-ui-react'
+// import {Placeholder} from 'semantic-ui-react'
 // import ImageLoader from "./ImageLoader"
 // import {initializeApp} from "firebase/app"
 // import {getFirestore} from "firebase/firestore"
@@ -12,8 +12,8 @@ import app from "../contexts/AuthContext"
 import firebase from "../firebase/firebase"
 import firestore from "../firebase/firestore"
 import db from "../firebase/firestore"
-import { PhotoPlaceholder } from 'react-placeholder-image';
-import { CustomPlaceholder } from 'react-placeholder-image';
+// import { PhotoPlaceholder } from 'react-placeholder-image';
+// import { CustomPlaceholder } from 'react-placeholder-image';
 
 // import {setDoc, doc} from "../firebase/firebase"
 
