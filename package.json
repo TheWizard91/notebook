@@ -18,7 +18,6 @@
     "semantic-ui-react": "^2.1.3"
   },
   "scripts": {
-    "babel": "babel --presets es2015 js/main.js -o build/main.bundle.js",
     "start": "parcel",
     "build": "parcel build"
     
