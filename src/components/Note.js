@@ -119,7 +119,8 @@ function Note() {
         </div> */}
 
         <div className="six wide tablet eight wide computer column">
-          <input 
+          <textarea
+            rows = "5"
             id = "input-element"
             className = "ui segment"
             type = "text"
