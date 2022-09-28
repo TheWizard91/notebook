@@ -68,30 +68,30 @@ ORDER: Base + Typography > Generar Layout + Grid > Page Layout > Components
 
 }
 
-@mixin supportColorForIE11 {
+// @mixin supportColorForIE11 {
 
-    // Fall for text-gradient not supported in EI11
-    color: $secondary-color;
-    -webkit-text-fill-color: $secondary-color; // fallback
-    @supports (-webkit-background-clip: text) or (background-clip: text) {
-        background-image: linear-gradient(
-            135deg,
-            $primary-color 0%,
-            $secondary-color 100%
-        );
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        color: transparent;
-    }
+//     // Fall for text-gradient not supported in EI11
+//     color: $secondary-color;
+//     -webkit-text-fill-color: $secondary-color; // fallback
+//     @supports (-webkit-background-clip: text) or (background-clip: text) {
+//         background-image: linear-gradient(
+//             135deg,
+//             $primary-color 0%,
+//             $secondary-color 100%
+//         );
+//         -webkit-background-clip: text;
+//         -webkit-text-fill-color: transparent;
+//         color: transparent;
+//     }
 
-}
+// }
 
-@mixin supportIE11 {
+// @mixin supportIE11 {
 
-    // Provide you basic style to support IE11
-    @media screen and (-ms-high-constrast: active),
-        screen and (-ms-high-contrast: none) {
-            @content;
-    }
+//     // Provide you basic style to support IE11
+//     @media screen and (-ms-high-constrast: active),
+//         screen and (-ms-high-contrast: none) {
+//             @content;
+//     }
     
-}
+// }
