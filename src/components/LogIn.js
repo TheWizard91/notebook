@@ -4,7 +4,7 @@ import { Form, Button, Card, Alert } from "react-bootstrap"
 import {useAuth} from "../contexts/AuthContext"
 import SignUp from "./SignUp"
 import {Link, useNavigate} from "react-router-dom"
-import Note from "./Note"
+import Notebook from "./Notebook"
 
 function LogIn() {
 
@@ -24,7 +24,7 @@ function LogIn() {
       setError("")
       setLoading(true)
       await login(emailRef.current.value, passwordRef.current.value)
-      navigate("/note")
+      navigate("/notebook")
     } catch {
       setError("Failed to log in")
     }

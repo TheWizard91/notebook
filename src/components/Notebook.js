@@ -19,7 +19,7 @@ import "../App.css"
 
 // import cogoToast from "cogo-toast"
 
-function Note() {
+function Notebook() {
 
   // const [post, setPost] = useState("");
   const inputRef = useRef(null)
@@ -164,4 +164,4 @@ function Note() {
   )
 }
 
-export default Note
+export default Notebook
