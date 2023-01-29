@@ -12,6 +12,7 @@ import React, { useRef, useState, useEffect } from "react"
 // import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth, logout, signOut } from "../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
+import LogIn from "./LogIn"
 
 import "../styles/notebookComponent.css"
 import "../App.css"
@@ -77,21 +78,23 @@ function Notebook() {
     setError("")
 
     try{
+      setError("")
+      setLoading(true)
+      navigate("/")
       await logout()
-      navigate("/login")
     } catch {
       setError("failed to log out")
     }
   }
   return (
-    <div 
-      className = "ui centered grid">
+    <div className = "ui centered grid">
       <div className="computer only row">
       <div className="column"></div>
     </div>
     {/* Media Queries */}
-    <link rel="stylesheet" href="/home/emmanuel/Desktop/ReactJSProjects/Diary/frontend/src/styles/notebookComponent.css" />
-    
+    <link rel="stylesheet" 
+      href="/home/emmanuel/Desktop/ReactJSProjects/Diary/frontend/src/styles/notebookComponent.css" 
+    />
       <div
         id = "notebook-element" 
         className="ui card" 
@@ -99,10 +102,9 @@ function Notebook() {
           {/* 
         style = {{  height: 300, width: 1000 }} */}
         <h2 
-          className = "text-center mb-4">
+          className = "text-center mb-2">
             Notebook
         </h2>
-
 
         {/* <div 
           class="ui button" 
@@ -127,7 +129,7 @@ function Notebook() {
             ref = { inputRef }
             name = "message"
             onChange = { handleChange }
-            placeholder =  'Type here...'
+            placeholder =  'Type anything...'
           />
         </div>
         {/* <div class="six wide tablet eight wide computer column"> */}
@@ -139,11 +141,11 @@ function Notebook() {
             type = "submit"
             size = "big"
             onClick = { sendPost }
-            data-tooltip="App under cunstruction so if you just entered the website, please logout and create an account first." 
+            data-tooltip="Press to send note to save on database." 
             data-position="top center" 
             > <i className = "send icon"></i>
           </Button>
-          <div className = "or"></div>
+          {/* <div className = "or"></div> */}
           <Button 
             id = "log-out-button"
             basic name = "logout"
@@ -152,6 +154,7 @@ function Notebook() {
             type = "submit"
             size = "big"
             onClick = { logginout }
+            data-tooltip="Press to log out."  
             data-position="top center" >  
               <i className = "logout icon"></i>
           </Button>

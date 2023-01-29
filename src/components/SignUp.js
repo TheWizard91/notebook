@@ -148,7 +148,7 @@ function SignUp() {
         </Card.Body>
       </Card>
       <div className = "w-100 text-center mt-2">
-        Already have an account? <Link to="/login" element = { <LogIn /> }>Log In</Link>
+        Already have an account? <Link to="/" element = { <LogIn /> }>Log In</Link>
       </div>
     </div>
   )
