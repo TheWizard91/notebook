@@ -12,8 +12,8 @@ import app from "../contexts/AuthContext"
 import firebase from "../firebase/firebase"
 import firestore from "../firebase/firestore"
 import db from "../firebase/firestore"
-import { PhotoPlaceholder } from 'react-placeholder-image';
-import { CustomPlaceholder } from 'react-placeholder-image';
+// import { PhotoPlaceholder } from 'react-placeholder-image';
+// import { CustomPlaceholder } from 'react-placeholder-image';
 
 // import { setCurrentUserUID } from "../contexts/AuthContext"
 
