@@ -1,8 +1,9 @@
 import React, { useRef, useState } from "react"
 import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import SignUp from "./SignUp"
+import LogIn from "./LogIn"
 
 
 export default function ForgotPassword() {
@@ -11,6 +12,7 @@ export default function ForgotPassword() {
     const [error, setError] = useState("")
     const [message, setMessage] = useState("")
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -20,13 +22,13 @@ export default function ForgotPassword() {
             setError("")
             setLoading(true)
             await resetPassword(emailRef.current.value)
-            setMessage("Check your inbox for durther instructions")
+            setMessage("Check your inbox for further instructions")
             alert("Val: "+emailRef.current.value)
+            navigate("/")
         } catch {
-                setError("Failed to reset password")
-                alert("Val: "+emailRef.current.value)
+            setError("Failed to reset password")
+            alert("Val: "+emailRef.current.value)
         }
-
         setLoading(false)
         }
 
@@ -47,7 +49,8 @@ export default function ForgotPassword() {
                     </Button>
                 </Form>
                 <div className="w-100 text-center mt-3">
-                    <Link to="/login">Login</Link>
+                    No need to change password? 
+                    <Link to="/" element={<LogIn/>}>Login</Link>
                 </div>
             </Card.Body>
         </Card>

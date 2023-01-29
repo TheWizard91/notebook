@@ -1,10 +1,10 @@
-import React, {useRef, useState, useEffect} from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import RegisterForm from "./RegisterForm"
 import { Form, Button, Card, Alert } from "react-bootstrap"
-import {useAuth} from "../contexts/AuthContext"
+import { useAuth } from "../contexts/AuthContext"
 import {Link, useNavigate} from "react-router-dom"
 import LogIn from "./LogIn"
-// import {Placeholder} from 'semantic-ui-react'
+import {Placeholder} from 'semantic-ui-react'
 // import ImageLoader from "./ImageLoader"
 // import {initializeApp} from "firebase/app"
 // import {getFirestore} from "firebase/firestore"
@@ -12,10 +12,10 @@ import app from "../contexts/AuthContext"
 import firebase from "../firebase/firebase"
 import firestore from "../firebase/firestore"
 import db from "../firebase/firestore"
-// import { PhotoPlaceholder } from 'react-placeholder-image';
-// import { CustomPlaceholder } from 'react-placeholder-image';
+import { PhotoPlaceholder } from 'react-placeholder-image';
+import { CustomPlaceholder } from 'react-placeholder-image';
 
-// import {setDoc, doc} from "../firebase/firebase"
+// import { setCurrentUserUID } from "../contexts/AuthContext"
 
 function SignUp() {
 
@@ -24,14 +24,19 @@ function SignUp() {
   const emailRef = useRef()
   const passwordRef = useRef()
   const passwordConfirmationRef = useRef()
-  const {signup} = useAuth()
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
+  const { currentUser, signup } = useAuth()
+  const [ error, setError ] = useState("")
+  const [ loading, setLoading ] = useState(false)
   const navigate = useNavigate()
 
-  const [selectedImage, setSelectedImage] = useState(null)
+  // alert(currentUser)
+  // const currentUserUID
 
-  async function handleSubmit(e) {
+  // const [ selectedImage, setSelectedImage ] = useState(null)
+
+  // const currentUserUID = setCurrentUserUID(currentUser)
+
+  function handleSubmit(e) {
     e.preventDefault()
 
     // Vasditaion checks
@@ -45,23 +50,43 @@ function SignUp() {
       setError("")
       setLoading(true)
 
-      await signup(emailRef.current.value, passwordRef.current.value)
-      db.collection("Users").add({
+      // Create user in authetication first so we have it created with the uid
+      signup(emailRef.current.value, passwordRef.current.value)
+
+      // Create user in the database. // using user's name: firstNameRef.current.value
+      db.collection("users").doc(currentUser.uid).set({
         firstName: firstNameRef.current.value,
         lastName: lastNameRef.current.value,
         email: emailRef.current.value,
-        password: passwordRef.current.value
+        password: passwordRef.current.value,
+        // id: currentUser.uid,
       })
 
+      // db.collection("users").add({
+      //   firstName: firstNameRef.current.value,
+      //   lastName: lastNameRef.current.value,
+      //   email: emailRef.current.value,
+      //   password: passwordRef.current.value
+      // })
+
+      // for id currentUser.uid
+      // realtimeDB.ref(firstNameRef.current.value).set({
+      //   firstName: firstNameRef.current.value,
+      //   lastName: lastNameRef.current.value,
+      //   email: emailRef.current.value,
+      //   password: passwordRef.current.value,
+      //   id: currentUser.uid,
+      // }).catch(alert)
+
+      // console.log("users id: "+currentUser.uid+" and users name: "+firstNameRef.current.value)
       navigate("/")
 
     } catch {
-      
+
       setError("Failed to create an account")
 
     }
-
-    // alert("first name: "+firstNameRef.current.value+" and last name: "+lastNameRef.current.value)
+    
     setLoading(false)
   }
 
@@ -120,7 +145,7 @@ function SignUp() {
         </Card.Body>
       </Card>
       <div className = "w-100 text-center mt-2">
-        Already have an account? <Link to="/login" element = { <LogIn /> }>Log In</Link>
+        Already have an account? <Link to="/" element = { <LogIn /> }>Log In</Link>
       </div>
     </div>
   )

@@ -1,0 +1,26 @@
+#notebook-element {
+    height: 300px;
+    width: 1000px;
+}
+
+#input-element {
+    height: 200px;
+    width: 400px;
+}
+
+@media all and (max-width: 400px) {
+    #notebook-element {
+        height: 200px;
+        width: 250px;
+    }
+
+    #input-element {
+        height: 100px;
+        width: 200px;
+    }
+
+    /* #log-out-button {
+        height: 100px;
+        width: 100px;
+    } */
+}

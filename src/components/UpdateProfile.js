@@ -11,13 +11,13 @@ export default function UpdateProfile() {
   const emailRef = useRef()
   const passwordRef = useRef()
   const passwordConfirmRef = useRef()
-  const {currentUser, updatePassword, updateEmail} = useAuth()
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
+  const { currentUser, updatePassword, updateEmail } = useAuth()
+  const [ error, setError ] = useState("")
+  const [ loading, setLoading ] = useState(false)
   const navigate = useNavigate()
 
-  const [usersData, setUsersData] = useState([]);
-  const [dataIdToBeUpdated, setDataIdToBeUpdated] = useState("");
+  const [ usersData, setUsersData ] = useState([]);
+  const [ dataIdToBeUpdated, setDataIdToBeUpdated ] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -68,7 +68,7 @@ export default function UpdateProfile() {
   // }
 
   useEffect(() => {
-    db.collection("Users")
+    db.collection("users")
       .get()
       .then((querySnapshot) => {
         const data = []
