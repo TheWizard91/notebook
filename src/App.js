@@ -13,13 +13,16 @@ import ForgotPassword from "./components/ForgotPassword"
 import UpdateProfile from "./components/UpdateProfile"
 import PrivateRouteTwo from "./components/PrivateRouteTwo"
 import Notebook from "./components/Notebook"
+import MainPage from "./components/MainPage"
+import LoadPage from "./components/LoadPage"
+import LoadPosts from "./components/LoadPosts"
 
 class App extends Component {
   render() {
     return (
         <Container className = "d-flex align-items-center justify-content-center"
           style = {{ minHeight: "100vh" }}>
-            <div className = "w-100" style = {{ maxWidth: "400px" }}>
+            <div className = "w-100"> {/** style = {{ maxWidth: "400px" }} */}
                 <Router>
                   <AuthProvider>
                     <Routes>
@@ -35,6 +38,10 @@ class App extends Component {
                       <Route path="/login" element={<LogIn />} />
                       <Route path="/forgot-password" element={<ForgotPassword />} />
                       <Route path="/notebook" element = { <Notebook /> } />
+                      <Route path = "/mainpage" element = { <MainPage /> } />
+                      {/* <Route path = "/loadpage" element = { <LoadPage />} />
+                      <Route path = "/loadposts" element = {<LoadPosts />} /> */}
+
                     </Routes>
                   </AuthProvider>
                 </Router>
