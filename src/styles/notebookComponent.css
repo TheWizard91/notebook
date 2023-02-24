@@ -1,22 +1,22 @@
 #notebook-element {
-    height: 300px;
-    width: 1000px;
+    height: 100%;
+    width: 100%;
 }
 
 #input-element {
-    height: 200px;
-    width: 400px;
+    height: 100%;
+    width: 100%;
 }
 
 @media all and (max-width: 400px) {
     #notebook-element {
-        height: 200px;
-        width: 250px;
+        height: 100%;
+        width: 100%;
     }
 
     #input-element {
-        height: 100px;
-        width: 200px;
+        height: 100%;
+        width: 100%;
     }
 
     /* #log-out-button {

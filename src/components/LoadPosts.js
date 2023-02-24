@@ -1,37 +1,31 @@
 import React from "react"
+import {Card, Button} from "semantic-ui-react"
 
-import { useNavigate, Link } from "react-router-dom"
-import Notebook from "./Notebook"
-import Dashboard from "./Dashboard"
-import LogIn from "./LogIn"
-
-function LoadPage ({page}) {
-    // window.open("/"+page)
-    switch (page) {
-        case "home":
-            return (
-                <Notebook />
-            )
-            break;
-        case "dashboard":
-            return (
-                <Dashboard />
-            )
-        case "logout":
-            return (
-                <div>
-                    <h1>
-                        Logout
-                    </h1>
+function LoadPosts ({post,timeStamp}) {
+    return (
+        <div>
+            <Card id = "livePostCardview" style = {{width:"100%"}}>
+                <div className = "content">
+                    <i class="right floated like icon"></i>
+                    <i class="right floated star icon"></i>
+                    <div 
+                        className = "ui left floated header"
+                        style = {{width:"fit-content"}}
+                        >{timeStamp}
+                    </div>
+                    <p></p>
+                    <div 
+                        className = "description"
+                        >
+                        {post}
+                    </div>
                 </div>
-            )
-    
-        default:
-            return (
-                <div><h1>Nothing to see</h1></div>
-            )
-            break;
-    }
+                <Button>
+                    <i class="edit icon"></i>
+                </Button>
+            </Card>
+        </div>
+    )
 }
 
-export default LoadPage
+export default LoadPosts
