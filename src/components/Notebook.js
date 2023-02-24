@@ -1,5 +1,6 @@
 
-import { Button, Card } from "semantic-ui-react"
+import React, { useRef, useState, useEffect } from "react"
+import { Button, Card, Grid, Segment } from "semantic-ui-react"
 import 'semantic-ui-css/semantic.min.css'
 import ref from "../firebase/Storage"
 import realtimeDB from '../firebase/realtimeDatabase';
@@ -8,8 +9,6 @@ import firebase from "../firebase/firebase"
 import firestore from "../firebase/firestore"
 import db from "../firebase/firestore"
 
-import React, { useRef, useState, useEffect } from "react"
-// import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth, logout, signOut } from "../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
 import LogIn from "./LogIn"
@@ -17,13 +16,9 @@ import LogIn from "./LogIn"
 import "../styles/notebookComponent.css"
 import "../App.css"
 
-
-// import cogoToast from "cogo-toast"
+import LoadPosts from "./LoadPosts"
 
 function Notebook() {
-
-  // const [post, setPost] = useState("");
-  const inputRef = useRef(null)
 
   const firstNameRef = useRef()
   const lastNameRef = useRef()
@@ -33,11 +28,11 @@ function Notebook() {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
-  const [info , setInfo] = useState([]);
-
-  // cogoToast.info("Hi from the developer if you have just eneterd the website, please press teh logout button first make, make an account, login and be back here. Else post something!",
-  //  { position: 'top-center', heading: 'Information' });
-
+  const inputRef = useRef(null)
+  const [info , setInfo] = useState();
+  const [timeStamp, setTimeStamp] = useState()
+  const [enterPost, setState] = useState()
+  const [postURI,setPostURI] = useState()
 
   const sendPost = (e) => {
     e.preventDefault()
@@ -45,7 +40,8 @@ function Notebook() {
     realtimeDB.ref(currentUser.uid).set({
       post: inputRef.current.value
     }).catch(alert)
-
+    setState(inputRef.current.value)
+    // setTimeStamp(timeStamp.current.value)
   }
   
   const handleChange = (e) => {
@@ -68,7 +64,6 @@ function Notebook() {
         querySnapshot.forEach(element => {
             var data = element.data();
             setInfo(arr => [...arr , data]);
-              
         });
     })
   }
@@ -86,54 +81,39 @@ function Notebook() {
       setError("failed to log out")
     }
   }
+
   return (
-    <div className = "ui centered grid">
-      <div className="computer only row">
-      <div className="column"></div>
-    </div>
-    {/* Media Queries */}
-    <link rel="stylesheet" 
-      href="/home/emmanuel/Desktop/ReactJSProjects/Diary/frontend/src/styles/notebookComponent.css" 
-    />
-      <div
-        id = "notebook-element" 
-        className="ui card" 
-        >
-          {/* 
-        style = {{  height: 300, width: 1000 }} */}
-        <h2 
-          className = "text-center mb-2">
-            Notebook
-        </h2>
-
-        {/* <div 
-          class="ui button" 
-          data-tooltip="Hi from the developer if you have just eneterd the website, please press the logout button first make, make an account, login and be back here. Else post something!" 
-          data-position="top center">
-          Top Center
-        </div> */}
-        {/* <div class="content">
-          <div class="right floated meta">14h</div>
-          <img class="ui avatar image" src="/images/avatar/large/elliot.jpg" /> Elliot
-        </div>
-        <div class="image">
-          <img />
-        </div> */}
-
-        <div className="six wide tablet eight wide computer column">
-          <textarea
-            rows = "5"
-            id = "input-element"
-            className = "ui segment"
-            type = "text"
-            ref = { inputRef }
-            name = "message"
-            onChange = { handleChange }
-            placeholder =  'Type anything...'
-          />
-        </div>
-        {/* <div class="six wide tablet eight wide computer column"> */}
-          <div class="ui buttons">
+    <Grid columns = {2}>
+      <link rel="stylesheet" 
+        href="/home/emmanuel/Desktop/ReactJSProjects/Diary/frontend/src/styles/notebookComponent.css" 
+      />
+      <Grid.Row stretched style = {{ paddingTop:"5%" }} divided>
+        <Grid.Column width = {6}>
+          <Segment>
+            <div
+              id = "notebook-element" 
+              // className="ui card" 
+            >
+              <h2 className = "text-center mb-2">
+                <h1 className = "ui center aligned icon header">
+                  <i className = "sticky note outline"></i>
+                  Write what comes in mind!
+                </h1>
+              </h2>
+              <div>
+                <textarea
+                  rows = "10"
+                  id = "input-element"
+                  className = "ui segment"
+                  type = "text"
+                  ref = { inputRef }
+                  name = "message"
+                  onChange = { handleChange }
+                  placeholder =  'Type anything...'
+                />
+              </div>
+            </div>
+          </Segment>
           <Button 
             basic name = "cloud"
             color = "blue"
@@ -142,28 +122,22 @@ function Notebook() {
             size = "big"
             onClick = { sendPost }
             data-tooltip="Press to send note to save on database." 
-            data-position="top center" 
+            data-position="top center"
+            // time = { Date.now() } 
             > <i className = "send icon"></i>
           </Button>
-          {/* <div className = "or"></div> */}
-          <Button 
-            id = "log-out-button"
-            basic name = "logout"
-            color = "blue"
-            className = "ui incon basic button"
-            type = "submit"
-            size = "big"
-            onClick = { logginout }
-            data-tooltip="Press to log out."  
-            data-position="top center" >  
-              <i className = "logout icon"></i>
-          </Button>
-          </div>
-
-        {/* </div> */}
-      </div>
-      
-    </div>
+        </Grid.Column>
+        <Grid.Column width = {10} style = {{height:"100%", borderColor:"transparent"}}>
+          <Segment>
+            <div>
+              <LoadPosts 
+                post = {enterPost}
+                timeStamp = "Date"/>
+            </div>
+          </Segment>
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
   )
 }
 

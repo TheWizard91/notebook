@@ -1,0 +1,88 @@
+#root, #mainPageContainer {
+    height: 100%;
+    background-color: transparent;
+}
+
+/* #mainPageId {
+    width: 100%;
+} */
+.ui.row {
+    --bs-gutter-x: 0rem;
+    --bs-gutter-y:0rem
+}
+
+#mainPageContainer {
+    padding: 5%;
+
+    /* background-color: blueviolet; */
+}
+/* NAVBAR */
+#subMenu {
+    /* background-color: #000000; */
+    -webkit-text-fill-color: #000000;
+}
+
+#homeId:hover,
+#notesId:hover,
+#accountSettingsId:hover {
+    -webkit-text-fill-color: palegreen;
+}
+
+/* REST */
+#subContainer {
+    text-align: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    /* background-color: aqua; */
+}
+
+/* FOOTER */
+.ui_container {
+    border: #000000;
+    size: 2rem;
+
+}
+
+#stayConnectedId {
+    text-align: center;
+    text-emphasis-color: black;
+    color: #000000;
+    padding-bottom: 20px;
+}
+
+@media (min-height: 320px) {
+    .ui.footer.form-page { /* Increased specificity for SO snippet priority */
+      position: absolute;
+      bottom: 0;
+      width: 100%; 
+      padding-right: 5%;
+      background-color: transparent;
+    }
+}
+
+#links {
+align-items: center;
+}
+
+#linkedinIcon {
+margin-right: 60px;
+}
+
+#githubIcon {
+margin-left: 60px;
+margin-right: 60px;
+}
+
+#emailIcon {
+    margin-left: 60px;
+}
+/* #body {
+    background-color: rgb(35, 35, 141)
+} */
+
+
+
+
+
+

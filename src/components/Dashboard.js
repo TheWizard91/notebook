@@ -16,25 +16,28 @@ function Dashboard() {
       navigate("/login")
       await logout()
       // navigate("/login")
-      alert("Email: "+currentUser.email+" logged out")
+      alert("Email: " + currentUser.email + " logged out")
     } catch {
       setError("failed to log out")
     }
 
-    console.log("email of current user is: "+currentUser.email)
+    console.log("email of current user is: " + currentUser.email)
   }
+
   return (
-    <div>
-        <Card.Body>
-          <h2 className="text-center mb-4">Profile</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <strong>Email: </strong>{currentUser.email}
-          <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
-            Update Profile
-          </Link>
-        </Card.Body>
-        <div className="w-100 text-center mt-2">
-        <Button variant="link" onClick={handleLogOut}>Log Out</Button>
+    <div>  {/*style={{height:"300",width:"300"}}*/}
+      {/* <title>Dashboard</title>
+      <h1>DASHBOARD</h1> */}
+      <Card.Body>
+        <h2 className = "text-center mb-4">Profile</h2>
+        {error && <Alert variant="danger"> { error } </Alert>}
+        <strong>Email: </strong>{ currentUser.email }
+        <Link to = "/update-profile" className = "btn btn-primary w-100 mt-3">
+          Update Profile
+        </Link>
+      </Card.Body>
+      <div className = "w-100 text-center mt-2">
+        <Button variant = "link" onClick = { handleLogOut }>Log Out</Button>
       </div>
     </div>
   )
