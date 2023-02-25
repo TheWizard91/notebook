@@ -1,6 +1,6 @@
 {
-  "homepage": "https://diary-project.herokuapp.com/",
-  "name": "frontend",
+  "homepage": "https://diary-project.herokuapp.com/git",
+  "name": "diary-project",
   "version": "0.1.0",
   "private": false,
   "dependencies": {
@@ -31,6 +31,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "deploy": "heroku -d build",
     "heroku-postbuild": "webpack --config webpack.config.prod.js"
   },
   "heroku-run-build-script": true,
