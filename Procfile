@@ -1,1 +1,1 @@
-web: gunicorn diary-project.wsgi --log-file -
+web: node server.js
