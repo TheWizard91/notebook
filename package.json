@@ -27,7 +27,7 @@
     "web-vitals": "^2.1.2"
   },
   "scripts": {
-    "start": "node src/index.js",
+    "start": "react-scripts start",
     "build": "webpack"
   },
   "heroku-run-build-script": true,
