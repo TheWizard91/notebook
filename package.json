@@ -1,5 +1,5 @@
 {
-  "homepage": "https://TheWizard91.github.io/notebook/",
+  "homepage": "https://diary-project.herokuapp.com/",
   "name": "frontend",
   "version": "0.1.0",
   "private": false,
@@ -48,9 +48,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "gh-pages": "^3.2.3"
   },
   "engines": {
     "node": "16.18.1",
