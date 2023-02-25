@@ -32,16 +32,22 @@ function Notebook() {
   const [info , setInfo] = useState();
   const [timeStamp, setTimeStamp] = useState()
   const [enterPost, setState] = useState()
-  const [postURI,setPostURI] = useState()
+  // const [postURI, setPostURI] = useState()
+  // const timeStamp = null
 
   const sendPost = (e) => {
     e.preventDefault()
     // TODO: Try to start from the login page.
     realtimeDB.ref(currentUser.uid).set({
-      post: inputRef.current.value
+      post: inputRef.current.value,
+      time: new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
     }).catch(alert)
+    // TODO: There is a lagging when uing the console log
+    // to pring the timeStamp -- it needs the second click for some
+    // reason to be preinted.
     setState(inputRef.current.value)
-    // setTimeStamp(timeStamp.current.value)
+    setTimeStamp(new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}))
+    // console.log("timeIs "+timeStamp)
   }
   
   const handleChange = (e) => {
@@ -84,7 +90,8 @@ function Notebook() {
 
   return (
     <Grid columns = {2}>
-      <link rel="stylesheet" 
+      <link 
+        rel = "stylesheet" 
         href="/home/emmanuel/Desktop/ReactJSProjects/Diary/frontend/src/styles/notebookComponent.css" 
       />
       <Grid.Row stretched style = {{ paddingTop:"5%" }} divided>
@@ -120,19 +127,21 @@ function Notebook() {
             className = "ui incon basic button"
             type = "submit"
             size = "big"
+            value = {timeStamp}
             onClick = { sendPost }
-            data-tooltip="Press to send note to save on database." 
-            data-position="top center"
-            // time = { Date.now() } 
+            data-tooltip = "Press to send note to save on database." 
+            data-position = "top center"
             > <i className = "send icon"></i>
           </Button>
         </Grid.Column>
-        <Grid.Column width = {10} style = {{height:"100%", borderColor:"transparent"}}>
+        <Grid.Column 
+          width = {10} 
+          style = {{ height:"100%", borderColor:"transparent" }}>
           <Segment>
             <div>
               <LoadPosts 
-                post = {enterPost}
-                timeStamp = "Date"/>
+                post = { enterPost }
+                time = { timeStamp }/>
             </div>
           </Segment>
         </Grid.Column>

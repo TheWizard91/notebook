@@ -1,7 +1,7 @@
 import React from "react"
 import {Card, Button} from "semantic-ui-react"
 
-function LoadPosts ({post,timeStamp}) {
+function LoadPosts ({post,time}) {
     return (
         <div>
             <Card id = "livePostCardview" style = {{width:"100%"}}>
@@ -11,7 +11,7 @@ function LoadPosts ({post,timeStamp}) {
                     <div 
                         className = "ui left floated header"
                         style = {{width:"fit-content"}}
-                        >{timeStamp}
+                        >{time}
                     </div>
                     <p></p>
                     <div 
