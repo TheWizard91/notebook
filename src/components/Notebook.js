@@ -5,11 +5,13 @@ import 'semantic-ui-css/semantic.min.css'
 import ref from "../firebase/Storage"
 import realtimeDB from '../firebase/realtimeDatabase';
 
+import app from "../contexts/AuthContext"
 import firebase from "../firebase/firebase"
-import firestore from "../firebase/firestore"
+import { firestore, collection, query, where, getDock } from "../firebase/firestore"
 import db from "../firebase/firestore"
-
 import { useAuth, logout, signOut } from "../contexts/AuthContext"
+// import { db } from "../firebase/config"
+
 import { Link, useNavigate } from "react-router-dom"
 import LogIn from "./LogIn"
 
@@ -17,6 +19,9 @@ import "../styles/notebookComponent.css"
 import "../App.css"
 
 import LoadPosts from "./LoadPosts"
+
+//import uuid v4
+import { v4 as uuid } from 'uuid';
 
 function Notebook() {
 
@@ -30,24 +35,45 @@ function Notebook() {
 
   const inputRef = useRef(null)
   const [info , setInfo] = useState();
-  const [timeStamp, setTimeStamp] = useState()
-  const [enterPost, setState] = useState()
-  // const [postURI, setPostURI] = useState()
-  // const timeStamp = null
+  const [timeStamp, setTimeStamp] = useState("Date")
+  const [enterPost, setState] = useState("Post goes here")
+  // console.log("currentUser.uid "+currentUser.uid)
+  // const 
+  db.collection("posts")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log(doc.id, "=>", doc.data())
+        })
+      }).catch((error) => {
+        console.log("Error getting documents: ", error)
+      })
+
+  const postURI = uuid()
 
   const sendPost = (e) => {
     e.preventDefault()
-    // TODO: Try to start from the login page.
-    realtimeDB.ref(currentUser.uid).set({
+
+    // realtimeDB.ref(currentUser.uid).set({
+    //   post: inputRef.current.value,
+    //   time: new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}),
+    //   postId: postURI.slice(0,8),
+    //   like: 0,
+    //   favorite: 0
+    // }).catch(alert)
+    db.collection("posts")
+      .doc(postURI.slice(0,8))
+      .set({
       post: inputRef.current.value,
-      time: new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
-    }).catch(alert)
-    // TODO: There is a lagging when uing the console log
-    // to pring the timeStamp -- it needs the second click for some
-    // reason to be preinted.
+      time: new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}),
+      
+      likes: 0,
+      favorite: 0
+    })
+    // postId: postURI.slice(0,8),
     setState(inputRef.current.value)
     setTimeStamp(new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}))
-    // console.log("timeIs "+timeStamp)
+
   }
   
   const handleChange = (e) => {
@@ -64,7 +90,6 @@ function Notebook() {
   // Fetch the required data using the get() method
   const Fetchdata = () =>{
     db.collection("users").get().then((querySnapshot) => {
-         
         // Loop through the data and store
         // it in array to display
         querySnapshot.forEach(element => {
@@ -74,27 +99,24 @@ function Notebook() {
     })
   }
 
-  async function logginout () {
-
-    setError("")
-
-    try{
-      setError("")
-      setLoading(true)
-      navigate("/")
-      await logout()
-    } catch {
-      setError("failed to log out")
-    }
+  const getData = () => {
+    db.collection("posts")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log(doc.id, "=>", doc.data())
+        })
+      }).catch((error) => {
+        console.log("Error getting documents: ", error)
+      })
   }
-
   return (
     <Grid columns = {2}>
       <link 
         rel = "stylesheet" 
         href="/home/emmanuel/Desktop/ReactJSProjects/Diary/frontend/src/styles/notebookComponent.css" 
       />
-      <Grid.Row stretched style = {{ paddingTop:"5%" }} divided>
+      <Grid.Row stretched style = {{paddingTop:"5%"}} divided>
         <Grid.Column width = {6}>
           <Segment>
             <div
@@ -104,7 +126,7 @@ function Notebook() {
               <h2 className = "text-center mb-2">
                 <h1 className = "ui center aligned icon header">
                   <i className = "sticky note outline"></i>
-                  Write what comes in mind!
+                  Write what comes to mind!
                 </h1>
               </h2>
               <div>
@@ -113,9 +135,9 @@ function Notebook() {
                   id = "input-element"
                   className = "ui segment"
                   type = "text"
-                  ref = { inputRef }
+                  ref = {inputRef}
                   name = "message"
-                  onChange = { handleChange }
+                  onChange = {handleChange}
                   placeholder =  'Type anything...'
                 />
               </div>
@@ -128,7 +150,7 @@ function Notebook() {
             type = "submit"
             size = "big"
             value = {timeStamp}
-            onClick = { sendPost }
+            onClick = {sendPost}
             data-tooltip = "Press to send note to save on database." 
             data-position = "top center"
             > <i className = "send icon"></i>
@@ -136,17 +158,18 @@ function Notebook() {
         </Grid.Column>
         <Grid.Column 
           width = {10} 
-          style = {{ height:"100%", borderColor:"transparent" }}>
-          <Segment>
+          style = {{height:"100%", borderColor:"transparent"}}>
+          <Segment style = {{backgroundColor:"#F3FDFE"}}>
             <div>
               <LoadPosts 
-                post = { enterPost }
-                time = { timeStamp }/>
+                post = {enterPost}
+                time = {timeStamp}/>
             </div>
           </Segment>
         </Grid.Column>
       </Grid.Row>
     </Grid>
+    
   )
 }
 

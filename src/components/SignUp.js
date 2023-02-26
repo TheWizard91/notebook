@@ -11,7 +11,8 @@ import {Placeholder} from 'semantic-ui-react'
 import app from "../contexts/AuthContext"
 import firebase from "../firebase/firebase"
 import firestore from "../firebase/firestore"
-import db from "../firebase/firestore"
+import ref from "../firebase/Storage"
+import realtimeDB from '../firebase/realtimeDatabase';
 // import { PhotoPlaceholder } from 'react-placeholder-image';
 // import { CustomPlaceholder } from 'react-placeholder-image';
 
@@ -36,7 +37,7 @@ function SignUp() {
 
   // const currentUserUID = setCurrentUserUID(currentUser)
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
 
     // Vasditaion checks
@@ -54,29 +55,22 @@ function SignUp() {
       signup(emailRef.current.value, passwordRef.current.value)
 
       // Create user in the database. // using user's name: firstNameRef.current.value
-      db.collection("users").doc(currentUser.uid).set({
-        firstName: firstNameRef.current.value,
-        lastName: lastNameRef.current.value,
-        email: emailRef.current.value,
-        password: passwordRef.current.value,
-        // id: currentUser.uid,
-      })
-
-      // db.collection("users").add({
-      //   firstName: firstNameRef.current.value,
-      //   lastName: lastNameRef.current.value,
-      //   email: emailRef.current.value,
-      //   password: passwordRef.current.value
-      // })
-
-      // for id currentUser.uid
-      // realtimeDB.ref(firstNameRef.current.value).set({
+      // db.collection("users").doc(currentUser.uid).set({
       //   firstName: firstNameRef.current.value,
       //   lastName: lastNameRef.current.value,
       //   email: emailRef.current.value,
       //   password: passwordRef.current.value,
-      //   id: currentUser.uid,
-      // }).catch(alert)
+      //   // id: currentUser.uid,
+      // })
+
+      // for id currentUser.uid
+      await realtimeDB.ref(currentUser.uid).set({
+        firstName: firstNameRef.current.value,
+        lastName: lastNameRef.current.value,
+        email: emailRef.current.value,
+        password: passwordRef.current.value,
+        id: currentUser.uid,
+      }).catch(alert)
 
       // console.log("users id: "+currentUser.uid+" and users name: "+firstNameRef.current.value)
       navigate("/")
