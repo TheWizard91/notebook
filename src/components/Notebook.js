@@ -37,17 +37,43 @@ function Notebook() {
   const [info , setInfo] = useState();
   const [timeStamp, setTimeStamp] = useState("Date")
   const [enterPost, setState] = useState("Post goes here")
-  // console.log("currentUser.uid "+currentUser.uid)
-  // const 
-  db.collection("posts")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          console.log(doc.id, "=>", doc.data())
-        })
-      }).catch((error) => {
-        console.log("Error getting documents: ", error)
+  const [postsDictionary, setPostDictionary] = useState({postsDictionry:{}})
+
+  useEffect(() => {
+    db.collection("posts")
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        // console.log(doc.id, "=>", doc.data())
+        postsDictionary[doc.id] = doc.data()
       })
+
+      // console.log("inside of use state "+ JSON.stringify(postsDictionary))
+      setPostDictionary(postsDictionary)
+      // console.log("loop")
+      // for(let ps in postsDictionary) {
+      //   console.log("loop")
+      //   // console.log(postsDictionary[key][i])
+      // }
+      Object.keys(postsDictionary)
+        .forEach(function(key, index){
+          console.log(postsDictionary[key],index)
+          for(let k in postsDictionary[key]) {
+            // console.log("key = "+JSON.stringify(k)+" value is = "+JSON.stringify(postsDictionary[key][k]))
+            // if(key=="time") let time=postsDictionary[key]
+            // console.log(postsDictionary[key][i])
+            // console.log()
+            let timeStamp = postsDictionary[key]["time"]
+            let enterPost = postsDictionary[key]["post"]
+            // setState(enterPost)
+            // setTimeStamp(timeStamp)
+            document.title = '<LoadPosts post = ${enterpost} time = ${timeStamp}/>'
+          }
+      })
+    }).catch((error) => {
+      console.log("Error getting documents: ", error)
+    })
+  })
 
   const postURI = uuid()
 
@@ -61,16 +87,15 @@ function Notebook() {
     //   like: 0,
     //   favorite: 0
     // }).catch(alert)
+
     db.collection("posts")
       .doc(postURI.slice(0,8))
       .set({
       post: inputRef.current.value,
       time: new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}),
-      
       likes: 0,
       favorite: 0
     })
-    // postId: postURI.slice(0,8),
     setState(inputRef.current.value)
     setTimeStamp(new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}))
 
@@ -99,17 +124,19 @@ function Notebook() {
     })
   }
 
-  const getData = () => {
-    db.collection("posts")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          console.log(doc.id, "=>", doc.data())
-        })
-      }).catch((error) => {
-        console.log("Error getting documents: ", error)
-      })
-  }
+  // const getData = () => {
+  //   db.collection("posts")
+  //     .get()
+  //     .then((querySnapshot) => {
+  //       querySnapshot.forEach((doc) => {
+  //         console.log(doc.id, "=>", doc.data())
+  //         postsDictionry[doc.id] = doc.data()
+  //       })
+  //     }).catch((error) => {
+  //       console.log("Error getting documents: ", error)
+  //     })
+  // }
+  
   return (
     <Grid columns = {2}>
       <link 
@@ -146,7 +173,7 @@ function Notebook() {
           <Button 
             basic name = "cloud"
             color = "blue"
-            className = "ui incon basic button"
+            className = "big ui incon basic button"
             type = "submit"
             size = "big"
             value = {timeStamp}
@@ -158,12 +185,10 @@ function Notebook() {
         </Grid.Column>
         <Grid.Column 
           width = {10} 
-          style = {{height:"100%", borderColor:"transparent"}}>
-          <Segment style = {{backgroundColor:"#F3FDFE"}}>
+          style = {{height:"100%",borderColor:"transparent"}}>
+          <Segment style={{backgroundColor:"#F3FDFE"}}>
             <div>
-              <LoadPosts 
-                post = {enterPost}
-                time = {timeStamp}/>
+              <LoadPosts post = {enterPost} time = {timeStamp}/>
             </div>
           </Segment>
         </Grid.Column>

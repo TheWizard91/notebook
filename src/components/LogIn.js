@@ -51,10 +51,10 @@ function LogIn() {
     <div id = "loginId"> {/* style = {{ backgroundColor:"aquamarine" }}*/}
       <Grid // className = "center aligned"
         className = "d-flex align-items-center justify-content-center"
-        style = {{ minHeight: "100vh" }}
+        style = {{minHeight: "100vh"}}
         >
         <Grid.Row centered>
-          <Grid.Column width = {6}>
+          <Grid.Column width = {6} style = {{minWidth: "600px"}}>
             <Card style = {{width: "100%"}}>
               <div> {/**className = "w-100" style = {{ maxWidth: "400px" }} */}
                 <Form onSubmit = { handleSubmit }>
