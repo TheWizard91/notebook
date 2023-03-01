@@ -1,8 +1,9 @@
 
 import React, { useRef, useState, useEffect } from "react"
-import { Form, Button, Card, Alert } from "react-bootstrap"
+// import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
+import {Form,Button,Card,Grid,Select,Input,Icon,Header} from "semantic-ui-react"
 import db from "../firebase/firestore"
 
 export default function UpdateProfile() {
@@ -94,87 +95,93 @@ export default function UpdateProfile() {
   // }
 
   return (
-    <>
-      <Card>
-        <Card.Body>
-          <h2 className="text-center mb-4">Update Profile</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <Form onSubmit={handleSubmit}>
-            <Form.Group id="first-name">
-              <Form.Label>First Name</Form.Label>
-              <Form.Control  type = "text"
-                id =  "user-first-name"
-                // onChange = { handleChange } 
-                ref = { firstNameRef } 
-                required 
-              />
-            </Form.Group>
-            <Form.Group id="last-name">
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control 
-                type = "text" 
-                ref = { lastNameRef } 
-                required 
-                id =  "user-first-name"
-                // onChange = { handleChange } 
-              />
-            </Form.Group>
-            <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control 
-                type = "email" 
-                ref = { emailRef } 
-                defaultValue = { currentUser.email }
-                required 
-              />
-            </Form.Group>
-            <Form.Group id="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control 
-                placeholder = "Leave blank to keep the same" 
-                type = "password" 
-                ref = { passwordRef }
-              />
-            </Form.Group>
-            <Form.Group id = "password-confirm">
-              <Form.Label>Password Confirmation</Form.Label>
-              <Form.Control 
-                placeholder = "Leave blank to keep the same" 
-                type = "password" 
-                ref = { passwordConfirmRef } 
-              />
-            </Form.Group>
-            <Button 
-              disabled = { loading } 
-              // onClick = { handleSubmit } 
-              className = "w-100" 
-              type = "submit"
-            >
-              Update
-            </Button>
-          </Form>
-        </Card.Body>
-      </Card>
-      <div className="w-100 text-center mt-2">
-        <Link to="/">Cancel</Link>
-      </div>
-    </>
+    <Grid
+      className="d-flex align-items-center justify-content-center"
+      style={{mainHeight:"100vh"}}>
+      <Grid.Row centered>
+        <Grid.Column width={6} style={{minWidth:"800px"}}>
+          <Card style={{width:"100%"}}>
+            <Form onSubmit={handleSubmit}>
+              <Header className="text-center mb-4">Update Profile</Header>
+              <Form.Field id="first-name">
+                {/* <Form.Label>First Name</Form.Label> */}
+                <Form.Input 
+                  label = "Firstname"
+                  type = "text"
+                  id =  "user-first-name"
+                  placeholder="Enter Firstname"
+                  // onChange = { handleChange } 
+                  ref = { firstNameRef } 
+                  required 
+                ></Form.Input>
+              </Form.Field>
+              <Form.Field id="last-name">
+                {/* <Form.Label>Last Name</Form.Label> */}
+                <Form.Input 
+                  label = "Lastname"
+                  type = "text" 
+                  ref = { lastNameRef } 
+                  required 
+                  id =  "user-first-name"
+                  placeholder="Last Name"
+                  // onChange = { handleChange } 
+                  required
+                ></Form.Input>
+              </Form.Field>
+              <Form.Field id="email">
+                {/* <Form.Label>Email</Form.Label> */}
+                <Form.Input 
+                  label = "Email"
+                  type = "email" 
+                  iconPosition = "right"
+                  icon = "user"
+                  ref = { emailRef } 
+                  defaultValue = { currentUser.email }
+                  required 
+                ></Form.Input>
+              </Form.Field>
+              <Form.Field id="password">
+                {/* <Form.Label>Password</Form.Label> */}
+                <Form.Input
+                  label = "New Passord"
+                  placeholder = "Leave blank to keep the same" 
+                  type = "password" 
+                  iconPosition = "right"
+                  icon = "lock"
+                  ref = { passwordRef }
+                  placeholder="Enter Old Password"
+                  required
+                ></Form.Input>
+              </Form.Field>
+              <Form.Field id = "password-confirm">
+                {/* <Form.Label>Password Confirmation</Form.Label> */}
+                <Form.Input 
+                  label = "Password"
+                  placeholder = "Leave blank to keep the same" 
+                  type = "password" 
+                  iconPosition = "right"
+                  icon = "lock"
+                  ref = { passwordConfirmRef } 
+                  required
+                ></Form.Input>
+              </Form.Field>
+              <Button 
+                disabled = { loading } 
+                // onClick = { handleSubmit } 
+                className = "w-100" 
+                type = "submit"
+                color="blue"
+              >
+                Update
+              </Button>
+            </Form>
+            <div className="w-100 text-center mt-2">
+              <Link to="/">Cancel</Link>
+            </div>
+          </Card>
+        </Grid.Column>
+      </Grid.Row>
+    
+    </Grid>
   )
 }
-
-    {/* // <div>
-    //     <Card>
-    //         <Card.Body >
-    //           <h2 className = "text-center mb-4">Notebook</h2>
-              
-    //           <div>
-    //             <input className = "ui segment"/>
-    //           </div>
-    //           <Button 
-    //             basic name="cloud"
-    //             color = "pink"
-    //             size = "big" ><i class="cloud icon"></i></Button>
-              
-    //         </Card.Body>
-    //     </Card>
-    // </div> */}

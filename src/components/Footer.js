@@ -16,21 +16,30 @@ function Footer () {
                         <a 
                             href = {"https://www.linkedin.com/in/emmanuel-kofi-agyapong-783807bb/"}
                             id = "linkedinIcon">
-                            <button class="ui circular linkedin icon button">
+                            <button 
+                                className="ui circular linkedin icon button"
+                                data-tooltip = "Checkout my LinkedIn." 
+                                data-position = "top center"> 
                                 <i className="big linkedin icon "></i>
                             </button>
                         </a>
                         <a 
                             href = {"https://github.com/TheWizard91"}
                             id = "githubIcon">
-                            <button class="ui circular github icon button">
-                                <i className="big github icon"></i>
+                            <button 
+                                className="ui circular yellow github icon button"
+                                data-tooltip = "Checkout my Github repos." 
+                                data-position = "top center">
+                                <i className="big github alternate icon"></i>
                             </button>
                         </a>
                             <a 
                                 href = {"https://github.com/TheWizard91"}
                                 id = "emailIcon">
-                                <button class="ui circular black envelop icon button">
+                                <button 
+                                    className="ui circular green envelop icon button"
+                                    data-tooltip = "Send me an email." 
+                                    data-position = "top center">
                                     <i className="big envelope icon"></i>
                                 </button>
                             </a>

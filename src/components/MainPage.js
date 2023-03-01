@@ -35,7 +35,7 @@ function MainPage() {
                         <Menu.Item
                             id = "accountSettingsId" 
                             // name = "settings"
-                            icon = "big cog icon"
+                            icon = "big icon settings"
                             onClick = { handleOnClick }
                             active = { activeItem == "dashboard" }
                             value = "dashboard"
