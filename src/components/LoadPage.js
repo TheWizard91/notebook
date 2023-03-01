@@ -40,7 +40,7 @@ function LoadPage ({page}) {
             return (
                 <div>
                     <h1>
-                        Logout . {logginout()}
+                        {logginout()}
                     </h1>
                 </div>
             )

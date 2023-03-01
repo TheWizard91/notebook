@@ -10,7 +10,6 @@ import firebase from "../firebase/firebase"
 import { firestore, collection, query, where, getDock } from "../firebase/firestore"
 import db from "../firebase/firestore"
 import { useAuth, logout, signOut } from "../contexts/AuthContext"
-// import { db } from "../firebase/config"
 
 import { Link, useNavigate } from "react-router-dom"
 import LogIn from "./LogIn"
@@ -36,69 +35,57 @@ function Notebook() {
   const inputRef = useRef(null)
   const [info , setInfo] = useState();
   const [timeStamp, setTimeStamp] = useState("Date")
-  const [enterPost, setState] = useState("Post goes here")
+  const [enterPost, setPost] = useState("Post goes here")
   const [postsDictionary, setPostDictionary] = useState({postsDictionry:{}})
+  const [postsFromFirebase, setPostsFromFirebase] = useState({postsFromFirebase:[]})
+  const postURI = uuid()
 
   useEffect(() => {
+    // Getting data from firebase
     db.collection("posts")
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        // console.log(doc.id, "=>", doc.data())
         postsDictionary[doc.id] = doc.data()
       })
 
-      // console.log("inside of use state "+ JSON.stringify(postsDictionary))
       setPostDictionary(postsDictionary)
-      // console.log("loop")
-      // for(let ps in postsDictionary) {
-      //   console.log("loop")
-      //   // console.log(postsDictionary[key][i])
-      // }
-      Object.keys(postsDictionary)
-        .forEach(function(key, index){
-          console.log(postsDictionary[key],index)
-          for(let k in postsDictionary[key]) {
-            // console.log("key = "+JSON.stringify(k)+" value is = "+JSON.stringify(postsDictionary[key][k]))
-            // if(key=="time") let time=postsDictionary[key]
-            // console.log(postsDictionary[key][i])
-            // console.log()
-            let timeStamp = postsDictionary[key]["time"]
-            let enterPost = postsDictionary[key]["post"]
-            // setState(enterPost)
-            // setTimeStamp(timeStamp)
-            document.title = '<LoadPosts post = ${enterpost} time = ${timeStamp}/>'
-          }
-      })
-    }).catch((error) => {
-      console.log("Error getting documents: ", error)
-    })
-  })
 
-  const postURI = uuid()
+      // Settting up the posts to postsFromFirebase
+      Object.keys(postsDictionary)
+        .forEach(async function (key, index){
+          let timeStamp = postsDictionary[key]["time"]
+          let enterPost = postsDictionary[key]["post"]
+          postsFromFirebase["postsFromFirebase"].push({"time":timeStamp,"post":enterPost})
+          // console.log("time is: "+timeStamp+" and "+" post is : "+enterPost)
+          setPostsFromFirebase(postsFromFirebase)
+          setTimeStamp(timeStamp)
+          setPost(enterPost)
+        })
+      }).catch((error) => {
+    })
+    // Can't set the values here
+  },[postsFromFirebase])
 
   const sendPost = (e) => {
     e.preventDefault()
 
-    // realtimeDB.ref(currentUser.uid).set({
-    //   post: inputRef.current.value,
-    //   time: new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}),
-    //   postId: postURI.slice(0,8),
-    //   like: 0,
-    //   favorite: 0
-    // }).catch(alert)
-
+    let p = inputRef.current.value
+    let t = new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
+    
     db.collection("posts")
       .doc(postURI.slice(0,8))
       .set({
-      post: inputRef.current.value,
-      time: new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}),
-      likes: 0,
-      favorite: 0
+        post: p,
+        time: t,
+        likes: 0,
+        favorite: 0
     })
-    setState(inputRef.current.value)
-    setTimeStamp(new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}))
 
+    setPost(p)
+    setTimeStamp(t)
+    console.log("p"+JSON.stringify(postsFromFirebase))
+    postsFromFirebase["postsFromFirebase"].push({"time":t,"post":p})
   }
   
   const handleChange = (e) => {
@@ -109,43 +96,34 @@ function Notebook() {
   // Start the fetch operation as soon as
   // the page loads
   window.addEventListener('load', () => {
-    Fetchdata();
+    fetchData();
   });
 
   // Fetch the required data using the get() method
-  const Fetchdata = () =>{
-    db.collection("users").get().then((querySnapshot) => {
+  const fetchData = () => {
+    db.collection("posts")
+      .get()
+      .then((querySnapshot) => {
         // Loop through the data and store
         // it in array to display
-        querySnapshot.forEach(element => {
-            var data = element.data();
-            setInfo(arr => [...arr , data]);
+        querySnapshot.forEach((doc) => {
+          var data = doc.data();
+          console.log(doc.id,"=>",data["post"])
         });
+    }).catch((error) => {
+      console.log("In FetchData: Error getting documents: ", error)
     })
   }
 
-  // const getData = () => {
-  //   db.collection("posts")
-  //     .get()
-  //     .then((querySnapshot) => {
-  //       querySnapshot.forEach((doc) => {
-  //         console.log(doc.id, "=>", doc.data())
-  //         postsDictionry[doc.id] = doc.data()
-  //       })
-  //     }).catch((error) => {
-  //       console.log("Error getting documents: ", error)
-  //     })
-  // }
-  
   return (
     <Grid columns = {2}>
       <link 
         rel = "stylesheet" 
         href="/home/emmanuel/Desktop/ReactJSProjects/Diary/frontend/src/styles/notebookComponent.css" 
       />
-      <Grid.Row stretched style = {{paddingTop:"5%"}} divided>
+      <Grid.Row stretched style = {{paddingTop:"5%", height:"800px"}} divided>
         <Grid.Column width = {6}>
-          <Segment>
+          <Segment style = {{height:"80%"}}>
             <div
               id = "notebook-element" 
               // className="ui card" 
@@ -156,7 +134,7 @@ function Notebook() {
                   Write what comes to mind!
                 </h1>
               </h2>
-              <div>
+              <div style = {{height:"80%"}}>
                 <textarea
                   rows = "10"
                   id = "input-element"
@@ -165,7 +143,7 @@ function Notebook() {
                   ref = {inputRef}
                   name = "message"
                   onChange = {handleChange}
-                  placeholder =  'Type anything...'
+                  placeholder =  'Type anything...' 
                 />
               </div>
             </div>
@@ -173,28 +151,30 @@ function Notebook() {
           <Button 
             basic name = "cloud"
             color = "blue"
-            className = "big ui incon basic button"
+            className = "circular ui incon basic red button"
             type = "submit"
             size = "big"
             value = {timeStamp}
             onClick = {sendPost}
+            style={{width:"fit-content",padding:"0px",height:"0px",width:"0px",borderColor:"blue",borderRadius:"10px",left:"40%"}}
             data-tooltip = "Press to send note to save on database." 
             data-position = "top center"
-            > <i className = "send icon"></i>
+            > <i className = "huge plus circle icon" style={{margin:"0px"}}></i>
           </Button>
         </Grid.Column>
         <Grid.Column 
           width = {10} 
-          style = {{height:"100%",borderColor:"transparent"}}>
+          style = {{height:"100%",borderColor:"transparent",overflow:'scroll',maxHeight:"800px"}}>
           <Segment style={{backgroundColor:"#F3FDFE"}}>
-            <div>
-              <LoadPosts post = {enterPost} time = {timeStamp}/>
-            </div>
+              {postsFromFirebase["postsFromFirebase"]
+              .map(entry=> {if(entry.post!=null && entry.time!=null)
+              return (
+                <div style={{marginTop:"15px"}}><LoadPosts post={entry.post} time={entry.time}/></div>)}
+            )}
           </Segment>
         </Grid.Column>
       </Grid.Row>
     </Grid>
-    
   )
 }
 

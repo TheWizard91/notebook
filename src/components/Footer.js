@@ -5,27 +5,35 @@ import {Link, useNavigate} from "react-router-dom"
 function Footer () {
     return (
         <center>
-            <div className="ui inverted vertical footer segment form-page">
-                <div className="ui container">
+            <div className="ui inverted vertical footer segment form-page" style = {{width:"fit-content"}}>
+                <div className="ui container" style = {{marginLeft:"0px"}}>
                     <div id = "stayConnectedId">
-                        <p><strong>Stay Connected</strong></p>
+                        <h1 className="ui header">Stay Connected</h1>
+                        {/* <p><strong>Stay Connected</strong></p>
+                         */}
                     </div>
                     <div id = "links">
                         <a 
                             href = {"https://www.linkedin.com/in/emmanuel-kofi-agyapong-783807bb/"}
                             id = "linkedinIcon">
-                            <i className="big linkedin icon "></i>
+                            <button class="ui circular linkedin icon button">
+                                <i className="big linkedin icon "></i>
+                            </button>
                         </a>
                         <a 
                             href = {"https://github.com/TheWizard91"}
                             id = "githubIcon">
-                            <i className="big github icon"></i>
+                            <button class="ui circular github icon button">
+                                <i className="big github icon"></i>
+                            </button>
                         </a>
-                        <a 
-                            href = {"https://github.com/TheWizard91"}
-                            id = "emailIcon">
-                            <i className="big envelope icon"></i>
-                        </a>
+                            <a 
+                                href = {"https://github.com/TheWizard91"}
+                                id = "emailIcon">
+                                <button class="ui circular black envelop icon button">
+                                    <i className="big envelope icon"></i>
+                                </button>
+                            </a>
                     </div>
                 </div>
             </div>
