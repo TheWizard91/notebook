@@ -1,6 +1,5 @@
 {
-  "homepage": "https://thewizard91.github.io/notebook/",
-  "name": "diary-projetc",
+  "name": "diary-project",
   "version": "0.1.0",
   "private": false,
   "dependencies": {
@@ -29,7 +28,6 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
