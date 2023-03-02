@@ -1,6 +1,6 @@
 {
   "homepage": "https://thewizard91.github.io/notebook/",
-  "name": "diary-project",
+  "name": "notebook",
   "version": "0.1.0",
   "private": false,
   "dependencies": {
