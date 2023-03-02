@@ -1,1 +1,1 @@
-web:gunicorn notebook
+web: node src/index.js
