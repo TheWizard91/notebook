@@ -6,7 +6,6 @@ import {useAuth} from "../contexts/AuthContext"
 import SignUp from "./SignUp"
 import {Link, useNavigate} from "react-router-dom"
 import MainPage from "./MainPage"
-// import Notebook from "./Notebook"
 
 function LogIn() {
 

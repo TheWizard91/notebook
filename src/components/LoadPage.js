@@ -2,7 +2,7 @@ import React, {useRef, useState} from "react"
 
 import {useNavigate, Link} from "react-router-dom"
 import {useAuth, logout} from "../contexts/AuthContext"
-import Notebook from "./Notebook"
+import Note from "./Note"
 import Dashboard from "./Dashboard"
 import LogIn from "./LogIn"
 
@@ -29,7 +29,7 @@ function LoadPage ({page}) {
     switch (page) {
         case "home":
             return (
-                <Notebook />
+                <Note />
             )
             break;
         case "dashboard":

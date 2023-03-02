@@ -12,7 +12,7 @@ import PrivateRoute from './components/PrivateRoute'
 import ForgotPassword from "./components/ForgotPassword"
 import UpdateProfile from "./components/UpdateProfile"
 import PrivateRouteTwo from "./components/PrivateRouteTwo"
-import Notebook from "./components/Notebook"
+import Note from "./components/Note"
 import MainPage from "./components/MainPage"
 import LoadPage from "./components/LoadPage"
 import LoadPosts from "./components/LoadPosts"
@@ -35,7 +35,7 @@ class App extends Component {
                     <Route path="/signup" element={<SignUp />} />
                     <Route path="/login" element={<LogIn />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
-                    <Route path="/notebook" element = { <Notebook /> } />
+                    <Route path="/note" element = { <Note /> } />
                     <Route path = "/mainpage" element = { <MainPage /> } />
                   </Routes>
                 </AuthProvider>

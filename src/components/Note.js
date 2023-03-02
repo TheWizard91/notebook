@@ -22,7 +22,7 @@ import LoadPosts from "./LoadPosts"
 //import uuid v4
 import { v4 as uuid } from 'uuid';
 
-function Notebook() {
+function Note() {
 
   const firstNameRef = useRef()
   const lastNameRef = useRef()
@@ -178,4 +178,4 @@ function Notebook() {
   )
 }
 
-export default Notebook
+export default Note
