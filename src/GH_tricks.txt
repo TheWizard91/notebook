@@ -1,0 +1,3 @@
+I am in main trying yo move changes in gh-pages. I do:
+git checkout gh-pages #I am i main I am moving to gh-pages
+git merge main #I am in gh-pages and copying whatever in mgh-pages
