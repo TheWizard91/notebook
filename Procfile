@@ -1,1 +1,1 @@
-web: https://diary-project.herokuapp.com/
+web: node /src/App.js
