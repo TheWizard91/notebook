@@ -20,32 +20,28 @@ import LoadPosts from "./components/LoadPosts"
 class App extends Component {
   render() {
     return (
-        <Container className = "d-flex align-items-center justify-content-center"> {/**style = {{ minHeight: "100vh"/ }} */}
-            <div className = "w-100"> {/** style = {{ maxWidth: "400px" }} */}
-                <Router>
-                  <AuthProvider>
-                    <Routes>
-                      {/* <PrivateRoute exact path="/" element={<PrivateRoute />} /> */}
-                      <Route exact path="/dashboard" element={<Dashboard />} />
-                      <Route exact path='/' element={<PrivateRoute/>} >
-                        <Route exact path='/' element={<LogIn/>}/>
-                      </Route>
-                      <Route path='/' element={<PrivateRouteTwo/>} >
-                        <Route path='/update-profile' element={<UpdateProfile/>}/>
-                      </Route>
-                      <Route path="/signup" element={<SignUp />} />
-                      <Route path="/login" element={<LogIn />} />
-                      <Route path="/forgot-password" element={<ForgotPassword />} />
-                      <Route path="/notebook" element = { <Notebook /> } />
-                      <Route path = "/mainpage" element = { <MainPage /> } />
-                      {/* <Route path = "/loadpage" element = { <LoadPage />} />
-                      <Route path = "/loadposts" element = {<LoadPosts />} /> */}
-
-                    </Routes>
-                  </AuthProvider>
-                </Router>
-            </div>
-        </Container>
+      <Container className = "d-flex align-items-center justify-content-center">
+          <div className = "w-100">
+              <Router>
+                <AuthProvider>
+                  <Routes>
+                    <Route exact path="/dashboard" element={<Dashboard />} />
+                    <Route exact path='/' element={<PrivateRoute/>} >
+                      <Route exact path='/' element={<LogIn/>}/>
+                    </Route>
+                    <Route path='/' element={<PrivateRouteTwo/>} >
+                      <Route path='/update-profile' element={<UpdateProfile/>}/>
+                    </Route>
+                    <Route path="/signup" element={<SignUp />} />
+                    <Route path="/login" element={<LogIn />} />
+                    <Route path="/forgot-password" element={<ForgotPassword />} />
+                    <Route path="/notebook" element = { <Notebook /> } />
+                    <Route path = "/mainpage" element = { <MainPage /> } />
+                  </Routes>
+                </AuthProvider>
+              </Router>
+          </div>
+      </Container>
     );
   }
 }
