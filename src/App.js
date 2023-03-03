@@ -20,8 +20,10 @@ import LoadPosts from "./components/LoadPosts"
 class App extends Component {
   render() {
     return (
-      <Container className = "d-flex align-items-center justify-content-center">
-          <div className = "w-100">
+      <Container 
+        className = "d-flex align-items-center justify-content-center"
+        style={{height:"100%"}}>
+          <div className = "w-100"> {/*className = "w-100"*/}
               <Router>
                 <AuthProvider>
                   <Routes>
@@ -29,9 +31,9 @@ class App extends Component {
                     <Route exact path='/' element={<PrivateRoute/>} >
                       <Route exact path='/' element={<LogIn/>}/>
                     </Route>
-                    <Route path='/' element={<PrivateRouteTwo/>} >
+                    {/* <Route path='/' element={<PrivateRouteTwo/>} > */}
                       <Route path='/update-profile' element={<UpdateProfile/>}/>
-                    </Route>
+                    {/* </Route> */}
                     <Route path="/signup" element={<SignUp />} />
                     <Route path="/login" element={<LogIn />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />

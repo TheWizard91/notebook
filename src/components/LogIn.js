@@ -1,6 +1,5 @@
 import React, {useRef, useState} from 'react'
 import RegisterForm from "./RegisterForm"
-// import { Form, Button, Card, Alert } from "react-bootstrap"
 import { Form, Input, TextArea, Button, Select, Card, Grid, Icon } from 'semantic-ui-react'
 import {useAuth} from "../contexts/AuthContext"
 import SignUp from "./SignUp"
@@ -47,18 +46,17 @@ function LogIn() {
   }
 
   return (
-    <div id = "loginId"> {/* style = {{ backgroundColor:"aquamarine" }}*/}
-      <Grid // className = "center aligned"
+    <div id = "loginId">
+      <Grid 
         className = "d-flex align-items-center justify-content-center"
-        style = {{minHeight: "100vh"}}
+        style = {{minHeight:"100vh"}}
         >
         <Grid.Row centered>
           <Grid.Column width = {6} style = {{minWidth: "600px"}}>
             <Card style = {{width: "100%"}}>
-              <div> {/**className = "w-100" style = {{ maxWidth: "400px" }} */}
+              <div>
                 <Form onSubmit = { handleSubmit }>
                   <h2 className = "ui dividing header text-center mb-4"> Log In</h2>
-                  {/* {error && <Alert variant = "danger">{ error }</Alert>} */}
                   <Form.Field>
                     <Form.Input
                       label = "Email"

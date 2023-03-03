@@ -1,12 +1,12 @@
 
 import React, { useRef, useState, useEffect } from "react"
-// import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
+import realtimeDB from '../firebase/realtimeDatabase'
 import { Link, useNavigate } from "react-router-dom"
-import {Form,Button,Card,Grid,Select,Input,Icon,Header} from "semantic-ui-react"
+import {Form,Button,Card,Grid,Select,Input,Icon,Header,Image} from "semantic-ui-react"
 import db from "../firebase/firestore"
 
-export default function UpdateProfile() {
+function UpdateProfile() {
   const firstNameRef = useRef()
   const lastNameRef = useRef()
   const emailRef = useRef()
@@ -37,14 +37,6 @@ export default function UpdateProfile() {
       promises.push(updatePassword(passwordRef.current.value))
     }
 
-    // db.collection("Users").doc(dataIdToBeUpdated).update({
-    //   firstName: firstNameRef.current.value,
-    //   lastName: lastNameRef.current.value,
-    //   email: emailRef.current.value,
-    //   password: currentUser.password
-    // })
-    // setDataIdToBeUpdated("");
-
     Promise.all(promises)
       .then(() => {
         navigate("/")
@@ -55,18 +47,12 @@ export default function UpdateProfile() {
       .finally(() => {
         setLoading(false)
       })
-
-    // setDataIdToBeUpdated("");
-
   }
 
-  // const handleChange = (e) => {
-  //   e.preventDefault()
-  //   db.collection("Users").add({
-  //     firstName: firstNameRef.current.value,
-  //     lastName: lastNameRef.current.value
-  //   })
-  // }
+  const handleChange =(e)=>{
+    e.preventDefault()
+    console.log("printing user input"+firstName.current.value)
+  }
 
   useEffect(() => {
     db.collection("users")
@@ -84,39 +70,39 @@ export default function UpdateProfile() {
       });
   }, [])
 
-  // const updateData = (e) => {
-  //   e.preventDefault()
-  //   db.collection("Users").doc(dataIdToBeUpdated).update({
-  //     firstName: firstNameRef.current.value,
-  //     lastName: lastNameRef.current.value,
-  //     email: emailRef.current.value,
-  //     password: currentUser.password
-  //   })
-  // }
+  const handleImageOnclick = (e) => {
+    e.preventDefault()
+    console.log("clicked")
+  }
 
   return (
     <Grid
       className="d-flex align-items-center justify-content-center"
-      style={{mainHeight:"100vh"}}>
-      <Grid.Row centered>
+      style={{mainHeight:"100vh"}}
+    >
+      <Grid.Row >
         <Grid.Column width={6} style={{minWidth:"800px"}}>
           <Card style={{width:"100%"}}>
             <Form onSubmit={handleSubmit}>
               <Header className="text-center mb-4">Update Profile</Header>
+              <Image 
+                className="ui circular big centered image"
+                src="user outline"
+                onClick={handleImageOnclick}
+                style={{backgroundColor:"transparent",height:"100px",width:"100px"}}
+                />
               <Form.Field id="first-name">
-                {/* <Form.Label>First Name</Form.Label> */}
                 <Form.Input 
                   label = "Firstname"
                   type = "text"
                   id =  "user-first-name"
                   placeholder="Enter Firstname"
-                  // onChange = { handleChange } 
+                  onChange = { handleChange } 
                   ref = { firstNameRef } 
                   required 
                 ></Form.Input>
               </Form.Field>
               <Form.Field id="last-name">
-                {/* <Form.Label>Last Name</Form.Label> */}
                 <Form.Input 
                   label = "Lastname"
                   type = "text" 
@@ -129,7 +115,6 @@ export default function UpdateProfile() {
                 ></Form.Input>
               </Form.Field>
               <Form.Field id="email">
-                {/* <Form.Label>Email</Form.Label> */}
                 <Form.Input 
                   label = "Email"
                   type = "email" 
@@ -141,7 +126,6 @@ export default function UpdateProfile() {
                 ></Form.Input>
               </Form.Field>
               <Form.Field id="password">
-                {/* <Form.Label>Password</Form.Label> */}
                 <Form.Input
                   label = "New Passord"
                   placeholder = "Leave blank to keep the same" 
@@ -154,7 +138,6 @@ export default function UpdateProfile() {
                 ></Form.Input>
               </Form.Field>
               <Form.Field id = "password-confirm">
-                {/* <Form.Label>Password Confirmation</Form.Label> */}
                 <Form.Input 
                   label = "Password"
                   placeholder = "Leave blank to keep the same" 
@@ -181,7 +164,8 @@ export default function UpdateProfile() {
           </Card>
         </Grid.Column>
       </Grid.Row>
-    
     </Grid>
   )
 }
+
+export default UpdateProfile

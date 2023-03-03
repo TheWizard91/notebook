@@ -27,3 +27,11 @@ https://diary-project.herokuapp.com/
   
   ## SOLUTION
   you need to pay dynos for 7$/m 
+
+
+
+    "dev": "react-scripts start",
+    "start": "serve -s build",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
