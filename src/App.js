@@ -21,6 +21,7 @@ class App extends Component {
   render() {
     return (
       <Container 
+        id = "AppId"
         className = "d-flex align-items-center justify-content-center">
           <div className = "w-100"> {/*className = "w-100"*/}
               <Router>
@@ -28,7 +29,7 @@ class App extends Component {
                   <Routes>
                     <Route exact path="/dashboard" element={<Dashboard />}/>
                     {/* <Route exact path='/' element={<PrivateRoute/>} > */}
-                    <Route exact path='/' element={<LogIn/>}/>
+                      <Route exact path='/' element={<LogIn/>}/>
                     {/* </Route> */}
                     <Route path='/update-profile' element={<UpdateProfile/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
