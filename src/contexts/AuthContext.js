@@ -39,13 +39,13 @@ export function AuthProvider({children}) {
         return currentUser.updatePassword(password)
     }
     
-    // function setCurrentUserUID (currentUser) {
-    //     return currentUser.uid
-    // }
+    function setCurrentUserUID (currentUser) {
+        return currentUser.uid
+    }
 
-    // function setUserId () {
-    //     return currentUser
-    // }
+    function setUserId () {
+        return currentUser
+    }
 
     useEffect(() => {       //  Set the user for us.
         const unsubscribe = auth.onAuthStateChanged(user => {

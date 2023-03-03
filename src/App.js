@@ -21,8 +21,7 @@ class App extends Component {
   render() {
     return (
       <Container 
-        className = "d-flex align-items-center justify-content-center"
-        style={{height:"100%"}}>
+        className = "d-flex align-items-center justify-content-center">
           <div className = "w-100"> {/*className = "w-100"*/}
               <Router>
                 <AuthProvider>
@@ -34,11 +33,11 @@ class App extends Component {
                     {/* <Route path='/' element={<PrivateRouteTwo/>} > */}
                       <Route path='/update-profile' element={<UpdateProfile/>}/>
                     {/* </Route> */}
-                    <Route path="/signup" element={<SignUp />} />
-                    <Route path="/login" element={<LogIn />} />
-                    <Route path="/forgot-password" element={<ForgotPassword />} />
-                    <Route path="/note" element = { <Note /> } />
-                    <Route path = "/mainpage" element = { <MainPage /> } />
+                    <Route path="/signup" element={<SignUp/>}/>
+                    <Route path="/login" element={<LogIn/>}/>
+                    <Route path="/forgot-password" element={<ForgotPassword/>}/>
+                    <Route path="/note" element={<Note/>}/>
+                    <Route path = "/mainpage" element={<MainPage/>}/>
                   </Routes>
                 </AuthProvider>
               </Router>

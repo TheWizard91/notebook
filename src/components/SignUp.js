@@ -41,8 +41,7 @@ function SignUp() {
     e.preventDefault()
 
     // Vasditaion checks
-    if (passwordRef.current.value !==
-      passwordConfirmationRef.current.value) {
+    if (passwordRef.current.value !== passwordConfirmationRef.current.value) {
       return setError("Password do not matrch")
     }
 

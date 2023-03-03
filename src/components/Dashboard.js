@@ -48,7 +48,7 @@ function Dashboard() {
     try{
       navigate("/update-profile")
     } catch {
-      setError("failed to log out")
+      setError("failed to log oumint")
     }
     setLoading(false)
   }
