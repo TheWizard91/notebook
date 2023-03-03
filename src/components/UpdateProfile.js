@@ -13,19 +13,22 @@ function UpdateProfile() {
   const [ loading, setLoading ] = useState(false)
   const navigate = useNavigate()
   // New values
-  // const [newFirstname,setNewFirstname] = useState()
-  // const [newLastname,setNewLastname] = useState()
-  // const [newEmail,setNewEmail]=useState()
-  // const [newPassword,setNewPassword] = useState()
-  // const [confirmNewPassword,setConfirmNewPassword]=useState()
-  // const [newProfileImageURL,setNewProfileImageURI]=useState()
-  // 
-  const newFirstname=useRef()
-  const newLastname=useRef()
-  const newEmail=useRef()
-  const newPassword=useRef()
-  const confirmNewPassword=useRef()
-  const newProfileImageURL=useRef()
+  const [newFirstname,setNewFirstname] = useState()
+  const [newLastname,setNewLastname] = useState()
+  const [newEmail,setNewEmail]=useState()
+  const [newPassword,setNewPassword] = useState()
+  const [confirmNewPassword,setConfirmNewPassword]=useState()
+  const [newProfileImageURL,setNewProfileImageURI]=useState()
+  // TODO: Use these as it is a better way of doing it better.
+  // Had to comment it of becuase the app is good enough to be lauched.
+  // Just a few features to add to make it comeplete, use sign in com as reference.
+  // const newFirstname=useRef()
+  // const newLastname=useRef()
+  // const newEmail=useRef()
+  // const newPassword=useRef()
+  // const confirmNewPassword=useRef()
+  // const newProfileImageURL=useRef()
+  
   // Old Values
   const [oldFirstname,setOldFirstname]=useState()
   const [oldLastname,setOldLastname]=useState()
@@ -71,7 +74,6 @@ function UpdateProfile() {
     
     switch (e.target.name) {
       case "firstname":
-        // setNewFirstname(e.target.value)
         // console.log("firstname: "+e.target.value)
         console.log("firstname: "+e.target.value)
         break;
@@ -114,33 +116,33 @@ function UpdateProfile() {
     .get()
     .then((snapshot) => {
       if(snapshot.exists()) {
-        // let old_firstname = snapshot.val().firstName
-        // let old_lastname = snapshot.val().lastName
-        // let old_email = snapshot.val().email
-        // let old_password = snapshot.val().password
-        // let old_profile_image_uri = snapshot.val().profileImage
-        // setOldFirstname(old_firstname)
-        // setOldLastname(old_lastname)
-        // setOldEmail(old_email)
-        // setOldPassWord(old_password)
-        // setOldProfileImageURL(old_profile_image_uri)
-        // usersData.push(old_firstname)
-        // usersData.push(old_lastname)
-        // usersData.push(old_email)
-        // usersData.push(old_password)
-        // usersData.push(old_profile_image_uri)
+        let old_firstname = snapshot.val().firstName
+        let old_lastname = snapshot.val().lastName
+        let old_email = snapshot.val().email
+        let old_password = snapshot.val().password
+        let old_profile_image_uri = snapshot.val().profileImage
+        setOldFirstname(old_firstname)
+        setOldLastname(old_lastname)
+        setOldEmail(old_email)
+        setOldPassWord(old_password)
+        setOldProfileImageURL(old_profile_image_uri)
+        usersData.push(old_firstname)
+        usersData.push(old_lastname)
+        usersData.push(old_email)
+        usersData.push(old_password)
+        usersData.push(old_profile_image_uri)
 
-        let oldFirstname = snapshot.val().firstName
-        let oldLastname = snapshot.val().lastName
-        let oldEmail = snapshot.val().email
-        let oldPassword = snapshot.val().password
-        let oldProfileImageURI = snapshot.val().profileImage
+        // let oldFirstname = snapshot.val().firstName
+        // let oldLastname = snapshot.val().lastName
+        // let oldEmail = snapshot.val().email
+        // let oldPassword = snapshot.val().password
+        // let oldProfileImageURI = snapshot.val().profileImage
 
-        usersData.push(oldFirstname)
-        usersData.push(oldLastname)
-        usersData.push(oldEmail)
-        usersData.push(oldPassword)
-        usersData.push(oldProfileImageURI)
+        // usersData.push(oldFirstname)
+        // usersData.push(oldLastname)
+        // usersData.push(oldEmail)
+        // usersData.push(oldPassword)
+        // usersData.push(oldProfileImageURI)
 
       } else {
         console.log("No data vailable")
@@ -151,7 +153,7 @@ function UpdateProfile() {
     
   }, [])
 
-  // console.log(usersData)
+  console.log(usersData)
   const handleImageOnclick = (e) => {
     e.preventDefault()
     console.log("clicked")
@@ -243,7 +245,7 @@ function UpdateProfile() {
               </Form.Field>
               <Button 
                 disabled={loading} 
-                onClick={handleSubmit} 
+                // onClick={handleSubmit} 
                 className="w-100" 
                 type="submit"
                 color="blue"

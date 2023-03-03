@@ -32,7 +32,7 @@ function MainPage() {
                             value = "home"
                             activeItem = "home">
                         </Menu.Item>
-                        <Menu.Item
+                        {/* <Menu.Item
                             id = "accountSettingsId" 
                             // name = "settings"
                             icon = "big icon settings"
@@ -40,7 +40,7 @@ function MainPage() {
                             active = { activeItem == "dashboard" }
                             value = "dashboard"
                             activeItem = "dashboard">
-                        </Menu.Item>
+                        </Menu.Item> */}
                         <Menu.Item
                             id = "logoutId" 
                             icon = "big power off left icon"
