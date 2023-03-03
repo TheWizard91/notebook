@@ -2,7 +2,7 @@
   "homepage" : "https://thewizard91.github.io/notebook/",
   "name": "notebook",
   "version": "0.1.0",
-  "private": false,
+  "private": true,
   "dependencies": {
     "@googlemaps/react-wrapper": "^1.1.18",
     "@reduxjs/toolkit": "^1.7.1",
