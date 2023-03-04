@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import 'semantic-ui-css/semantic.min.css'  
+// import 'semantic-ui-css/semantic.min.css'  
 import SignUp from "./components/SignUp"
 import {Container} from "semantic-ui-react" //"react-bootstrap"
 import {AuthProvider} from "../src/contexts/AuthContext"
