@@ -25,7 +25,7 @@ class App extends Component {
         className = "d-flex align-items-center justify-content-center">
           <div className = "w-100"> {/*className = "w-100"*/}
               <Router>
-                <AuthProvider>
+                {/* <AuthProvider> */}
                   <Routes>
                     <Route exact path="/dashboard" element={<Dashboard />}/>
                     {/* <Route exact path='/' element={<PrivateRoute/>} > */}
@@ -38,7 +38,7 @@ class App extends Component {
                     <Route path="/note" element={<Note/>}/>
                     <Route path = "/mainpage" element={<MainPage/>}/>
                   </Routes>
-                </AuthProvider>
+                {/* </AuthProvider> */}
               </Router>
           </div>
       </Container>
