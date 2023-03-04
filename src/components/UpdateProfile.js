@@ -58,7 +58,7 @@ function UpdateProfile() {
 
     Promise.all(promises)
       .then(() => {
-        navigate("/")
+        navigate("/login")
       })
       .catch(() => {
         setError("Failed to update account")

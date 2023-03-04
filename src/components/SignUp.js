@@ -72,7 +72,7 @@ function SignUp() {
       }).catch(alert)
 
       // console.log("users id: "+currentUser.uid+" and users name: "+firstNameRef.current.value)
-      navigate("/")
+      navigate("/login")
 
     } catch {
 

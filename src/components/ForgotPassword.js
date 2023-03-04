@@ -24,7 +24,7 @@ export default function ForgotPassword() {
             await resetPassword(emailRef.current.value)
             setMessage("Check your inbox for further instructions")
             alert("Val: "+emailRef.current.value)
-            navigate("/")
+            navigate("/login")
         } catch {
             setError("Failed to reset password")
             alert("Val: "+emailRef.current.value)

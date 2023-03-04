@@ -1,0 +1,294 @@
+/*-------HEADER------*/
+html{width: 100%;height: 100%;}
+body, .main_container,nav li a, h1, h2, h3, footer, #mainPageSubTittle, #whiteBoard,a 
+{ 
+	/* color: #665544;
+	background-color: #ffffff/*#1582c29a;*/
+	/* font-family: Georgia, 'Times New Roman', Times, serif; */ 
+    color: #2e2e2e;
+    letter-spacing: .01rem;
+    line-height: 1.75rem;
+}
+body, #root,#mainPage {
+    width: inherit;
+    height: inherit;
+    text-align: center;
+}
+.main_container, .fix_block{width: inherit; height: inherit;}
+#navHeader 
+{
+    display: inline-flex;
+    margin-top: auto;
+    margin-left: auto;
+    margin-bottom: auto;
+    margin-right: auto;
+    top: auto;
+    bottom: auto;
+    background-color: #ffffff;
+    align-items: center;
+    width: inherit;
+    justify-content: space-between;
+}
+
+.menu 
+{
+    /* position: relative;
+    left: 70%; */
+	overflow: hidden;
+	display: inline;
+    text-align: right;
+	font-size: 100%;
+}
+
+.menu ul .navbar 
+{
+	text-align: right;
+	vertical-align: top;
+}
+
+.menu li 
+{
+	float: right;
+	margin-right: 2%;
+}
+
+.menu li a, #projectsHeading
+{
+	/*For the links i have added some space 
+	between the elements and the borders using the padding
+	property. While I use the letter-spacing to have some
+	space between the letter*/
+	padding-left: .5%;
+	padding-right: .5%;
+	letter-spacing: 0.2em;
+    margin-right: 10px;
+    font-family: Montserrat,helvetica neue,Helvetica,Arial,sans-serif;
+    font-weight: 700;
+	/*color: #ffffff;*/
+}
+
+.menu li a:hover, .menu li a.current 
+{
+	color: #f11c1c;
+}
+/* 
+.left {
+    text-align: left;
+    width: inherit;
+} */
+
+.navbar {
+    display: inline-flex;
+    position: relative;
+    right: 0px;
+    padding-right:20px;
+
+}
+#name{
+    display: inline;
+    position: relative;
+    left: 0px;
+}
+ul {
+    font-family: Montserrat,helvetica neue,Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    list-style-type: none;
+}
+
+
+
+
+
+#mainContainer {
+    width: 100%;
+    height: 100%;
+}
+
+/* #myImage, #aboutMe {
+    position: relative;
+    left: 45%;
+} */
+ .bg-border {
+    background-color: rgb(176, 214, 6);
+ }
+ circle {
+    border-radius: 50%;
+}
+.border {
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(0,0,0,.125);
+}
+.p1 {
+    padding: 0.5rem;
+}
+a img {
+    border: none;
+}
+
+img {
+    max-width: 100%;
+}
+a {
+    color: #0096cc;
+    text-decoration: none;
+}
+.page-title {
+    position: relative;
+    /* left: 30%; */
+    font-size: 3rem;
+}
+
+.heading_two {
+    font-size: large;
+    position: relative;
+    /* left: 40%; */
+}
+.thirty_seconds_pitch {
+    position: relative;
+    width: 40%;
+}
+
+.fix_block {
+    text-align: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: baseline;
+}
+
+h3{
+    width: fit-content;
+    text-align: center;
+}
+
+.social_network{
+    position: relative;
+    left: 0%;
+}
+#contact{
+    margin-left: 35%;
+}
+
+
+
+/* #projectsHeadings {
+    position: relative;
+    left: 45%;
+} */
+
+.projects_image {
+    position: relative;
+    left: 0%;
+    margin-right: 0%;
+    width: fit-content;
+}
+.peoject-description{
+    position: relative;
+    width: 200px;
+}
+.heading_three{
+    font-size: large;
+}
+#fix_projects{
+    position: relative;
+    width: 100%;
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: stretch;
+}
+html::-webkit-scrollbar {
+    display: none; /*for Chrome, Safari, and Opera */
+}
+element::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+}
+html,body{overflow-x: hidden;}
+
+
+
+
+#projectsHeadings {
+    /* position: relative;
+    left: 45%; */
+}
+
+.projects_image {
+position: relative;
+left: 0%;
+margin-right: 0%;
+width: fit-content;
+}
+.peoject-description{
+position: relative;
+width: 200px;
+}
+.heading_three{
+font-size: large;
+}
+#fix_projects{
+position: relative;
+width: 100%;
+height: inherit;
+display: flex;
+justify-content: center;
+align-content: center;
+align-items: stretch;
+}
+html::-webkit-scrollbar {
+display: none; 
+}
+element::-webkit-scrollbar {
+display: none; 
+}
+/* html,body{overflow-x: hidden;} */
+
+#fix_interests {
+text-align: center;
+display: block;
+padding-top: 10%;
+}
+#socialNetwork, #socialNetworkUL {
+display: -webkit-inline-box;
+text-align: center;
+padding-top: 15%;
+}
+
+#socialNetwork #socialNetworkUL li{
+margin-left: 20px;
+margin-right: 20px;
+}
+
+#address{
+    padding-right: 300px;
+    text-align: left;
+}
+#add{text-align: left;}
+
+#map{width: 400px; height: 400px;}
+/* 
+#projectContainer{
+    width: 50%;
+  }
+#projectsHeadings {
+    text-align: center;
+    display: -webkit-inline-box;
+  }
+#card {
+    display: inline-flex;
+    padding: 1% 1% 1% 1%;
+    margin: 1% 1% 1% 1%;
+  }
+  
+#description{
+    padding-left: 20px;
+  } */
+
+  .meduim_size_font {
+    font-size: 1.2em;
+    letter-spacing: 0.05em;
+    line-height: 2em;
+  }
