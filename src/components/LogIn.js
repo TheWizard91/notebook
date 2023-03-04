@@ -60,7 +60,7 @@ function LogIn() {
                   <Form.Field>
                     <Form.Input
                       label = "Email"
-                      iconPosition = "right"
+                      // iconPosition = {"right"}
                       icon = "user"
                       type = "email"
                       placeholder = "Enter Email..."
@@ -73,7 +73,7 @@ function LogIn() {
                   <Form.Field>
                     <Form.Input 
                       label = "password"
-                      iconPosition = "right"
+                      // iconPosition = "right"
                       icon = "lock"
                       type = "password"
                       placeholder = "Ennter Password..."

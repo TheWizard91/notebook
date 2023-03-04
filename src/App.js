@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import 'semantic-ui-css/semantic.min.css'  
 import SignUp from "./components/SignUp"
-import {Container} from "react-bootstrap"
+import {Container} from "semantic-ui-react" //"react-bootstrap"
 import {AuthProvider} from "../src/contexts/AuthContext"
 import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom"
 import Dashboard from "./components/Dashboard"

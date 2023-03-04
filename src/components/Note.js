@@ -1,7 +1,6 @@
-
 import React, { useRef, useState, useEffect } from "react"
 import { Button, Card, Grid, Segment } from "semantic-ui-react"
-import 'semantic-ui-css/semantic.min.css'
+// import 'semantic-ui-css/semantic.min.css'
 import ref from "../firebase/Storage"
 import realtimeDB from '../firebase/realtimeDatabase';
 

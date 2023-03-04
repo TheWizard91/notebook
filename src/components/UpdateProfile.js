@@ -181,7 +181,7 @@ function UpdateProfile() {
                   label="firstname"
                   type="text"
                   id="user-first-name"
-                  iconPosition="right"
+                  // iconPosition="right"
                   icon="user"
                   placeholder="Enter Firstname"
                   onChange={handleChange} 
@@ -195,7 +195,7 @@ function UpdateProfile() {
                   label="Lastname"
                   type="text" 
                   ref={newLastname}
-                  iconPosition="right"
+                  // iconPosition="right"
                   icon="user"
                   id="user-first-name"
                   placeholder="Last Name"
@@ -208,7 +208,7 @@ function UpdateProfile() {
                   name="email"
                   label="Email"
                   type="email" 
-                  iconPosition="right"
+                  // iconPosition="right"
                   icon="envelope"
                   ref={newEmail} 
                   defaultValue={currentUser.email}
@@ -222,7 +222,7 @@ function UpdateProfile() {
                   label="Passord"
                   placeholder="Leave blank to keep the same" 
                   type="password" 
-                  iconPosition="right"
+                  // iconPosition="right"
                   icon="lock"
                   ref={newPassword}
                   defaultValue={currentUser.password}
@@ -236,7 +236,7 @@ function UpdateProfile() {
                   label="Password"
                   placeholder="Confirm the new password" 
                   type="password" 
-                  iconPosition="right"
+                  // iconPosition="right"
                   icon="lock"
                   ref={confirmNewPassword} 
                   onChange={handleChange} 
