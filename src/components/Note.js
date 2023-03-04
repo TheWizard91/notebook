@@ -133,7 +133,7 @@ function Note() {
                   Write what comes to mind!
                 </h1>
               </h2>
-              <div style = {{height:"80%"}}>
+              <div style = {{height:"75%"}}>
                 <textarea
                   rows = "10"
                   id = "input-element"

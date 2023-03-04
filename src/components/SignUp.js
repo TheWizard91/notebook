@@ -21,14 +21,19 @@ import LogIn from "../components/LogIn"
 
 function SignUp() {
 
-  const firstNameRef = useRef()
-  const lastNameRef = useRef()
-  const emailRef = useRef()
-  const passwordRef = useRef()
-  const passwordConfirmationRef = useRef()
-  const { currentUser, signup } = useAuth()
-  const [ error, setError ] = useState("")
-  const [ loading, setLoading ] = useState(false)
+  // const firstNameRef = useRef()
+  // const lastNameRef = useRef()
+  // const emailRef = useRef()
+  // const passwordRef = useRef()
+  // const passwordConfirmationRef = useRef()
+  const [firstname,setFirstname]=useState()
+  const [lastname,setLastname]=useState()
+  const [email,setEmail]=useState()
+  const [password,setPassword]=useState()
+  const [confirmPassword,setConfirmPassword]=useState()
+  const {currentUser,signup}=useAuth()
+  const [error,setError]=useState("")
+  const [loading,setLoading]=useState(false)
   const navigate = useNavigate()
 
   // alert(currentUser)
@@ -40,7 +45,7 @@ function SignUp() {
 
   async function handleSubmit(e) {
     e.preventDefault()
-
+    console.log("Clicked!")
     // Vasditaion checks
     if (passwordRef.current.value !== passwordConfirmationRef.current.value) {
       return setError("Password do not matrch")
@@ -65,10 +70,10 @@ function SignUp() {
 
       // for id currentUser.uid
       await realtimeDB.ref(currentUser.uid).set({
-        firstName: firstNameRef.current.value,
-        lastName: lastNameRef.current.value,
-        email: emailRef.current.value,
-        password: passwordRef.current.value,
+        firstName: firstname.current.value,
+        lastName: lastname.current.value,
+        email: email.current.value,
+        password: password.current.value,
         id: currentUser.uid,
       }).catch(alert)
 
