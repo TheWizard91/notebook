@@ -48,28 +48,34 @@ function LogIn() {
   return (
     <div id = "loginId">
       <Grid 
-        className = "d-flex align-items-center justify-content-center"
-        style = {{minHeight:"100vh"}}
+        className="ui container center aligned"
+        // style = {{minHeight:"100vh"}}
+        textAlign="center"
+        verticalAlign='middle'
         >
         <Grid.Row centered>
-          <Grid.Column width = {6} style = {{minWidth: "600px"}}>
+          <Grid.Column width = {6} style = {{minWidth: "600px",maxHeight:"800px"}}>
             <Card style = {{width: "100%"}}>
               <div>
-                <Form onSubmit = { handleSubmit }>
+                <Form 
+                  size="big"
+                  key="big"
+                  onSubmit={handleSubmit}>
                   <h2 className = "ui dividing header text-center mb-4"> Log In</h2>
-                  <Form.Field>
-                    <Form.Input
-                      label = "Email"
-                      // iconPosition = {"right"}
-                      icon = "user"
-                      type = "email"
-                      placeholder = "Enter Email..."
-                      value = { emailRef }
-                      onChange = { handleChangeEmail }
-                      required
-                      >
-                    </Form.Input>
-                  </Form.Field>
+                  <Form.Group>
+                    <Form.Field width={16}>
+                      <Form.Input
+                        label = "Email"
+                        icon = "envelope"
+                        type = "email"
+                        placeholder = "Enter Email..."
+                        value = { emailRef }
+                        onChange = { handleChangeEmail }
+                        required
+                        >
+                      </Form.Input>
+                    </Form.Field>
+                  </Form.Group>
                   <Form.Field>
                     <Form.Input 
                       label = "password"
@@ -86,6 +92,7 @@ function LogIn() {
                       className = "w-100"
                       color = "primary"
                       disabled = { loading }
+                      icon="login"
                       type = "submit">Login</Button>
                     <div className = "w-100 text-center mt-2">
                       <Link to = "/forgot-password" element = { <SignUp/> }>

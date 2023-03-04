@@ -1,9 +1,9 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React,{useRef,useState,useEffect} from 'react'
 import RegisterForm from "./RegisterForm"
-import { Form, Button, Card, Alert } from "react-bootstrap"
-import { useAuth } from "../contexts/AuthContext"
+// import {Form,Button,Card,Alert} from "react-bootstrap"
+import {useAuth} from "../contexts/AuthContext"
 import {Link, useNavigate} from "react-router-dom"
-import LogIn from "./LogIn"
+import {Form,Input,TextArea,Button,Select,Card,Grid,Icon} from 'semantic-ui-react'
 import {Placeholder} from 'semantic-ui-react'
 // import ImageLoader from "./ImageLoader"
 // import {initializeApp} from "firebase/app"
@@ -13,6 +13,7 @@ import firebase from "../firebase/firebase"
 import firestore from "../firebase/firestore"
 import ref from "../firebase/Storage"
 import realtimeDB from '../firebase/realtimeDatabase';
+import LogIn from "../components/LogIn"
 // import { PhotoPlaceholder } from 'react-placeholder-image';
 // import { CustomPlaceholder } from 'react-placeholder-image';
 
@@ -72,7 +73,7 @@ function SignUp() {
       }).catch(alert)
 
       // console.log("users id: "+currentUser.uid+" and users name: "+firstNameRef.current.value)
-      navigate("/login")
+      navigate("/")
 
     } catch {
 
@@ -86,13 +87,15 @@ function SignUp() {
   return (
     <div>
       {/* <RegisterForm /> */}
-      <Card>
-        <Card.Body>
-          <h2 className="text-center mb-4">Sign Up</h2>
+      <Grid
+        className="ui container center aligned"
+        textAlign="center"
+        verticalAlign='middle'>
+        <Grid.Row>
+          {/* <h2 className="text-center mb-4">Sign Up</h2> */}
           {/* {JSON.stringify(currentUser)} */}
           {/* {currentUser && currentUser.email} */}
           {/* {currentUser.email} */}
-          {error && <Alert variant="danger">{error}</Alert>}
           {/* <ImageLoader /> */}
           {/* <figure className="figure">
             <img src=".../100x100" className="figure-img img-fluid rounded" />
@@ -112,31 +115,73 @@ function SignUp() {
               setSelectedImage(event.target.files[0])
             }}
           /> */}
-          <Form onSubmit={handleSubmit}>
-            <Form.Group id = "first-name">
-              <Form.Label>First Name</Form.Label>
-              <Form.Control type="text" ref={firstNameRef} required />
-            </Form.Group>
-            <Form.Group id="last-name">
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control type="text" ref={lastNameRef} required />
-            </Form.Group>
-            <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" ref={emailRef} required />
-            </Form.Group>
-            <Form.Group id = "password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" ref={passwordRef} required />
-            </Form.Group>
-            <Form.Group id="password-confirm">
-              <Form.Label>Password Confirmation</Form.Label>
-              <Form.Control type="password" ref={passwordConfirmationRef} required />
-            </Form.Group>
-            <Button disabled={loading} className="w-100" type="submit">Sign Up</Button> {/*onCLick={saveChange}*/}
-          </Form>
-        </Card.Body>
-      </Card>
+          <Grid.Column width={6} style = {{minWidth: "600px",maxHeight:"800px"}}>
+            <Card style={{width:"100%"}}>
+              <Form 
+                size="big"
+                key="big"
+                onSubmit={handleSubmit}>
+                <h2 className="text-center mb-4">Sign Up</h2>
+                <Form.Field id = "first-name">
+                  <Form.Input 
+                    type="text"
+                    label="Email"
+                    placeholder="Enter Firstname..." 
+                    icon="user"
+                    ref={firstNameRef} 
+                    required></Form.Input>
+                </Form.Field>
+                {/* </Form.Group> */}
+                <Form.Field id="last-name">
+                  {/* <Form.Label>Last Name</Form.Label> */}
+                  <Form.Input 
+                    type="text"
+                    label="Lastname"
+                    placeholder="Enter Lastname..." 
+                    icon="user"
+                    ref={lastNameRef} 
+                    required></Form.Input>
+                </Form.Field>
+                <Form.Field id="email">
+                  {/* <Form.Label>Email</Form.Label> */}
+                  <Form.Input 
+                    type="email"
+                    label="Email"
+                    placeholder="Enter Email..." 
+                    icon="envelope"
+                    ref={emailRef} 
+                    required></Form.Input>
+                </Form.Field>
+                <Form.Field id = "password">
+                  {/* <Form.Label>Password</Form.Label> */}
+                  <Form.Input 
+                    type="password"
+                    label="Enter Password"
+                    placeholder="Enter Password..." 
+                    icon="lock"
+                    ref={passwordRef} 
+                    required></Form.Input>
+                </Form.Field>
+                <Form.Field id="password-confirm">
+                  {/* <Form.Label>Password Confirmation</Form.Label> */}
+                  <Form.Input
+                    type="password"
+                    label="Confirm Password"
+                    placeholder="Confirm Password..." 
+                    icon="lock"
+                    ref={passwordConfirmationRef} 
+                    required></Form.Input>
+                </Form.Field>
+                <Button 
+                  disabled={loading} 
+                  className="w-100"
+                  color="blue" 
+                  type="submit">Sign Up</Button> {/*onCLick={saveChange}*/}
+              </Form>
+            </Card>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
       <div className = "w-100 text-center mt-2">
         Already have an account? <Link to="/" element={<LogIn />}>Log In</Link>
       </div>

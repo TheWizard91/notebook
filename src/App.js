@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css' 
 import SignUp from "./components/SignUp"
-import {Container} from "semantic-ui-react" //"react-bootstrap"
+import {Container} from "react-bootstrap" //"semantic-ui-react" 
 import {AuthProvider} from "../src/contexts/AuthContext"
 import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom"
 import Dashboard from "./components/Dashboard"
@@ -21,21 +21,18 @@ import New from "./components/New"
 class App extends Component {
   render() {
     return (
-      <Container 
-        id = "AppId"
-        className = "d-flex align-items-center justify-content-center">
+      <Container
+      className = "d-flex align-items-center justify-content-center"
+        id = "AppId">
           <div className = "w-100"> {/*className = "w-100"*/}
-            {/* <AuthProvider> */}
-              
-            {/* </AuthProvider> */}
               <Router>
                 <Navigation/>
                 <AuthProvider>
                   <Routes>
                     <Route exact path="/dashboard" element={<Dashboard />}/>
-                    {/* <Route exact path='/' element={<PrivateRoute/>} >
-                      <Route exact={true}  path='/login' element={<LogIn/>}/>
-                    </Route> */}
+                    <Route exact path='/' element={<PrivateRoute/>} >
+                      <Route exact={true}  path='/' element={<LogIn/>}/>
+                    </Route>
                     <Route path='/update-profile' element={<UpdateProfile/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
                     <Route path="/login" exact={true} element={<LogIn/>}/>

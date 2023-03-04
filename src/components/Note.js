@@ -115,12 +115,12 @@ function Note() {
   }
 
   return (
-    <Grid columns = {2}>
+    <Grid columns={2}>
       <link 
         rel = "stylesheet" 
         href="/home/emmanuel/Desktop/ReactJSProjects/Diary/frontend/src/styles/notebookComponent.css" 
       />
-      <Grid.Row stretched style = {{paddingTop:"5%", height:"800px"}} divided>
+      <Grid.Row stretched style = {{paddingTop:"5%", height:"600px"}} divided>
         <Grid.Column width = {6}>
           <Segment style = {{height:"80%"}}>
             <div
