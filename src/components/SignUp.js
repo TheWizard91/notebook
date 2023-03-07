@@ -17,7 +17,7 @@ function SignUp() {
   const [email,setEmail]=useState()
   const [password,setPassword]=useState()
   const [confirmPassword,setConfirmPassword]=useState()
-  const {currentUser,signup}=useAuth()
+  const {currentUser,signup,logout}=useAuth()
   const [error,setError]=useState("")
   const [loading,setLoading]=useState(false)
   const navigate = useNavigate()
@@ -27,26 +27,31 @@ function SignUp() {
 
     // Validating and checking
     if (password !== confirmPassword) {
-      return setError("Password do not matrch")
+      return setError("Password do not match")
     }
 
     try {
       setError("")
       setLoading(true)
       // Create user in authetication first so we have it created with the uid
-      await signup(email,password)
-      promise.then(function() {
-        // Adding user to realtime db by id currentUser.uid
-        realtimeDB.ref(currentUser.uid).set({
-          firstname: firstname,
-          lastname: lastname,
-          email: email,
-          password: password,
-          id: currentUser.uid,
-          profileImageURI: ""
-        }).catch(alert)
-        navigate("/")
+      let promise=new Promise((signup,reject)=>{
+        setTimeout(() => {
+          signup(email,password)
+        }, 1000);
       })
+      await promise
+      
+      // Adding user to realtime db by id currentUser.uid
+      // await realtimeDB.ref(currentUser.uid).set({
+      //   firstname: firstname,
+      //   lastname: lastname,
+      //   email: email,
+      //   password: password,
+      //   id: currentUser.uid,
+      //   profileImageURI: ""
+      // }).catch(alert)
+      logout()
+      navigate("/")
     } catch {
       setError("Failed to create an account")
     }
