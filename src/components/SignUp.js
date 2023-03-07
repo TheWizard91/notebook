@@ -18,13 +18,13 @@ function SignUp() {
   const [password,setPassword]=useState()
   const [confirmPassword,setConfirmPassword]=useState()
   const {currentUser,signup,logout,setUserId}=useAuth()
-  // const [userUID,setUserUID]=useState()
   const [error,setError]=useState("")
   const [loading,setLoading]=useState(false)
   const navigate = useNavigate()
 
   async function handleSubmit (e) {
     e.preventDefault()
+    // loadUserInfoToRealtimeDB()
 
     // Validating and checking
     if (password !== confirmPassword) {
@@ -38,20 +38,22 @@ function SignUp() {
       let promise=new Promise((resolve,reject)=>{
         setTimeout(() => {
           signup(email,password)
-          // let uid = currentUser.uid
-          // setUserUID(uid)
-          // console.log("in signup, user id is: "+JSON.stringify(setUserId()))
+          setUserId()
+          loadUserInfoToRealtimeDB()
+          console.log("Success!")
           resolve("Success!")
-        }, 2000);
+          // console.log("uid: "+currentUser.uid)
+        }, 1000);
       })
+
       // Adding user to realtime db by id currentUser.uid
       promise.then(result=>(
-        setUserId(),
-        // console.log("in signup, user id is: "+JSON.stringify(currentUser.uid))
-        loadUserInfoToRealtimeDB(),
+        // setUserId(),
+        // console.log("uid: "+currentUser.uid),
+        // loadUserInfoToRealtimeDB(),
         logout(),
         navigate("/")
-      ))
+      )).catch(err=>logout())
     } catch {
       setError("Failed to create an account")
     }
@@ -59,12 +61,12 @@ function SignUp() {
   }
 
   const loadUserInfoToRealtimeDB =()=> {
-    realtimeDB.ref(currentUser.uid).set({
+    realtimeDB.ref(firstname).set({
       firstname: firstname,
       lastname: lastname,
       email: email,
       password: password,
-      id: currentUser.uid,
+      // id: currentUser.uid,
       profileImageURI: ""
     }).catch(alert)
   }
