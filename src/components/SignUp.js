@@ -17,7 +17,8 @@ function SignUp() {
   const [email,setEmail]=useState()
   const [password,setPassword]=useState()
   const [confirmPassword,setConfirmPassword]=useState()
-  const {currentUser,signup,logout}=useAuth()
+  const {currentUser,signup,logout,setUserId}=useAuth()
+  // const [userUID,setUserUID]=useState()
   const [error,setError]=useState("")
   const [loading,setLoading]=useState(false)
   const navigate = useNavigate()
@@ -34,28 +35,38 @@ function SignUp() {
       setError("")
       setLoading(true)
       // Create user in authetication first so we have it created with the uid
-      let promise=new Promise((signup,reject)=>{
+      let promise=new Promise((resolve,reject)=>{
         setTimeout(() => {
           signup(email,password)
-        }, 1000);
+          // let uid = currentUser.uid
+          // setUserUID(uid)
+          // console.log("in signup, user id is: "+JSON.stringify(setUserId()))
+          resolve("Success!")
+        }, 2000);
       })
-      await promise
-      
       // Adding user to realtime db by id currentUser.uid
-      // await realtimeDB.ref(currentUser.uid).set({
-      //   firstname: firstname,
-      //   lastname: lastname,
-      //   email: email,
-      //   password: password,
-      //   id: currentUser.uid,
-      //   profileImageURI: ""
-      // }).catch(alert)
-      logout()
-      navigate("/")
+      promise.then(result=>(
+        setUserId(),
+        // console.log("in signup, user id is: "+JSON.stringify(currentUser.uid))
+        loadUserInfoToRealtimeDB(),
+        logout(),
+        navigate("/")
+      ))
     } catch {
       setError("Failed to create an account")
     }
     setLoading(false)
+  }
+
+  const loadUserInfoToRealtimeDB =()=> {
+    realtimeDB.ref(currentUser.uid).set({
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      password: password,
+      id: currentUser.uid,
+      profileImageURI: ""
+    }).catch(alert)
   }
 
   // Set values entered by uset to variables by hook
