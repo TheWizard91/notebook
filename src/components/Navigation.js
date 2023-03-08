@@ -16,22 +16,15 @@ function Navigation() {
 
     }
     return (
-        // <div>
         <header id="navHeader">
             <div className="left">
                 <h3 id="name">
-                    {/* <Link 
-                        to="/login" 
-                        element={<LogIn/>}
-                        onClick={toggleVisibility}>Emmanuel K. Agyapong</Link> */}
-                    
                     {/* <Button
                         content={visible ? 'Hide' : 'Show'}
                         onClick={toggleVisibility}/> */}
                     <Link 
                         to="/login" 
-                        element={<LogIn/>}
-                        onClick={toggleVisibility}>Start App</Link>
+                        element={<LogIn/>}>Start The App</Link>
                     {/* <Divider hiden/> */}
                     {/* <Transition
                         visible={visible} 
@@ -46,15 +39,15 @@ function Navigation() {
             <nav className="menu">
                 <ul className="navbar ml-auto">
                     <li>
-                        <Link to="" className="nav-link">My work</Link>
+                        <a 
+                            href="https://github.com/TheWizard91/notebook" 
+                            target="_blank">
+                            Docs/Overview
+                        </a>
                     </li>
-                    {/* <li>
-                        <Link>Website</Link>
-                    </li> */}
                 </ul>
             </nav>
         </header>
-        // </div>
     )
 }
 

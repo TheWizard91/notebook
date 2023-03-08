@@ -64,7 +64,7 @@ body, #root,#mainPage {
     margin-right: 10px;
     font-family: Montserrat,helvetica neue,Helvetica,Arial,sans-serif;
     font-weight: 700;
-	/*color: #ffffff;*/
+	color: #4997D0;
 }
 
 .menu li a:hover, .menu li a.current 
@@ -217,26 +217,26 @@ html,body{overflow-x: hidden;}
 }
 
 .projects_image {
-position: relative;
-left: 0%;
-margin-right: 0%;
-width: fit-content;
+    position: relative;
+    left: 0%;
+    margin-right: 0%;
+    width: fit-content;
 }
 .peoject-description{
-position: relative;
-width: 200px;
+    position: relative;
+    width: 200px;
 }
 .heading_three{
-font-size: large;
+    font-size: large;
 }
 #fix_projects{
-position: relative;
-width: 100%;
-height: inherit;
-display: flex;
-justify-content: center;
-align-content: center;
-align-items: stretch;
+    position: relative;
+    width: 100%;
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: stretch;
 }
 html::-webkit-scrollbar {
 display: none; 
@@ -287,8 +287,8 @@ margin-right: 20px;
     padding-left: 20px;
   } */
 
-  .meduim_size_font {
-    font-size: 1.2em;
-    letter-spacing: 0.05em;
-    line-height: 2em;
-  }
+.meduim_size_font {
+font-size: 1.2em;
+letter-spacing: 0.05em;
+line-height: 2em;
+}
