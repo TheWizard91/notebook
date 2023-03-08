@@ -2,7 +2,7 @@ import React,{useRef,useState,useEffect} from 'react'
 import RegisterForm from "./RegisterForm"
 import {useAuth} from "../contexts/AuthContext"
 import {Link, useNavigate} from "react-router-dom"
-import {Form,Input,TextArea,Button,Select,Card,Grid,Icon} from 'semantic-ui-react'
+import {Form,Input,TextArea,Button,Select,Card,Grid,Icon,Divider,Transaction} from 'semantic-ui-react'
 import {Placeholder} from 'semantic-ui-react'
 import app from "../contexts/AuthContext"
 import firebase from "../firebase/firebase"
