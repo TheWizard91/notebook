@@ -35,6 +35,7 @@ function Note() {
   const [info , setInfo] = useState();
   const [timeStamp, setTimeStamp] = useState("Date")
   const [enterPost, setPost] = useState("Post goes here")
+  const [postID,setPostID]=useState()
   const [postsDictionary, setPostDictionary] = useState({postsDictionry:{}})
   const [postsFromFirebase, setPostsFromFirebase] = useState({postsFromFirebase:[]})
   const postURI = uuid()
@@ -53,13 +54,18 @@ function Note() {
       // Settting up the posts to postsFromFirebase
       Object.keys(postsDictionary)
         .forEach(async function (key, index){
-          let timeStamp = postsDictionary[key]["time"]
-          let enterPost = postsDictionary[key]["post"]
-          postsFromFirebase["postsFromFirebase"].push({"time":timeStamp,"post":enterPost})
-          // console.log("time is: "+timeStamp+" and "+" post is : "+enterPost)
-          setPostsFromFirebase(postsFromFirebase)
-          setTimeStamp(timeStamp)
-          setPost(enterPost)
+          // console.log(index)
+          if(index!=0){
+            let timeStamp = postsDictionary[key]["time"]
+            let enterPost = postsDictionary[key]["post"]
+            let p_uri=postsDictionary[key]["post_id"]
+            postsFromFirebase["postsFromFirebase"].push({"time":timeStamp,"post":enterPost,"post_id":p_uri})
+            // console.log("time is: "+timeStamp+" and "+" post is : "+enterPost+" p_uri is: "+p_uri)
+            setPostsFromFirebase(postsFromFirebase)
+            setTimeStamp(timeStamp)
+            setPost(enterPost)
+            setPostID(p_uri)
+          }
         })
       }).catch((error) => {
     })
@@ -71,20 +77,23 @@ function Note() {
 
     let p = inputRef.current.value
     let t = new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
-    
+    let post_uri=postURI.slice(0,8)
+    // console.log("post_uri is: "+post_uri)
     db.collection("posts")
-      .doc(postURI.slice(0,8))
+      .doc(post_uri)
       .set({
         post: p,
         time: t,
         likes: 0,
-        favorite: 0
+        favorite: 0,
+        post_id: post_uri
     })
 
     setPost(p)
     setTimeStamp(t)
-    console.log("p"+JSON.stringify(postsFromFirebase))
-    postsFromFirebase["postsFromFirebase"].push({"time":t,"post":p})
+    setPostID(post_uri)
+    // console.log("p"+JSON.stringify(postsFromFirebase))
+    postsFromFirebase["postsFromFirebase"].push({"time":t,"post":p,"post_id":post_uri})
   }
   
   const handleChange = (e) => {
@@ -127,48 +136,54 @@ function Note() {
               id = "notebook-element" 
               // className="ui card" 
             >
-              <h2 className = "text-center mb-2">
-                <h1 className = "ui center aligned icon header">
-                  <i className = "sticky note outline"></i>
+              <h2 className="text-center mb-2">
+                <h1 className="ui center aligned icon header">
+                  <i className="sticky note outline"></i>
                   Write what comes to mind!
                 </h1>
               </h2>
-              <div style = {{height:"75%"}}>
+              <div style={{height:"75%"}}>
                 <textarea
-                  rows = "10"
-                  id = "input-element"
-                  className = "ui segment"
-                  type = "text"
-                  ref = {inputRef}
-                  name = "message"
-                  onChange = {handleChange}
-                  placeholder =  'Type anything...' 
+                  rows="10"
+                  id="input-element"
+                  className="ui segment"
+                  type="text"
+                  ref={inputRef}
+                  name="message"
+                  onChange={handleChange}
+                  placeholder='Type anything...' 
                 />
               </div>
             </div>
           </Segment>
           <Button 
-            basic name = "cloud"
-            color = "blue"
-            className = "circular ui incon basic red button"
-            type = "submit"
-            size = "big"
-            value = {timeStamp}
-            onClick = {sendPost}
+            basic name="cloud"
+            color="blue"
+            className="circular ui icon basic red button"
+            type="submit"
+            size="big"
+            value={timeStamp}
+            onClick={sendPost}
             style={{width:"fit-content",padding:"0px",height:"0px",width:"0px",borderColor:"blue",borderRadius:"10px",left:"40%"}}
-            data-tooltip = "Press to send note to save on database." 
-            data-position = "top center"
-            > <i className = "huge plus circle icon" style={{margin:"0px"}}></i>
+            data-tooltip="Press to send note to save on database." 
+            data-position="top center"
+            > <i className="huge plus circle icon" style={{margin:"0px"}}></i>
           </Button>
         </Grid.Column>
         <Grid.Column 
-          width = {10} 
-          style = {{height:"100%",borderColor:"transparent",overflow:'scroll',maxHeight:"800px"}}>
+          width={10} 
+          style={{height:"100%",borderColor:"transparent",overflow:'scroll',maxHeight:"800px"}}>
           <Segment style={{backgroundColor:"#F3FDFE"}}>
               {postsFromFirebase["postsFromFirebase"]
               .map(entry=> {if(entry.post!=null && entry.time!=null)
               return (
-                <div style={{marginTop:"15px"}}><LoadPosts post={entry.post} time={entry.time}/></div>)}
+                <div style={{marginTop:"15px"}}>
+                  <LoadPosts 
+                    post={entry.post} 
+                    time={entry.time}
+                    post_id={entry.post_id}
+                    />
+                </div>)}
             )}
           </Segment>
         </Grid.Column>

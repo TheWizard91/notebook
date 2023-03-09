@@ -239,7 +239,7 @@ html,body{overflow-x: hidden;}
     align-items: stretch;
 }
 html::-webkit-scrollbar {
-display: none; 
+    display: none; 
 }
 element::-webkit-scrollbar {
 display: none; 
@@ -247,19 +247,19 @@ display: none;
 /* html,body{overflow-x: hidden;} */
 
 #fix_interests {
-text-align: center;
-display: block;
-padding-top: 10%;
+    text-align: center;
+    display: block;
+    padding-top: 10%;
 }
 #socialNetwork, #socialNetworkUL {
-display: -webkit-inline-box;
-text-align: center;
-padding-top: 15%;
+    display: -webkit-inline-box;
+    text-align: center;
+    padding-top: 15%;
 }
 
 #socialNetwork #socialNetworkUL li{
-margin-left: 20px;
-margin-right: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 #address{
@@ -288,7 +288,7 @@ margin-right: 20px;
   } */
 
 .meduim_size_font {
-font-size: 1.2em;
-letter-spacing: 0.05em;
-line-height: 2em;
+    font-size: 1.2em;
+    letter-spacing: 0.05em;
+    line-height: 2em;
 }
