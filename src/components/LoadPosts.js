@@ -6,34 +6,44 @@ function LoadPosts ({post,time,post_id}) {
 
     const [postID,setPostID]=useState({postID:[]})
     // console.log("post_id: "+post_id)
-    const [visible,setVisibility]=useState({visible:true})
+    const [visible,setVisibility]=useState({visible:false})
     const [editTextValue,setEditTextValue]=useState()
+    const [po,setP]=useState()
+    const [ti,setT]=useState()
+    const [p_uid,setPUID]=useState()
+    const [clicks,setClicks]=useState(1)
 
     const editPost =(e)=>{
         e.preventDefault()
-        // console.log("In editPost: "+e.target.value)
         setVisibility(!visible)
+        setClicks(clicks+1)
+        console.log("c: "+clicks)
     }
 
     const handleEditTextChange =(e)=>{
         e.preventDefault()
         console.log("typing: "+e.target.value)
-        // setEditTextValue(e.target.value)
-        post=e.target.value
+        if (clicks%2==0){
+            setP(e.target.value)
+        }
+        console.log("p_uid: "+post_id)
+        console.log("post: "+po)
+        console.log("time: "+ti)
+        db.collection("posts")
+          .doc(post_id)
+          .set({
+            post:po,
+            time:ti,
+            likes:0,
+            favorite:0,
+            post_id:post_id
+          })
     }
     useEffect (()=>{
         setVisibility(false)
-        // if(visible==true) 
-        // db.collection("posts")
-        //   .get()
-        //   .then((querySnapshot)=>{
-        //     querySnapshot.forEach((doc)=>{
-        //         // console.log("dataIs: "+JSON.stringify(doc.data().post_id))
-        //         postID["postID"].push(doc.data().post_id)
-        //         // console.log("postID is: "+JSON.stringify(postID))
-        //     })
-        //     setPostID(postID)
-        //   })
+        setP(post)
+        setT(time)
+        setPUID(p_uid)
     },[])
 
     return (
@@ -49,11 +59,11 @@ function LoadPosts ({post,time,post_id}) {
                     <div 
                         className="ui left floated header"
                         style={{width:"fit-content"}}
-                        >{time}
+                        >{ti}
                     </div>
                     <p></p>
                     <div className="description">
-                        {post}
+                        {po}
                     </div>
                     <Divider iverted/>
                     <Transition
@@ -72,7 +82,7 @@ function LoadPosts ({post,time,post_id}) {
                 </div>
                 <Button
                     style={{backgroundColor:"#89CFF0"}}
-                    value={post_id}
+                    value={p_uid}
                     onClick={editPost}
                     data-tooltip="Edit Post." 
                     data-position="top center"
