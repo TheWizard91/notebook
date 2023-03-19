@@ -35,6 +35,9 @@ function Note() {
   const [info , setInfo] = useState();
   const [timeStamp, setTimeStamp] = useState("Date")
   const [enterPost, setPost] = useState("Post goes here")
+  const [likesCount,setLikesCount]=useState()
+  const [favoritesCount,setFavoriteCount]=useState()
+  const [postID,setPostID]=useState()
   const [postsDictionary, setPostDictionary] = useState({postsDictionry:{}})
   const [postsFromFirebase, setPostsFromFirebase] = useState({postsFromFirebase:[]})
   const postURI = uuid()
@@ -53,13 +56,20 @@ function Note() {
       // Settting up the posts to postsFromFirebase
       Object.keys(postsDictionary)
         .forEach(async function (key, index){
-          let timeStamp = postsDictionary[key]["time"]
-          let enterPost = postsDictionary[key]["post"]
-          postsFromFirebase["postsFromFirebase"].push({"time":timeStamp,"post":enterPost})
-          // console.log("time is: "+timeStamp+" and "+" post is : "+enterPost)
-          setPostsFromFirebase(postsFromFirebase)
-          setTimeStamp(timeStamp)
-          setPost(enterPost)
+          if(index!=0){
+            let timeStamp = postsDictionary[key]["time"]
+            let enterPost = postsDictionary[key]["post"]
+            let p_uri=postsDictionary[key]["post_id"]
+            let likesCount=postsDictionary[key]["likes"]
+            let favoritesCount=postsDictionary[key]["favorite"]
+            postsFromFirebase["postsFromFirebase"].push({"time":timeStamp,"post":enterPost,"post_id":p_uri,"likes":likesCount,"favorite":favoritesCount})
+            // setPostsFromFirebase(postsFromFirebase)
+            setTimeStamp(timeStamp)
+            setPost(enterPost)
+            setPostID(p_uri)
+            setLikesCount(likesCount)
+            setFavoriteCount(favoritesCount)
+          }
         })
       }).catch((error) => {
     })
@@ -71,20 +81,23 @@ function Note() {
 
     let p = inputRef.current.value
     let t = new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
-    
+    let post_uri=postURI.slice(0,8)
+    // console.log("post_uri is: "+post_uri)
     db.collection("posts")
-      .doc(postURI.slice(0,8))
+      .doc(post_uri)
       .set({
         post: p,
         time: t,
         likes: 0,
-        favorite: 0
+        favorite: 0,
+        post_id: post_uri
     })
 
     setPost(p)
     setTimeStamp(t)
-    console.log("p"+JSON.stringify(postsFromFirebase))
-    postsFromFirebase["postsFromFirebase"].push({"time":t,"post":p})
+    setPostID(post_uri)
+    // console.log("p"+JSON.stringify(postsFromFirebase))
+    postsFromFirebase["postsFromFirebase"].push({"time":t,"post":p,"post_id":post_uri})
   }
   
   const handleChange = (e) => {
@@ -106,7 +119,7 @@ function Note() {
         // Loop through the data and store
         // it in array to display
         querySnapshot.forEach((doc) => {
-          var data = doc.data();
+          var data=doc.data();
           console.log(doc.id,"=>",data["post"])
         });
     }).catch((error) => {
@@ -115,60 +128,68 @@ function Note() {
   }
 
   return (
-    <Grid columns = {2}>
+    <Grid columns={2}>
       <link 
-        rel = "stylesheet" 
+        rel="stylesheet" 
         href="/home/emmanuel/Desktop/ReactJSProjects/Diary/frontend/src/styles/notebookComponent.css" 
       />
-      <Grid.Row stretched style = {{paddingTop:"5%", height:"800px"}} divided>
-        <Grid.Column width = {6}>
-          <Segment style = {{height:"80%"}}>
+      <Grid.Row stretched style={{paddingTop:"5%", height:"600px"}} divided>
+        <Grid.Column width={6}>
+          <Segment style={{height:"80%"}}>
             <div
               id = "notebook-element" 
               // className="ui card" 
             >
-              <h2 className = "text-center mb-2">
-                <h1 className = "ui center aligned icon header">
-                  <i className = "sticky note outline"></i>
+              <h2 className="text-center mb-2">
+                <h1 className="ui center aligned icon header">
+                  <i className="sticky note outline"></i>
                   Write what comes to mind!
                 </h1>
               </h2>
-              <div style = {{height:"80%"}}>
+              <div style={{height:"75%"}}>
                 <textarea
-                  rows = "10"
-                  id = "input-element"
-                  className = "ui segment"
-                  type = "text"
-                  ref = {inputRef}
-                  name = "message"
-                  onChange = {handleChange}
-                  placeholder =  'Type anything...' 
+                  rows="10"
+                  id="input-element"
+                  className="ui segment"
+                  type="text"
+                  ref={inputRef}
+                  name="message"
+                  onChange={handleChange}
+                  placeholder='Type anything...' 
                 />
               </div>
             </div>
           </Segment>
           <Button 
-            basic name = "cloud"
-            color = "blue"
-            className = "circular ui incon basic red button"
-            type = "submit"
-            size = "big"
-            value = {timeStamp}
-            onClick = {sendPost}
+            basic name="cloud"
+            color="blue"
+            className="circular ui icon basic red button"
+            type="submit"
+            size="big"
+            value={timeStamp}
+            onClick={sendPost}
             style={{width:"fit-content",padding:"0px",height:"0px",width:"0px",borderColor:"blue",borderRadius:"10px",left:"40%"}}
-            data-tooltip = "Press to send note to save on database." 
-            data-position = "top center"
-            > <i className = "huge plus circle icon" style={{margin:"0px"}}></i>
+            data-tooltip="Press to send note to save on database." 
+            data-position="top center"
+            > <i className="huge plus circle icon" style={{margin:"0px"}}></i>
           </Button>
         </Grid.Column>
         <Grid.Column 
-          width = {10} 
-          style = {{height:"100%",borderColor:"transparent",overflow:'scroll',maxHeight:"800px"}}>
+          width={10} 
+          style={{height:"100%",borderColor:"transparent",overflow:'scroll',maxHeight:"800px"}}>
           <Segment style={{backgroundColor:"#F3FDFE"}}>
               {postsFromFirebase["postsFromFirebase"]
               .map(entry=> {if(entry.post!=null && entry.time!=null)
               return (
-                <div style={{marginTop:"15px"}}><LoadPosts post={entry.post} time={entry.time}/></div>)}
+                <div style={{marginTop:"15px"}}>
+                  <LoadPosts 
+                    post={entry.post} 
+                    time={entry.time}
+                    post_id={entry.post_id}
+                    likes={entry.likes}
+                    favorite={entry.favorite}
+                    />
+                </div>)}
             )}
           </Segment>
         </Grid.Column>

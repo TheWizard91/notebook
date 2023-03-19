@@ -10,7 +10,7 @@ function LoadPage ({page}) {
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
-    const {currentUser, logout} = useAuth()
+    const {currentUser,logout} = useAuth()
 
     async function logginout () {
 
@@ -19,7 +19,7 @@ function LoadPage ({page}) {
         try{
           setError("")
           setLoading(true)
-          navigate("/")
+          navigate("/login")
           await logout()
         } catch {
           setError("failed to log out")
@@ -47,7 +47,8 @@ function LoadPage ({page}) {
     
         default:
             return (
-                <div><h1>Nothing to see</h1></div>
+                // <div><h1>Nothing to see</h1></div>
+                <Note />
             )
             break;
     }

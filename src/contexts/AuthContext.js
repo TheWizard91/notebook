@@ -29,7 +29,7 @@ export function AuthProvider({children}) {
     
     function resetPassword(email) {
         return auth.sendPasswordResetEmail(email)
-      }
+    }
     
     function updateEmail(email) {
         return currentUser.updateEmail(email)
@@ -39,11 +39,11 @@ export function AuthProvider({children}) {
         return currentUser.updatePassword(password)
     }
     
-    function setCurrentUserUID (currentUser) {
+    function setCurrentUserUID(currentUser) {
         return currentUser.uid
     }
 
-    function setUserId () {
+    function setUserId() {
         return currentUser
     }
 
@@ -64,6 +64,7 @@ export function AuthProvider({children}) {
         resetPassword,
         updateEmail,
         updatePassword,
+        setUserId,
     }
     return (
         <AuthContext.Provider value = { value }>

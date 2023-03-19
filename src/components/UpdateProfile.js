@@ -58,7 +58,7 @@ function UpdateProfile() {
 
     Promise.all(promises)
       .then(() => {
-        navigate("/")
+        navigate("/login")
       })
       .catch(() => {
         setError("Failed to update account")
@@ -99,19 +99,7 @@ function UpdateProfile() {
   }
 
   useEffect(() => {
-    // db.collection("users")
-    //   .get()
-    //   .then((querySnapshot) => {
-    //     const data = []
-    //     querySnapshot.forEach((doc) => {
-    //       console.log(doc.is, " => ", doc.data());
-    //       data.push(doc.data());
-    //     })
-    //     setUsersData(data);
-    //   })
-    //   .catch((error) => {
-    //     console.log("Error getting documents: ", error);
-    //   });
+
     realtimeDB.ref(currentUser.uid)
     .get()
     .then((snapshot) => {
@@ -131,18 +119,6 @@ function UpdateProfile() {
         usersData.push(old_email)
         usersData.push(old_password)
         usersData.push(old_profile_image_uri)
-
-        // let oldFirstname = snapshot.val().firstName
-        // let oldLastname = snapshot.val().lastName
-        // let oldEmail = snapshot.val().email
-        // let oldPassword = snapshot.val().password
-        // let oldProfileImageURI = snapshot.val().profileImage
-
-        // usersData.push(oldFirstname)
-        // usersData.push(oldLastname)
-        // usersData.push(oldEmail)
-        // usersData.push(oldPassword)
-        // usersData.push(oldProfileImageURI)
 
       } else {
         console.log("No data vailable")
@@ -181,7 +157,6 @@ function UpdateProfile() {
                   label="firstname"
                   type="text"
                   id="user-first-name"
-                  // iconPosition="right"
                   icon="user"
                   placeholder="Enter Firstname"
                   onChange={handleChange} 
@@ -195,7 +170,6 @@ function UpdateProfile() {
                   label="Lastname"
                   type="text" 
                   ref={newLastname}
-                  // iconPosition="right"
                   icon="user"
                   id="user-first-name"
                   placeholder="Last Name"
@@ -207,8 +181,7 @@ function UpdateProfile() {
                 <Form.Input 
                   name="email"
                   label="Email"
-                  type="email" 
-                  // iconPosition="right"
+                  type="email"
                   icon="envelope"
                   ref={newEmail} 
                   defaultValue={currentUser.email}
@@ -221,8 +194,7 @@ function UpdateProfile() {
                   name="new_password"
                   label="Passord"
                   placeholder="Leave blank to keep the same" 
-                  type="password" 
-                  // iconPosition="right"
+                  type="password"
                   icon="lock"
                   ref={newPassword}
                   defaultValue={currentUser.password}
@@ -235,8 +207,7 @@ function UpdateProfile() {
                   name="confirm_new_Password" 
                   label="Password"
                   placeholder="Confirm the new password" 
-                  type="password" 
-                  // iconPosition="right"
+                  type="password"
                   icon="lock"
                   ref={confirmNewPassword} 
                   onChange={handleChange} 
@@ -244,8 +215,7 @@ function UpdateProfile() {
                 ></Form.Input>
               </Form.Field>
               <Button 
-                disabled={loading} 
-                // onClick={handleSubmit} 
+                disabled={loading}
                 className="w-100" 
                 type="submit"
                 color="blue"
