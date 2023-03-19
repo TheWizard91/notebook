@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react"
+import React,{useState,useEffect,useRef} from "react"
 import {Card,Button,Grid,Segment,Divider,Transition} from "semantic-ui-react"
 import db from "../firebase/firestore"
 import {doc,setDoc,updateDoc} from "firebase/firestore"
@@ -16,6 +16,8 @@ function LoadPosts ({post,time,post_id,likes,favorite}) {
     const [favoriteInFirestoreDatabase,setFavoriteInFirestoreDatabase]=useState(favorite)
     const [postIdInFirestoreDatabase,setPostIdInFirestoreDatabase]=useState(post_id)
     const docRef = doc(db,"posts",post_id)
+    const greenRef=useRef("#34CCAD")
+    const blackRef=useRef("#000000")
 
     // Edit post or textarea
     const [editPostClicks,seteditPostClicks]=useState(1)
@@ -39,7 +41,7 @@ function LoadPosts ({post,time,post_id,likes,favorite}) {
         setCountFavoriteClicks(countFavoriteClicks+1)
         console.log("before: "+countFavoriteClicks)
         if(countFavoriteClicks%2==1) {
-            setFavoritesColor("#34CCAD")
+            setFavoritesColor(greenRef.current)
             setFavoriteInFirestoreDatabase(favoriteInFirestoreDatabase+1)
             updateDoc(docRef,{
                 favorite:favoriteInFirestoreDatabase
@@ -51,7 +53,7 @@ function LoadPosts ({post,time,post_id,likes,favorite}) {
             console.log("after if: "+countFavoriteClicks)
             console.log("favoriteInFirestoreDatabase: "+favoriteInFirestoreDatabase)
         } else {   
-            setFavoritesColor("black")
+            setFavoritesColor(blackRef.current)
             setFavoriteInFirestoreDatabase(favoriteInFirestoreDatabase-1)
             updateDoc(docRef,{
                 favorite:favoriteInFirestoreDatabase
@@ -69,7 +71,7 @@ function LoadPosts ({post,time,post_id,likes,favorite}) {
         e.preventDefault()
         setCountLikesClicks(countLikesClicks+1)
         if(countLikesClicks%2==1) {
-            setLikesColor("#34CCAD")
+            setLikesColor(greenRef.current)
             setLikesInFirestoreDatabase(likesInFirestoreDatabase+1)
             // console.log("getting green")
             // console.log("color: "+likesColor)
@@ -81,7 +83,7 @@ function LoadPosts ({post,time,post_id,likes,favorite}) {
                 merge:true
             }).then(()=>console.log("likes updated"))
         } else {
-            setLikesColor("black")
+            setLikesColor(blackRef.current)
             setLikesInFirestoreDatabase(likesInFirestoreDatabase-1)
             // console.log("getting black")
             // console.log("color: "+likesColor)
@@ -112,17 +114,36 @@ function LoadPosts ({post,time,post_id,likes,favorite}) {
         },{
             merge:true
         }).then(()=>console.log("post updated"))
-    }   
+    }  
+
+    const initializeLikesColor=()=>{
+        if(favoriteInFirestoreDatabase>0){
+            setFavoritesColor(greenRef.current)
+            // favoritesColor=greenRef.current
+        } else{
+            setFavoritesColor(blackRef.current)
+        }
+    }
+
+    const initializeFavoritesColor=()=>{
+        if(likesInFirestoreDatabase>0){
+            setLikesColor(greenRef.current)
+        } else {
+            setLikesColor(blackRef.current)
+        }
+    }
+
     useEffect (()=>{
-        /**Only for initial values. */
+        /**Only for initial values. When the app starts the likes and favorites are 
+         * set, becuase the has been fetched from the data from the database;
+         * which is why I had the info passed as parameters in the very brggining.
+        */
         setVisibility(false)
-        // setPostInFirestoreDatabase(post)
-        // setTimeInFirestoreDatabase(time)
-        // setPostIdInFirestoreDatabase(post_id)
-        // setLikesInFirestoreDatabase(likes)
-        // setFavoriteInFirestoreDatabase(favorite)
         console.log("fav: "+favoriteInFirestoreDatabase)
-        setFavoriteInFirestoreDatabase(+1)
+        console.log("likes: "+likesInFirestoreDatabase)
+        console.log("green: "+greenRef.current)
+        initializeFavoritesColor()
+        initializeLikesColor()
     },[])
 
     return (
@@ -132,13 +153,13 @@ function LoadPosts ({post,time,post_id,likes,favorite}) {
                 id="livePostCardview" 
                 style={{width:"100%"}}>
                 <div className="content">
-                    <Button
+                    {/* <Button
                         name="profile_image"
                         value="user_profile_image"
                         className="right floated ui circular pastel gray icon button"
-                        style={{color:userColor}}>{/**"#34CCAD"*/}
+                        style={{color:userColor}}>
                         <i className="user circle outline icon"></i>
-                    </Button>
+                    </Button> */}
                     <Button 
                         name="likes"
                         value="heart"
@@ -179,15 +200,18 @@ function LoadPosts ({post,time,post_id,likes,favorite}) {
                             placeholder='Type anything...'/>
                     </Transition>
                 </div>
-                <Button
-                    style={{backgroundColor:"#89CFF0"}}
-                    value={postIdInFirestoreDatabase}
-                    onClick={editPost}
-                    data-tooltip="Edit Post." 
-                    data-position="top center"
-                    content={visible ? 'Hide' : 'Show'}>
-                    <i class="large edit icon"></i>
-                </Button>
+                <div>
+                    <Button
+                        className="ui circular icon button"
+                        style={{backgroundColor:"#89CFF0",width:"fit-item",color:"#f5f5f5",marginBottom:"10px"}}
+                        value={postIdInFirestoreDatabase}
+                        onClick={editPost}
+                        data-tooltip="Edit Post." 
+                        data-position="top center"
+                        content={visible ? 'Hide' : 'Show'}>
+                        <i className="large edit icon"></i>
+                    </Button>
+                </div>
             </Card>
         </div>
     )
