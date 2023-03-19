@@ -35,6 +35,8 @@ function Note() {
   const [info , setInfo] = useState();
   const [timeStamp, setTimeStamp] = useState("Date")
   const [enterPost, setPost] = useState("Post goes here")
+  const [likesCount,setLikesCount]=useState()
+  const [favoritesCount,setFavoriteCount]=useState()
   const [postID,setPostID]=useState()
   const [postsDictionary, setPostDictionary] = useState({postsDictionry:{}})
   const [postsFromFirebase, setPostsFromFirebase] = useState({postsFromFirebase:[]})
@@ -54,17 +56,19 @@ function Note() {
       // Settting up the posts to postsFromFirebase
       Object.keys(postsDictionary)
         .forEach(async function (key, index){
-          // console.log(index)
           if(index!=0){
             let timeStamp = postsDictionary[key]["time"]
             let enterPost = postsDictionary[key]["post"]
             let p_uri=postsDictionary[key]["post_id"]
-            postsFromFirebase["postsFromFirebase"].push({"time":timeStamp,"post":enterPost,"post_id":p_uri})
-            // console.log("time is: "+timeStamp+" and "+" post is : "+enterPost+" p_uri is: "+p_uri)
-            setPostsFromFirebase(postsFromFirebase)
+            let likesCount=postsDictionary[key]["likes"]
+            let favoritesCount=postsDictionary[key]["favorite"]
+            postsFromFirebase["postsFromFirebase"].push({"time":timeStamp,"post":enterPost,"post_id":p_uri,"likes":likesCount,"favorite":favoritesCount})
+            // setPostsFromFirebase(postsFromFirebase)
             setTimeStamp(timeStamp)
             setPost(enterPost)
             setPostID(p_uri)
+            setLikesCount(likesCount)
+            setFavoriteCount(favoritesCount)
           }
         })
       }).catch((error) => {
@@ -115,7 +119,7 @@ function Note() {
         // Loop through the data and store
         // it in array to display
         querySnapshot.forEach((doc) => {
-          var data = doc.data();
+          var data=doc.data();
           console.log(doc.id,"=>",data["post"])
         });
     }).catch((error) => {
@@ -126,12 +130,12 @@ function Note() {
   return (
     <Grid columns={2}>
       <link 
-        rel = "stylesheet" 
+        rel="stylesheet" 
         href="/home/emmanuel/Desktop/ReactJSProjects/Diary/frontend/src/styles/notebookComponent.css" 
       />
-      <Grid.Row stretched style = {{paddingTop:"5%", height:"600px"}} divided>
-        <Grid.Column width = {6}>
-          <Segment style = {{height:"80%"}}>
+      <Grid.Row stretched style={{paddingTop:"5%", height:"600px"}} divided>
+        <Grid.Column width={6}>
+          <Segment style={{height:"80%"}}>
             <div
               id = "notebook-element" 
               // className="ui card" 
@@ -182,6 +186,8 @@ function Note() {
                     post={entry.post} 
                     time={entry.time}
                     post_id={entry.post_id}
+                    likes={entry.likes}
+                    favorite={entry.favorite}
                     />
                 </div>)}
             )}
