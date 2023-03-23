@@ -53,7 +53,7 @@ function Note() {
 
       setPostDictionary(postsDictionary)
 
-      // Settting up the posts to postsFromFirebase
+      // Setting up the posts from Firebase
       Object.keys(postsDictionary)
         .forEach(async function (key, index){
           if(index!=0){
@@ -61,8 +61,8 @@ function Note() {
             let enterPost = postsDictionary[key]["post"]
             let p_uri=postsDictionary[key]["post_id"]
             let likesCount=postsDictionary[key]["likes"]
-            let favoritesCount=postsDictionary[key]["favorite"]
-            postsFromFirebase["postsFromFirebase"].push({"time":timeStamp,"post":enterPost,"post_id":p_uri,"likes":likesCount,"favorite":favoritesCount})
+            let favoritesCount=postsDictionary[key]["favorites"]
+            postsFromFirebase["postsFromFirebase"].push({"time":timeStamp,"post":enterPost,"post_id":p_uri,"likes":likesCount,"favorites":favoritesCount})
             // setPostsFromFirebase(postsFromFirebase)
             setTimeStamp(timeStamp)
             setPost(enterPost)
@@ -89,15 +89,17 @@ function Note() {
         post: p,
         time: t,
         likes: 0,
-        favorite: 0,
+        favorites: 0,
         post_id: post_uri
     })
 
     setPost(p)
     setTimeStamp(t)
     setPostID(post_uri)
-    // console.log("p"+JSON.stringify(postsFromFirebase))
-    postsFromFirebase["postsFromFirebase"].push({"time":t,"post":p,"post_id":post_uri})
+    setFavoriteCount(0)
+    setLikesCount(0)
+    console.log("p"+JSON.stringify(postsFromFirebase))
+    postsFromFirebase["postsFromFirebase"].push({"time":t,"post":p,"post_id":post_uri,likes:0,favorites:0})
   }
   
   const handleChange = (e) => {
@@ -187,7 +189,7 @@ function Note() {
                     time={entry.time}
                     post_id={entry.post_id}
                     likes={entry.likes}
-                    favorite={entry.favorite}
+                    favorites={entry.favorites}
                     />
                 </div>)}
             )}

@@ -1,19 +1,22 @@
 import React,{useState,useEffect,useRef} from "react"
-import {Card,Button,Grid,Segment,Divider,Transition} from "semantic-ui-react"
+import {Card,Button,Grid,Segment,Divider,Transition,Image} from "semantic-ui-react"
 import db from "../firebase/firestore"
 import {doc,setDoc,updateDoc} from "firebase/firestore"
 
-function LoadPosts ({post,time,post_id,likes,favorite}) {
+function LoadPosts ({post,time,post_id,likes,favorites}) {
 
     // const [postID,setPostID]=useState({postID:[]})
     const [visible,setVisibility]=useState({visible:false})
     const [editTextValue,setEditTextValue]=useState()
+    const userProfileImagePath=useRef("https://scontent-lga3-2.xx.fbcdn.net/v/t39.30808-6/244590566_4376334679140670_8344111291006398210_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=5wyzmXJtou8AX_702gl&_nc_ht=scontent-lga3-2.xx&oh=00_AfBYTGJK2YFtRihob8-p5l4PwnFgy4cTD9m2LeaAox-g0Q&oe=6422313A")
 
     // Firebase Database
     const [postInFirestoreDatabase,setPostInFirestoreDatabase]=useState(post)
     const [timeInFirestoreDatabase,setTimeInFirestoreDatabase]=useState(time)
     const [likesInFirestoreDatabase,setLikesInFirestoreDatabase]=useState(likes)
-    const [favoriteInFirestoreDatabase,setFavoriteInFirestoreDatabase]=useState(favorite)
+    const [favoritesInFirestoreDatabase,setFavoriteInFirestoreDatabase]=useState(favorites)
+    // console.log("likesIs: ",likes)
+    // console.log("favoritesIs: ",favorites)
     const [postIdInFirestoreDatabase,setPostIdInFirestoreDatabase]=useState(post_id)
     const docRef = doc(db,"posts",post_id)
     const greenRef=useRef("#34CCAD")
@@ -36,61 +39,49 @@ function LoadPosts ({post,time,post_id,likes,favorite}) {
     const [favoritesColor,setFavoritesColor]=useState("black")
     const [countFavoriteClicks,setCountFavoriteClicks]=useState(1)
 
+    /**TODO: I have setFavoriteInFirestoreDatabase(favoritesInFirestoreDatabase+1) or
+     * setFavoriteInFirestoreDatabase(favoritesInFirestoreDatabase-1) to increase ordecrese
+     * the 
+     */
     const handleOnClickFavorites =(e)=> {
         e.preventDefault()
         setCountFavoriteClicks(countFavoriteClicks+1)
         console.log("before: "+countFavoriteClicks)
         if(countFavoriteClicks%2==1) {
             setFavoritesColor(greenRef.current)
-            setFavoriteInFirestoreDatabase(favoriteInFirestoreDatabase+1)
+            setFavoriteInFirestoreDatabase(favoritesInFirestoreDatabase+1)
             updateDoc(docRef,{
-                favorite:favoriteInFirestoreDatabase
+                favorites:1//favoritesInFirestoreDatabase
             },{
                 merge:true
             }).then(()=>console.log("favorites updated"))
-            console.log("getting green")
-            console.log("favoritesColor: "+favoritesColor)
-            console.log("after if: "+countFavoriteClicks)
-            console.log("favoriteInFirestoreDatabase: "+favoriteInFirestoreDatabase)
         } else {   
             setFavoritesColor(blackRef.current)
-            setFavoriteInFirestoreDatabase(favoriteInFirestoreDatabase-1)
+            setFavoriteInFirestoreDatabase(favoritesInFirestoreDatabase-1)
             updateDoc(docRef,{
-                favorite:favoriteInFirestoreDatabase
+                favorites:0//favoritesInFirestoreDatabase
             },{
                 merge:true
             }).then(()=>console.log("favorites updated"))
-            console.log("getting black")
-            console.log("favoritesColor: "+favoritesColor)
-            console.log("after else: "+countFavoriteClicks)
-            console.log("favoriteInFirestoreDatabase: "+favoriteInFirestoreDatabase)
         }
     }
 
-    const onClickLikes = (e) => {
+    const onClickLikes =(e)=> {
         e.preventDefault()
         setCountLikesClicks(countLikesClicks+1)
         if(countLikesClicks%2==1) {
             setLikesColor(greenRef.current)
             setLikesInFirestoreDatabase(likesInFirestoreDatabase+1)
-            // console.log("getting green")
-            // console.log("color: "+likesColor)
-            // console.log("countLikesColor: "+countLikesClicks)
-            // console.log("likesInFirestoreDatabase: "+likesInFirestoreDatabase)
             updateDoc(docRef,{
-                likes:likesInFirestoreDatabase
+                likes:1//likesInFirestoreDatabase
             },{
                 merge:true
             }).then(()=>console.log("likes updated"))
         } else {
             setLikesColor(blackRef.current)
             setLikesInFirestoreDatabase(likesInFirestoreDatabase-1)
-            // console.log("getting black")
-            // console.log("color: "+likesColor)
-            // console.log("countLikesColor: "+countLikesClicks)
-            // console.log("likesInFirestoreDatabase: "+likesInFirestoreDatabase)
             updateDoc(docRef,{
-                likes:likesInFirestoreDatabase
+                likes:0//likesInFirestoreDatabase
             },{
                 merge:true
             }).then(()=>console.log("likes updated"))
@@ -117,7 +108,8 @@ function LoadPosts ({post,time,post_id,likes,favorite}) {
     }  
 
     const initializeLikesColor=()=>{
-        if(favoriteInFirestoreDatabase>0){
+        console.log("initializeLikesColor: "+favoritesInFirestoreDatabase)
+        if(favoritesInFirestoreDatabase>0){
             setFavoritesColor(greenRef.current)
             // favoritesColor=greenRef.current
         } else{
@@ -126,6 +118,7 @@ function LoadPosts ({post,time,post_id,likes,favorite}) {
     }
 
     const initializeFavoritesColor=()=>{
+        console.log("initializeFavoritesColor: "+likesInFirestoreDatabase)
         if(likesInFirestoreDatabase>0){
             setLikesColor(greenRef.current)
         } else {
@@ -139,9 +132,6 @@ function LoadPosts ({post,time,post_id,likes,favorite}) {
          * which is why I had the info passed as parameters in the very brggining.
         */
         setVisibility(false)
-        console.log("fav: "+favoriteInFirestoreDatabase)
-        console.log("likes: "+likesInFirestoreDatabase)
-        console.log("green: "+greenRef.current)
         initializeFavoritesColor()
         initializeLikesColor()
     },[])
@@ -158,7 +148,11 @@ function LoadPosts ({post,time,post_id,likes,favorite}) {
                         value="user_profile_image"
                         className="right floated ui circular pastel gray icon button"
                         style={{color:userColor}}>
-                        <i className="user circle outline icon"></i>
+                        <i className="user circle outline icon">
+                        <Image src="https://scontent-lga3-2.xx.fbcdn.net/v/t39.30808-6/244590566_4376334679140670_8344111291006398210_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=5wyzmXJtou8AX_702gl&_nc_ht=scontent-lga3-2.xx&oh=00_AfBYTGJK2YFtRihob8-p5l4PwnFgy4cTD9m2LeaAox-g0Q&oe=6422313A"
+                            style={{width:"15px",height:"15px"}} 
+                            circular />
+                        </i>
                     </Button> */}
                     <Button 
                         name="likes"
