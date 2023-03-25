@@ -42,7 +42,37 @@ function Note() {
   const [postsFromFirebase, setPostsFromFirebase] = useState({postsFromFirebase:[]})
   const postURI = uuid()
 
+  // Window
+  const width=useRef(window.innerWidth)
+  const height=useRef(window.innerHeight)
+
+  //main grid
+  const mainGradClassName=useRef("ui grid")
+
+  // outer row
+  const outerRowClassName=useRef("row")
+  const heightOfOuterRow=useRef("600px")
+  const paddingTopOfOuterRow=useRef("5%")
+  
+  const header=useRef("ui center aligned icon header")
+  const inputHint=useRef("sticky note outline")
+  const columnTwoMaxHeight=useRef("800px")
+  const [numberOfColumns,setNumberOfColumns]=useState()
+  const [gravityWidthOfColumnOne,setGravityWidthOfColumnOne]=useState()
+
+  const segmentOneHeight=useRef("80%")
+  const [gravityWidthOfColumnTwo,setGravityWidthOfColumnTwo]=useState()
+
   useEffect(() => {
+
+    if(height.current>width.current){
+      setNumberOfColumns(1)
+    } else {
+      setNumberOfColumns(2)
+      setGravityWidthOfColumnOne(6)
+      setGravityWidthOfColumnTwo(10)
+    }
+
     // Getting data from firebase
     db.collection("posts")
     .get()
@@ -130,21 +160,26 @@ function Note() {
   }
 
   return (
-    <Grid columns={2}>
+    <Grid columns={numberOfColumns}>
       <link 
         rel="stylesheet" 
-        href="/home/emmanuel/Desktop/ReactJSProjects/Diary/frontend/src/styles/notebookComponent.css" 
-      />
-      <Grid.Row stretched style={{paddingTop:"5%", height:"600px"}} divided>
-        <Grid.Column width={6}>
-          <Segment style={{height:"80%"}}>
+        href="/home/emmanuel/Desktop/ReactJSProjects/Diary/frontend/src/styles/notebookComponent.css"/>
+      <Grid.Row 
+      // <div className={outerRowClassName.current}
+        id="outerRow"
+        style={{paddingTop:paddingTopOfOuterRow.current, height:heightOfOuterRow.current}}
+        stretched 
+        divided>
+        <Grid.Column 
+          width={gravityWidthOfColumnOne}>
+          <Segment style={{height:segmentOneHeight.current}}>
             <div
               id = "notebook-element" 
               // className="ui card" 
             >
               <h2 className="text-center mb-2">
-                <h1 className="ui center aligned icon header">
-                  <i className="sticky note outline"></i>
+                <h1 className={header.current}>
+                  <i className={inputHint.current}></i>
                   Write what comes to mind!
                 </h1>
               </h2>
@@ -157,8 +192,7 @@ function Note() {
                   ref={inputRef}
                   name="message"
                   onChange={handleChange}
-                  placeholder='Type anything...' 
-                />
+                  placeholder='Type anything...'/>
               </div>
             </div>
           </Segment>
@@ -177,8 +211,8 @@ function Note() {
           </Button>
         </Grid.Column>
         <Grid.Column 
-          width={10} 
-          style={{height:"100%",borderColor:"transparent",overflow:'scroll',maxHeight:"800px"}}>
+          width={gravityWidthOfColumnTwo} 
+          style={{height:"100%",borderColor:"transparent",overflow:'scroll',maxHeight:columnTwoMaxHeight.current}}>
           <Segment style={{backgroundColor:"#F3FDFE"}}>
               {postsFromFirebase["postsFromFirebase"]
               .map(entry=> {if(entry.post!=null && entry.time!=null)
@@ -189,8 +223,7 @@ function Note() {
                     time={entry.time}
                     post_id={entry.post_id}
                     likes={entry.likes}
-                    favorites={entry.favorites}
-                    />
+                    favorites={entry.favorites}/>
                 </div>)}
             )}
           </Segment>

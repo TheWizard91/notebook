@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react'
+import React, {useRef,useState,useEffect} from 'react'
 import RegisterForm from "./RegisterForm"
 import { Form, Input, TextArea, Button, Select, Card, Grid, Icon } from 'semantic-ui-react'
 import {useAuth} from "../contexts/AuthContext"
@@ -14,6 +14,34 @@ function LogIn() {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+
+  // const device=useRef("ui container center aligned")
+  const headerString=useRef("ui dividing header text-center mb-4")
+  // const formWidth=useRef()
+  // const formHeight=useRef()
+  // console.log(window.innerWidth,window.innerHeight)
+  const [formWidth,setFormWidth]=useState()
+  const [formHeight,setFormHeight]=useState()
+  const [screenSize,setScreenSize]=useState()
+
+  useEffect(()=>{
+    let width=window.innerWidth
+    let height=window.innerHeight
+    console.log("width: "+width,"height"+height)
+
+    if(height>width) {
+      // formWidth.current="300px"
+      // formHeight.current="400px"
+      setFormWidth("300px")
+      setFormHeight("400px")
+      // setScreenSize("ui mobile large rectangle")
+      console.log("formWidth: "+formWidth,"formHeight: "+formHeight)
+    } else {
+      setFormWidth("600px")
+      setFormHeight("800px")
+      console.log("formWidth: "+formWidth,"formHeight: "+formHeight)
+    }
+  },[])
 
   async function handleSubmit (e) {
     // Preventing the form to be submitted before the
@@ -48,20 +76,20 @@ function LogIn() {
   return (
     <div id = "loginId">
       <Grid 
-        className="ui container center aligned"
+        className={screenSize}
         // style = {{minHeight:"100vh"}}
         textAlign="center"
         verticalAlign='middle'
         >
         <Grid.Row centered>
-          <Grid.Column width={6} style={{minWidth:"600px",maxHeight:"800px"}}>
+          <Grid.Column width={6} style={{minWidth:formWidth,maxHeight:formHeight}}>
             <Card style={{width:"100%"}}>
               <div>
                 <Form 
                   size="big"
                   key="big"
                   onSubmit={handleSubmit}>
-                  <h2 className="ui dividing header text-center mb-4"> Log In</h2>
+                  <h2 className={headerString.current}> Log In</h2>
                   <Form.Group>
                     <Form.Field width={16}>
                       <Form.Input

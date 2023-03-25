@@ -22,6 +22,23 @@ function SignUp() {
   const [loading,setLoading]=useState(false)
   const navigate = useNavigate()
 
+  /**Need to setup the values for the size of the form */
+  const width=useRef(window.innerWidth)
+  const height=useRef(window.innerHeight)
+  const [formWidth,setFormWidth]=useState()
+  const [formHeight,setFormHeight]=useState()
+
+  useEffect(()=>{
+    // let width=window.innerWidth
+    // let height=window.innerHeight
+    if(height.current>width.current){
+      setFormWidth("400px")
+      setFormHeight("400px")
+    } else {
+      setFormWidth("800px")
+      setFormHeight("800px")
+    }
+  })
   async function handleSubmit (e) {
     e.preventDefault()
     // loadUserInfoToRealtimeDB()
@@ -111,7 +128,7 @@ function SignUp() {
         textAlign="center"
         verticalAlign='middle'>
         <Grid.Row>
-          <Grid.Column width={6} style={{minWidth: "800px",maxHeight:"800px"}}>
+          <Grid.Column width={6} style={{minWidth:formWidth,maxHeight:formHeight}}>
             <Card style={{width:"100%"}}>
               <Form 
                 size="big"

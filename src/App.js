@@ -22,7 +22,7 @@ class App extends Component {
   render() {
     return (
       <Container
-      className = "d-flex align-items-center justify-content-center"
+      // className = "d-flex align-items-center justify-content-center"
         id = "AppId">
           <div className = "w-100"> {/*className = "w-100"*/}
               <Router>
