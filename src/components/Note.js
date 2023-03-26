@@ -51,7 +51,7 @@ function Note() {
 
   // outer row
   const outerRowClassName=useRef("row")
-  const heightOfOuterRow=useRef("600px")
+  const heightOfOuterRow=useRef("400px")
   const paddingTopOfOuterRow=useRef("5%")
   
   const header=useRef("ui center aligned icon header")
@@ -174,14 +174,12 @@ function Note() {
           width={gravityWidthOfColumnOne}>
           <Segment style={{height:segmentOneHeight.current}}>
             <div
-              id = "notebook-element" 
-              // className="ui card" 
-            >
+              id = "notebook-element">  {/*className="ui card"*/} 
               <h2 className="text-center mb-2">
-                <h1 className={header.current}>
+                <h3 className={header.current}>
                   <i className={inputHint.current}></i>
                   Write what comes to mind!
-                </h1>
+                </h3>
               </h2>
               <div style={{height:"75%"}}>
                 <textarea
