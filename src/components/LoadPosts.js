@@ -190,6 +190,7 @@ function LoadPosts ({post,time,post_id,likes,favorites}) {
                             type="text"
                             value={editTextValue}
                             name="message"
+                            style={{width:"100%"}}
                             onChange={handleEditTextChange}
                             placeholder='Type anything...'/>
                     </Transition>

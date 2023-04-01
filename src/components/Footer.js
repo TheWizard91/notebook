@@ -13,6 +13,7 @@ function Footer () {
     const [width,setWidth]=useState("15%")
     const [height,setHeight]=useState("15%")
     const [footerWidth,setFooterWidth]=useState("fit-content")
+    const [paddingL,setPaddingLeft]=useState("0px")
 
     const [buttonSize,setButtonSize]=useState("big")
 
@@ -22,6 +23,7 @@ function Footer () {
         console.log("windowWidth: ",windowWidth.current)
         if (windowHeight.current > windowWidth.current) {
             setFooterWidth("100%")
+            setPaddingLeft("40px")
             setWidth("5%")
             setHeight("5%")
             setButtonSize("large")
@@ -33,7 +35,7 @@ function Footer () {
 
     return (
         <center>
-            <div className = "ui inverted vertical footer segment form-page" style = {{width:footerWidth}}>
+            <div className = "ui inverted vertical footer segment form-page" style = {{width:footerWidth,paddingRight:paddingL}}>
                 <div className = "ui container" style = {{marginLeft:"0px"}}>
                     <div id = "stayConnectedId">
                         <h1 id="connect"className = "ui header">Stay Connected</h1>

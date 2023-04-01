@@ -23,7 +23,7 @@ function MainPage() {
     
     useEffect(()=>{
         if (windowHeight.current > windowWidth.current) {
-            setIconsSize("large")
+            setIconsSize("larger")
         }
     })
     return (
