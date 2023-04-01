@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useRef,useState,useEffect} from 'react'
 import { Card, Grid, Icon, Menu } from 'semantic-ui-react'
 // import { useAuth, logout } from "../contexts/AuthContext"
 import { useNavigate, Link } from "react-router-dom"
@@ -11,12 +11,21 @@ import LoadPage from "./LoadPage"
 // import NavBar from "./NavBar"
 
 function MainPage() {
+
+    const windowWidth = useRef(window.innerWidth)
+    const windowHeight = useRef(window.innerHeight)
     const [activeItem, setState] = React.useState();
+    const [inconsSize,setIconsSize] = useState("big")
 
     const handleOnClick = (e, {value}) => setState(value)
     console.log("Clicked "+activeItem)
     // window.open("/"+activeItem);
     
+    useEffect(()=>{
+        if (windowHeight.current > windowWidth.current) {
+            setIconsSize("large")
+        }
+    })
     return (
         <div id = "mainPageContainer">
             <div id = "body">
@@ -25,7 +34,7 @@ function MainPage() {
                         <Menu.Item
                             id = "homeId" 
                             // name = "home" 
-                            icon = "big home icon"
+                            icon = {inconsSize+" home icon"}
                             iconPosition = "right"
                             onClick = { handleOnClick }
                             active = { activeItem == "home" }
@@ -43,7 +52,7 @@ function MainPage() {
                         </Menu.Item> */}
                         <Menu.Item
                             id = "logoutId" 
-                            icon = "big power off left icon"
+                            icon = {inconsSize+" power off left icon"}
                             onClick = { handleOnClick }
                             link = "logout"
                             active = { activeItem == "logout" }
