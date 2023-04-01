@@ -1,4 +1,4 @@
-#notebook-element {
+/* #notebook-element {
     height: 100%;
     width: 100%;
 }
@@ -6,7 +6,7 @@
 #input-element {
     height: 100%;
     width: 100%;
-}
+} */
 
 @media all and (max-width: 400px) {
     #notebook-element {
@@ -14,10 +14,10 @@
         width: 100%;
     }
 
-    #input-element {
+    /* #input-element {
         height: 100%;
         width: 100%;
-    }
+    } */
 
     /* #log-out-button {
         height: 100px;

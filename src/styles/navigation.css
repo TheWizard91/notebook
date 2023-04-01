@@ -14,6 +14,7 @@ body, #root,#mainPage {
     height: inherit;
     text-align: center;
 }
+body{width:100%}
 .main_container, .fix_block{width: inherit; height: inherit;}
 #navHeader 
 {

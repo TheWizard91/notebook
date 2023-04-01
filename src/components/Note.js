@@ -56,21 +56,28 @@ function Note() {
   
   const header=useRef("ui center aligned icon header")
   const inputHint=useRef("sticky note outline")
-  const columnTwoMaxHeight=useRef("800px")
+  // const columnTwoMaxHeight=useRef("200px")
+  const [columnTwoMaxHeight,setColumnTwoMaxHeight]=useState("800px")
   const [numberOfColumns,setNumberOfColumns]=useState()
   const [gravityWidthOfColumnOne,setGravityWidthOfColumnOne]=useState()
 
   const segmentOneHeight=useRef("80%")
   const [gravityWidthOfColumnTwo,setGravityWidthOfColumnTwo]=useState()
 
+  const [buttonSize,setButtonSize]=useState("huge plus circle icon")
+  const [sendButtonMarginTop,setSendButtonMarginTop]=useState("15px")
+
   useEffect(() => {
 
-    if(height.current>width.current){
+    if(height.current > width.current){
       setNumberOfColumns(1)
+      setButtonSize("big plus circle icon")
+      setColumnTwoMaxHeight("250px")
     } else {
       setNumberOfColumns(2)
       setGravityWidthOfColumnOne(6)
       setGravityWidthOfColumnTwo(10)
+
     }
 
     // Getting data from firebase
@@ -110,7 +117,7 @@ function Note() {
     e.preventDefault()
 
     let p = inputRef.current.value
-    let t = new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
+    let t = new Date().toLocaleDateString('en-us', { weekday:"short", year:"numeric", month:"short", day:"numeric"})
     let post_uri=postURI.slice(0,8)
     // console.log("post_uri is: "+post_uri)
     db.collection("posts")
@@ -160,11 +167,14 @@ function Note() {
   }
 
   return (
-    <Grid columns={numberOfColumns}>
+    <Grid 
+      columns={numberOfColumns} 
+      reversed="mobile"
+      stackable >
       <link 
         rel="stylesheet" 
         href="/home/emmanuel/Desktop/ReactJSProjects/Diary/frontend/src/styles/notebookComponent.css"/>
-      <Grid.Row 
+      <Grid.Row
       // <div className={outerRowClassName.current}
         id="outerRow"
         style={{paddingTop:paddingTopOfOuterRow.current, height:heightOfOuterRow.current}}
@@ -181,17 +191,19 @@ function Note() {
                   Write what comes to mind!
                 </h3>
               </h2>
-              <div style={{height:"75%"}}>
+              {/* <div > */}
                 <textarea
                   rows="10"
                   id="input-element"
                   className="ui segment"
                   type="text"
+                  size="big"
                   ref={inputRef}
                   name="message"
+                  style={{height:"75%",width:"100%"}}
                   onChange={handleChange}
                   placeholder='Type anything...'/>
-              </div>
+              {/* </div> */}
             </div>
           </Segment>
           <Button 
@@ -205,12 +217,13 @@ function Note() {
             style={{width:"fit-content",padding:"0px",height:"0px",width:"0px",borderColor:"blue",borderRadius:"10px",left:"40%"}}
             data-tooltip="Press to send note to save on database." 
             data-position="top center"
-            > <i className="huge plus circle icon" style={{margin:"0px"}}></i>
+            > <i className={buttonSize} style={{margin:"0px"}}></i>
           </Button>
         </Grid.Column>
         <Grid.Column 
           width={gravityWidthOfColumnTwo} 
-          style={{height:"100%",borderColor:"transparent",overflow:'scroll',maxHeight:columnTwoMaxHeight.current}}>
+          style={{height:"100%",borderColor:"transparent",
+            overflow:'scroll',maxHeight:columnTwoMaxHeight}}>
           <Segment style={{backgroundColor:"#F3FDFE"}}>
               {postsFromFirebase["postsFromFirebase"]
               .map(entry=> {if(entry.post!=null && entry.time!=null)
