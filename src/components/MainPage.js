@@ -26,6 +26,7 @@ function MainPage() {
             setIconsSize("larger")
         }
     })
+    
     return (
         <div id = "mainPageContainer">
             <div id = "body">

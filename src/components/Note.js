@@ -65,11 +65,12 @@ function Note() {
   const [gravityWidthOfColumnTwo,setGravityWidthOfColumnTwo]=useState()
 
   const [buttonSize,setButtonSize]=useState("huge plus circle icon")
+  const [sizeButtonForDesktop,setButtonSizeForDesktop]=useState("big")
   const [sendButtonMarginTop,setSendButtonMarginTop]=useState("15px")
 
   useEffect(() => {
 
-    if(height.current > width.current){
+    if(height.current > (width.current+100)){
       setNumberOfColumns(1)
       setButtonSize("big plus circle icon")
       setColumnTwoMaxHeight("250px")
@@ -77,7 +78,7 @@ function Note() {
       setNumberOfColumns(2)
       setGravityWidthOfColumnOne(6)
       setGravityWidthOfColumnTwo(10)
-
+      setButtonSizeForDesktop("large")
     }
 
     // Getting data from firebase
@@ -211,7 +212,7 @@ function Note() {
             color="blue"
             className="circular ui icon basic red button"
             type="submit"
-            size="big"
+            size={sizeButtonForDesktop}
             value={timeStamp}
             onClick={sendPost}
             style={{width:"fit-content",padding:"0px",height:"0px",width:"0px",borderColor:"blue",borderRadius:"10px",left:"40%"}}

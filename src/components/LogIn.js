@@ -29,7 +29,7 @@ function LogIn() {
     let height=window.innerHeight
     console.log("width: "+width,"height"+height)
 
-    if(height>width) {
+    if(height>(width+100)) {
       // formWidth.current="300px"
       // formHeight.current="400px"
       setFormWidth("300px")

@@ -5,17 +5,18 @@ import {Link, useNavigate} from "react-router-dom"
 function Footer () {
 
     // getting the size of window
-    const windowWidth=useRef(window.innerWidth)
-    const windowHeight=useRef(window.innerHeight)
+    const windowWidth = useRef(window.innerWidth)
+    const windowHeight = useRef(window.innerHeight)
 
     // setting the with size for the buttons 
     // through useEffect()
-    const [width,setWidth]=useState("15%")
-    const [height,setHeight]=useState("15%")
-    const [footerWidth,setFooterWidth]=useState("fit-content")
-    const [paddingL,setPaddingLeft]=useState("0px")
+    const [width, setWidth] = useState("10%")
+    const [height, setHeight] = useState("10%")
+    const [footerWidth, setFooterWidth] = useState("fit-content")
+    const [paddingL, setPaddingLeft] = useState("0px")
+    const [paddingR,setPaddingRight] = useState("0px")
 
-    const [buttonSize,setButtonSize]=useState("big")
+    const [buttonSize, setButtonSize] = useState("big")
 
     useEffect(()=> {
         console.log("in useeffect")
@@ -24,6 +25,7 @@ function Footer () {
         if (windowHeight.current > windowWidth.current) {
             setFooterWidth("100%")
             setPaddingLeft("40px")
+            setPaddingRight("20%")
             setWidth("5%")
             setHeight("5%")
             setButtonSize("large")
@@ -35,10 +37,10 @@ function Footer () {
 
     return (
         <center>
-            <div className = "ui inverted vertical footer segment form-page" style = {{width:footerWidth,paddingRight:paddingL}}>
+            <div className = "ui inverted vertical footer segment form-page" style = {{width:footerWidth,paddingRight:paddingR,}}>
                 <div className = "ui container" style = {{marginLeft:"0px"}}>
                     <div id = "stayConnectedId">
-                        <h1 id="connect"className = "ui header">Stay Connected</h1>
+                        <h1 id = "connect" className = "ui header">Stay Connected</h1>
                     </div>
                     <div id = "links">
                         <a 
@@ -60,7 +62,7 @@ function Footer () {
                                 data-tooltip = "Checkout my Github repos." 
                                 data-position = "top center"
                                 style = {{marginRight:width,marginLeft:width}}>
-                                <i className={buttonSize+" github alternate icon"}></i>
+                                <i className = {buttonSize+" github alternate icon"}></i>
                             </button>
                         </a>
                             <a 
