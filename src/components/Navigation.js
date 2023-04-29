@@ -13,7 +13,6 @@ function Navigation() {
     const toggleVisibility =(e)=>{
         e.preventDefault()
         setVisibility(!visible)
-
     }
     return (
         <header id="navHeader">
@@ -37,7 +36,7 @@ function Navigation() {
                 </h3>
             </div>
             <nav className="menu">
-                <ul className="navbar ml-auto">
+                <ul className="navbar ml-auto" style={{marginBottom:"0px"}}>
                     <li>
                         <a 
                             href="https://github.com/TheWizard91/notebook" 
