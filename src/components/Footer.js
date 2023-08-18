@@ -12,32 +12,34 @@ function Footer () {
     // through useEffect()
     const [width, setWidth] = useState("10%")
     const [height, setHeight] = useState("10%")
-    const [footerWidth, setFooterWidth] = useState("fit-content")
+    const [footer_width, setFooterWidth] = useState("100%")
     const [paddingL, setPaddingLeft] = useState("0px")
     const [paddingR,setPaddingRight] = useState("0px")
 
     const [buttonSize, setButtonSize] = useState("big")
 
-    useEffect(()=> {
-        console.log("in useeffect")
-        console.log("windowHeight: ",windowHeight.current)
-        console.log("windowWidth: ",windowWidth.current)
+    useEffect(() => {
+        // console.log("in useeffect")
+        // console.log("windowHeight: ",windowHeight.current)
+        // console.log("windowWidth: ",windowWidth.current)
         if (windowHeight.current > windowWidth.current) {
             setFooterWidth("100%")
-            setPaddingLeft("40px")
-            setPaddingRight("20%")
+            setPaddingLeft("0%")
+            setPaddingRight("0%")
             setWidth("5%")
             setHeight("5%")
             setButtonSize("large")
             let element = document.getElementById("stayConnectedId")
             let hidden = element.getAttribute("hidden")
             element.setAttribute("hidden","hidden")
+        } else {
+            setFooterWidth("67%");
         }
     })
 
     return (
         <center>
-            <div className = "ui inverted vertical footer segment form-page" style = {{width:footerWidth,paddingRight:paddingR,}}>
+            <div className = "ui vertical footer segment form-page" style = {{width:footer_width,paddingRight:paddingR,}}>
                 <div className = "ui container" style = {{marginLeft:"0px"}}>
                     <div id = "stayConnectedId">
                         <h1 id = "connect" className = "ui header">Stay Connected</h1>

@@ -24,8 +24,8 @@
 }
 @media all and (max-width: 400px) {
   #notebook-element {
-    height: 300px;
-    width: 350px;
+    height: 250px;
+    width: 400px;
   }
 
   #input-element {

@@ -1,71 +1,108 @@
+// React dependencies imports.
 import React,{useRef,useState,useEffect} from 'react'
 import { Card, Grid, Icon, Menu } from 'semantic-ui-react'
-// import { useAuth, logout } from "../contexts/AuthContext"
 import { useNavigate, Link } from "react-router-dom"
-import "/home/emmanuel/Desktop/ReactJSProjects/Diary/frontend/src/styles/mainPage.css"
+
+// import for database.
+import ref from "../firebase/Storage"
+import realtimeDB from '../firebase/realtimeDatabase';
+import {firestore, collection, query, where, getDock} from "../firebase/firestore"
+import db from "../firebase/firestore"
+import {useAuth, logout, signOut} from "../contexts/AuthContext"
+
+// Friendly components imports.
 import Footer from "./Footer"
 import LoadPage from "./LoadPage"
-// import Notebook from "./Notebook"
-// import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
+import Navigation from "./Navigation"
 
-// import NavBar from "./NavBar"
+// Css imports.
+import "/home/emmanuel/Desktop/ReactJSProjects/Diary/frontend/src/styles/mainPage.css"
+
 
 function MainPage() {
 
+    const made_up_user_id = useRef(null);
     const windowWidth = useRef(window.innerWidth)
     const windowHeight = useRef(window.innerHeight)
-    const [activeItem, setState] = React.useState();
+    const [active_item, setActiveItem] = React.useState();
     const [inconsSize,setIconsSize] = useState("big")
+    
+    // 
+    const {currentUser, updatePassword, updateEmail, logout} = useAuth();
 
-    const handleOnClick = (e, {value}) => setState(value)
-    console.log("Clicked "+activeItem)
-    // window.open("/"+activeItem);
+    // 
+    const [f_name, setFirstname] = useState();
+    const [l_name, setLastname] = useState();
+    const [p_image, setProfileImage] = useState();
+    const [t_current_user_id, setTemporaryCurrentUserId] = useState({t_current_user_id:"some_user"});
+    const [user_information_query, setUserInformationQuery] = useState({user_information_query:{}});
+    const [fake_id, setFakeId] = useState({fake_id:""});
+    const id_ref = useRef();
+
+    const handleOnClick = (e, {value}) => setActiveItem(value)
     
-    useEffect(()=>{
+    useEffect(() => {
         if (windowHeight.current > windowWidth.current) {
-            setIconsSize("larger")
+            setIconsSize("larger");
         }
-    })
-    
+
+        console.log("message",setRealUserIdToUser());
+
+        setFirstname("emmanuel");
+        setLastname("agyapong");
+        setProfileImage("None yet");
+        setTemporaryCurrentUserId("000000");
+        console.log("id:",t_current_user_id);
+        
+    },1);
+
+    const setRealUserIdToUser = () => {
+        db.collection("users") 
+            .get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    user_information_query[doc.id] = doc.data()
+                    // for (const[key, value] of Object.entries(user_information_query[doc.id])) {
+                    //     if (value == currentUser.email) {
+                    //         db.collection("users").doc(doc.id).add("real_id":currentUser.uid)
+                    //     }
+                    // }
+                })
+        })
+
+        setUserInformationQuery(user_information_query);
+        
+        console.log("user_information_query",user_information_query)
+        
+        // setUserInformationQuery(user_information_query);
+        // for (const[key, value] of Object.entries(user_information_query)) {
+        //     console.log("key:",key)
+        // }
+
+        
+    }
+
+    const foo = (id) => {
+        // console.log("outside:",id);
+        // setFakeId(id);
+        setTemporaryCurrentUserId(id)
+        console.log("fake_id:",t_current_user_id);
+    }
+
     return (
         <div id = "mainPageContainer">
             <div id = "body">
-                <Grid.Row>
-                    <Menu id = "subMenu" pointing style = {{backgroundColor:"#c5aa6a"}}> {/**keepMounted className = "ui invert vertical pointing menu" */}
-                        <Menu.Item
-                            id = "homeId" 
-                            // name = "home" 
-                            icon = {inconsSize+" home icon"}
-                            iconPosition = "right"
-                            onClick = { handleOnClick }
-                            active = { activeItem == "home" }
-                            value = "home"
-                            activeItem = "home">
-                        </Menu.Item>
-                        {/* <Menu.Item
-                            id = "accountSettingsId" 
-                            // name = "settings"
-                            icon = "big icon settings"
-                            onClick = { handleOnClick }
-                            active = { activeItem == "dashboard" }
-                            value = "dashboard"
-                            activeItem = "dashboard">
-                        </Menu.Item> */}
-                        <Menu.Item
-                            id = "logoutId" 
-                            icon = {inconsSize+" power off left icon"}
-                            onClick = { handleOnClick }
-                            link = "logout"
-                            active = { activeItem == "logout" }
-                            value = "logout"
-                            activeItem = "logout">
-                        </Menu.Item>
-                    </Menu>
-                </Grid.Row>
+                {/* <Navigation /> */}
                 <div id = "subContainer">
-                    <LoadPage page = { activeItem } />
+                    <LoadPage 
+                        page = {active_item}
+                        firstname = {f_name}
+                        lastname = {l_name}
+                        profile_image = {p_image} 
+                        id_of_current_user = {currentUser.uid} />
                 </div>
             </div>
+            {/* TODO: here is where you can fix the footer. */}
             <Footer/>
         </div>
     )

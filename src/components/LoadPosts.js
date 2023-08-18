@@ -1,60 +1,98 @@
 import React,{useState,useEffect,useRef} from "react"
 import {Card,Button,Grid,Segment,Divider,Transition,Image} from "semantic-ui-react"
+import {Link, useNavigate} from "react-router-dom"
 import db from "../firebase/firestore"
 import {doc,setDoc,updateDoc} from "firebase/firestore"
+import imageUploader from "./ImageUploader"
 
-function LoadPosts ({post,time,post_id,likes,favorites}) {
-
-    // const [postID,setPostID]=useState({postID:[]})
-    const [visible,setVisibility]=useState({visible:false})
-    const [editTextValue,setEditTextValue]=useState()
-    const userProfileImagePath=useRef("https://scontent-lga3-2.xx.fbcdn.net/v/t39.30808-6/244590566_4376334679140670_8344111291006398210_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=5wyzmXJtou8AX_702gl&_nc_ht=scontent-lga3-2.xx&oh=00_AfBYTGJK2YFtRihob8-p5l4PwnFgy4cTD9m2LeaAox-g0Q&oe=6422313A")
+function LoadPosts ({post, time, post_id, post_image, likes, favorites, current_user_firstname, current_user_lastname, current_user_profile_image, current_user_id}) {
+    
+    // 
+    const [postID, setPostID] = useState({postID: []})
+    const [visible, setVisibility] = useState({visible: false})
+    const [editTextValue,setEditTextValue] = useState()
+    const userProfileImagePath = useRef("https://emmanuelcodes.netlify.app/profile_image.7e798b21.jpg")
 
     // Firebase Database
-    const [postInFirestoreDatabase,setPostInFirestoreDatabase]=useState(post)
-    const [timeInFirestoreDatabase,setTimeInFirestoreDatabase]=useState(time)
-    const [likesInFirestoreDatabase,setLikesInFirestoreDatabase]=useState(likes)
-    const [favoritesInFirestoreDatabase,setFavoriteInFirestoreDatabase]=useState(favorites)
-    // console.log("likesIs: ",likes)
-    // console.log("favoritesIs: ",favorites)
-    const [postIdInFirestoreDatabase,setPostIdInFirestoreDatabase]=useState(post_id)
-    const docRef = doc(db,"posts",post_id)
-    const greenRef=useRef("#34CCAD")
-    const blackRef=useRef("#000000")
+    const [postInFirestoreDatabase, setPostInFirestoreDatabase] = useState(post)
+    const [time_in_firestore_database, setTimeInFirestoreDatabase] = useState(time)
+    const [likesInFirestoreDatabase, setLikesInFirestoreDatabase] = useState(likes)
+    const [favoritesInFirestoreDatabase, setFavoriteInFirestoreDatabase] = useState(favorites);
+    const [image_of_the_post, setPostImage] = useState(post_image);
+    const [user_firstname, setUserFisrstname] = useState(current_user_firstname);
+    const [uset_lastname, setUserLastname] = useState(current_user_lastname);
+    const [user_profile_image, setUserProfileImage] = useState(current_user_profile_image);
+    const [user_id, setUserId] = useState(user_id);
+    const [postIdInFirestoreDatabase, setPostIdInFirestoreDatabase] = useState(post_id);
+    const docRef = doc(db, "posts", post_id);
+    
+    // Colors
+    const greenRef = useRef("#34CCAD");
+    const blackRef = useRef("#000000");
+    const dusty_white = useRef("#edf756");
+    const medium_purple = useRef("#d0bdf4");
+    const dark_sand = useRef("#a28089");
+    const ice_cold = useRef("#a0d2eb");
+    const white_ivory = useRef("#FFFFF0");
+
 
     // Edit post or textarea
-    const [editPostClicks,seteditPostClicks]=useState(1)
+    const [editPostClicks, seteditPostClicks] = useState(1)
     // const greenColor=useRef("")
 
     // User
-    const [userColor,setUserColor]=useState("black")
+    const [userColor, setUserColor] = useState("black")
 
     // Likes starting from 1 becuase 0%2==0, and if we start from 0,
     // get false because when we startt handleOn.....
     // countFavoriteClicks==0 inside of the function.
-    const [likesColor,setLikesColor]=useState("black")
-    const [countLikesClicks,setCountLikesClicks]=useState(1)
+    const [likesColor, setLikesColor] = useState("black")
+    const [countLikesClicks, setCountLikesClicks] = useState(1)
 
     // Favotites
-    const [favoritesColor,setFavoritesColor]=useState("black")
-    const [countFavoriteClicks,setCountFavoriteClicks]=useState(1)
+    const [favoritesColor, setFavoritesColor] = useState("black")
+    const [countFavoriteClicks, setCountFavoriteClicks] = useState(1);
+
+    const navigate = useNavigate();
+
+    const user_profile_image_ref = useRef("https://semantic-ui.com/images/avatar2/small/patrick.png");
 
     /**TODO: I have setFavoriteInFirestoreDatabase(favoritesInFirestoreDatabase+1) or
      * setFavoriteInFirestoreDatabase(favoritesInFirestoreDatabase-1) to increase ordecrese
      * the 
      */
-    const handleOnClickFavorites =(e)=> {
-        e.preventDefault()
+    
+    const handleOnClck = (e, {name, value}) => {
+        switch (name) {
+            case "setting_image":
+                handleOnClickSetting();
+                break;
+            case "likes":
+                handleOnClickLikes();
+                break;
+            case "start":
+                handleOnClickFavorites();
+                break;
+            case "user":
+                handleOnClickUser();
+                break;
+        }
+    }
+
+    const handleOnClickSetting = () => {
+        console.log("setting clicked!");
+    }
+    const handleOnClickFavorites = () => {
         setCountFavoriteClicks(countFavoriteClicks+1)
         console.log("before: "+countFavoriteClicks)
-        if(countFavoriteClicks%2==1) {
+        if((countFavoriteClicks%2) == 1) {
             setFavoritesColor(greenRef.current)
             setFavoriteInFirestoreDatabase(favoritesInFirestoreDatabase+1)
             updateDoc(docRef,{
                 favorites:1//favoritesInFirestoreDatabase
             },{
                 merge:true
-            }).then(()=>console.log("favorites updated"))
+            }).then(() => console.log("favorites updated"))
         } else {   
             setFavoritesColor(blackRef.current)
             setFavoriteInFirestoreDatabase(favoritesInFirestoreDatabase-1)
@@ -62,21 +100,20 @@ function LoadPosts ({post,time,post_id,likes,favorites}) {
                 favorites:0//favoritesInFirestoreDatabase
             },{
                 merge:true
-            }).then(()=>console.log("favorites updated"))
+            }).then(() => console.log("favorites updated"))
         }
     }
 
-    const onClickLikes =(e)=> {
-        e.preventDefault()
+    const handleOnClickLikes = () => {
         setCountLikesClicks(countLikesClicks+1)
-        if(countLikesClicks%2==1) {
+        if((countLikesClicks%2) == 1) {
             setLikesColor(greenRef.current)
             setLikesInFirestoreDatabase(likesInFirestoreDatabase+1)
             updateDoc(docRef,{
                 likes:1//likesInFirestoreDatabase
             },{
                 merge:true
-            }).then(()=>console.log("likes updated"))
+            }).then(() => console.log("likes updated"))
         } else {
             setLikesColor(blackRef.current)
             setLikesInFirestoreDatabase(likesInFirestoreDatabase-1)
@@ -84,20 +121,20 @@ function LoadPosts ({post,time,post_id,likes,favorites}) {
                 likes:0//likesInFirestoreDatabase
             },{
                 merge:true
-            }).then(()=>console.log("likes updated"))
+            }).then(() => console.log("likes updated"))
         }
     }
 
-    const editPost =(e)=>{
+    const editPost = (e) => {
         e.preventDefault()
         setVisibility(!visible)
         seteditPostClicks(editPostClicks+1)
-        console.log("editPostClicks: "+editPostClicks)
+        // console.log("editPostClicks: "+editPostClicks)
     }
 
-    const handleEditTextChange =(e)=>{
+    const handleEditTextChange = (e) =>{
         e.preventDefault()
-        if (editPostClicks%2==0){
+        if ((editPostClicks%2) == 0){
             setPostInFirestoreDatabase(e.target.value)
         }
         updateDoc(docRef,{
@@ -107,9 +144,9 @@ function LoadPosts ({post,time,post_id,likes,favorites}) {
         }).then(()=>console.log("post updated"))
     }  
 
-    const initializeLikesColor=()=>{
-        console.log("initializeLikesColor: "+favoritesInFirestoreDatabase)
-        if(favoritesInFirestoreDatabase>0){
+    const initializeLikesColor = () => {
+        // console.log("initializeLikesColor: "+favoritesInFirestoreDatabase)
+        if(favoritesInFirestoreDatabase > 0){
             setFavoritesColor(greenRef.current)
             // favoritesColor=greenRef.current
         } else{
@@ -117,8 +154,8 @@ function LoadPosts ({post,time,post_id,likes,favorites}) {
         }
     }
 
-    const initializeFavoritesColor=()=>{
-        console.log("initializeFavoritesColor: "+likesInFirestoreDatabase)
+    const initializeFavoritesColor = () => {
+        // console.log("initializeFavoritesColor: "+likesInFirestoreDatabase)
         if(likesInFirestoreDatabase>0){
             setLikesColor(greenRef.current)
         } else {
@@ -126,11 +163,18 @@ function LoadPosts ({post,time,post_id,likes,favorites}) {
         }
     }
 
+    const handleOnClickUser = () => {
+        console.log("user clicked!");
+        navigate("image-uploader");
+    }
+
     useEffect (()=>{
+
         /**Only for initial values. When the app starts the likes and favorites are 
          * set, becuase the has been fetched from the data from the database;
          * which is why I had the info passed as parameters in the very brggining.
         */
+        console.log("user_profile_image_ref: ",user_profile_image_ref);
         setVisibility(false)
         initializeFavoritesColor()
         initializeLikesColor()
@@ -139,73 +183,114 @@ function LoadPosts ({post,time,post_id,likes,favorites}) {
     return (
         <div>
             <Card
-                className="ui centered card"
-                id="livePostCardview" 
-                style={{width:"100%"}}>
-                <div className="content">
+                className = "ui centered card"
+                id = "livePostCardview" 
+                style = {{width:"100%", 
+                        borderRadius:"1em",
+                        borderWidth:"medium",
+                        borderColor:"red",
+                        backgroundColor:"#e5eaf5"}}>
+                <div className = "content">
                     {/* <Button
-                        name="profile_image"
-                        value="user_profile_image"
-                        className="right floated ui circular pastel gray icon button"
-                        style={{color:userColor}}>
-                        <i className="user circle outline icon">
-                        <Image src="https://scontent-lga3-2.xx.fbcdn.net/v/t39.30808-6/244590566_4376334679140670_8344111291006398210_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=5wyzmXJtou8AX_702gl&_nc_ht=scontent-lga3-2.xx&oh=00_AfBYTGJK2YFtRihob8-p5l4PwnFgy4cTD9m2LeaAox-g0Q&oe=6422313A"
-                            style={{width:"15px",height:"15px"}} 
-                            circular />
+                        name = "setting_image"//profile_image
+                        value = "setting_button" // user_profile_image
+                        className = "right floated ui circular settings pastel gray icon button" //right floated ui circular pastel gray icon button
+                        style = {{color:userColor, 
+                                backgroundColor:dark_sand.current}}
+                        onClick = {handleOnClck}>
+                        <i className = "setting icon" //circle outline
+                        > 
                         </i>
                     </Button> */}
                     <Button 
-                        name="likes"
-                        value="heart"
-                        className="right floated ui circular pastel gray icon button"
-                        style={{color:likesColor}}
-                        onClick={onClickLikes}>
-                        <i className="like icon"></i>
+                        name = "likes"
+                        value = "heart"
+                        className = "right floated ui circular pastel gray icon button"
+                        style = {{color:likesColor,
+                                backgroundColor:medium_purple.current}}
+                        onClick = {handleOnClck}>
+                        <i className = "like icon"></i>
                     </Button>
                     <Button 
-                        name="star"
-                        value="favorites"
-                        className="right floated ui circular pastel gray icon button"
-                        style={{color:favoritesColor}}
-                        onClick={handleOnClickFavorites}>
-                        <i className="star icon"></i>
+                        name = "star"
+                        value = "favorites"
+                        className = "right floated ui circular pastel gray icon button"
+                        style = {{color:favoritesColor, 
+                                backgroundColor:dusty_white.current}}
+                        onClick = {handleOnClickFavorites}>
+                        <i className = "star icon"></i>
                     </Button>
+                    {/* <Image
+                        // className = "ui image tiny avatar" 
+                        avatar
+                        src = {user_profile_image_ref} /> */}
+                    {/* <Button 
+                        name = "user"
+                        value = "user_name"
+                        className = "left floated ui circular pastel gray icon button"
+                        style = {{color:white_ivory.current, 
+                                backgroundColor:"black"}}
+                        onClick = {handleOnClck}>
+                        <i className = "user icon"></i>
+                    </Button> */}
                     <div 
-                        className="ui left floated header"
-                        style={{width:"fit-content"}}
-                        >{timeInFirestoreDatabase}
+                        className = "ui left floated text"//ui left floated header
+                        style = {{width: "fit-content"}}
+                        >{time_in_firestore_database}
                     </div>
                     <p></p>
-                    <div className="description">
+                    <div className = "description">
                         {postInFirestoreDatabase}
                     </div>
-                    <Divider iverted/>
+                    <Divider 
+                        iverted
+                        horizontal 
+                        color = "#a28089">
+                            Edit Post Or Reply
+                    </Divider>
                     <Transition
-                        visible={visible} 
-                        animation="scale" 
-                        duration={500}>
+                        visible = {visible} 
+                        animation = "scale" 
+                        duration = {500}>
                         <textarea
-                            id="input-element"
-                            className="ui segment"
-                            type="text"
-                            value={editTextValue}
-                            name="message"
-                            style={{width:"100%"}}
-                            onChange={handleEditTextChange}
-                            placeholder='Type anything...'/>
+                            id = "input-element"
+                            className = "ui segment"
+                            type = "text"
+                            value = {editTextValue}
+                            name = "message"
+                            style = {{width: "100%"}}
+                            onChange = {handleEditTextChange}
+                            placeholder = 'Type anything...'/>
                     </Transition>
                 </div>
                 <div>
                     <Button
-                        className="ui circular icon button"
-                        style={{backgroundColor:"#89CFF0",width:"fit-item",color:"#f5f5f5",marginBottom:"10px"}}
-                        value={postIdInFirestoreDatabase}
-                        onClick={editPost}
-                        data-tooltip="Edit Post." 
-                        data-position="top center"
-                        content={visible ? 'Hide' : 'Show'}>
-                        <i className="large edit icon"></i>
-                    </Button>
+                        className = "ui circular icon button"
+                        style = {{backgroundColor:ice_cold.current,
+                                width:"fit-item",
+                                color:"#1E90FF", // dodger-blue:1E90FF,a white:f5f5f5
+                                marginBottom:"10px"}}
+                        value = {postIdInFirestoreDatabase}
+                        onClick = {editPost}
+                        data-tooltip = "Edit." 
+                        data-position = "top center"
+                        content = {visible ? 'Hide' : 'Show'}>
+                        <i className = "edit icon"></i>
+                    </Button>{/**myBlue#89CFF0 iceCold:#a0d2eb*/}
+                    {/* <Button
+                        className = "ui circular icon button"
+                        style = {{backgroundColor:ice_cold.current,
+                                width:"fit-item",
+                                color:"#1E90FF", // dodger-blue:1E90FF,a white:f5f5f5
+                                marginBottom:"10px"}}
+                        value = {postIdInFirestoreDatabase}
+                        onClick = {editPost}
+                        data-tooltip = "Reply." 
+                        data-position = "top center"
+                        content = {visible ? 'Hide' : 'Show'}>
+                        <i className = "reply icon"></i>
+                    </Button> */}
+                    {/**myBlue#89CFF0 iceCold:#a0d2eb*/}
                 </div>
             </Card>
         </div>

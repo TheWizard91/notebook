@@ -9,12 +9,15 @@ body, .main_container,nav li a, h1, h2, h3, footer, #mainPageSubTittle, #whiteBo
     letter-spacing: .01rem;
     line-height: 1.75rem;
 }
+
 body, #root,#mainPage {
     width: inherit;
     height: inherit;
     text-align: center;
 }
+
 body{width:100%}
+
 .main_container, .fix_block{width: inherit; height: inherit;}
 #navHeader 
 {
@@ -209,14 +212,6 @@ element::-webkit-scrollbar {
 }
 html,body{overflow-x: hidden;}
 
-
-
-
-#projectsHeadings {
-    /* position: relative;
-    left: 45%; */
-}
-
 .projects_image {
     position: relative;
     left: 0%;
@@ -252,6 +247,7 @@ display: none;
     display: block;
     padding-top: 10%;
 }
+
 #socialNetwork, #socialNetworkUL {
     display: -webkit-inline-box;
     text-align: center;

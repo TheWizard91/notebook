@@ -65,17 +65,17 @@ function Dashboard() {
             wrapped ui = {false}/>
           <Card.Content>
             <Grid.Column>
-              <Grid.Row style={{display:"block"}}><strong>Firstname: </strong> {firstname}</Grid.Row> 
-              <Grid.Row style={{display:"block"}}><strong>Lastname: </strong> {lastname}</Grid.Row>
-              <Grid.Row style={{display:"block"}}><strong>Email: </strong> {email}</Grid.Row> 
-              <Grid.Row style={{display:"block"}}><strong>Password: </strong> {password}</Grid.Row>
+              <Grid.Row style = {{display:"block"}}><strong>Firstname: </strong> {firstname}</Grid.Row> 
+              <Grid.Row style = {{display:"block"}}><strong>Lastname: </strong> {lastname}</Grid.Row>
+              <Grid.Row style = {{display:"block"}}><strong>Email: </strong> {email}</Grid.Row> 
+              <Grid.Row style = {{display:"block"}}><strong>Password: </strong> {password}</Grid.Row>
             </Grid.Column>
           </Card.Content>
           <Card.Content extra>
             <Button 
               variant = "link" 
               className = "ui blue button"
-              onClick = { handleLogOut }
+              onClick = {handleLogOut}
               data-tooltip = "Update to database." 
               data-position = "top center"
               style = {{width:"fitContent"}}

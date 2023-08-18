@@ -54,13 +54,14 @@
 
 @media (min-height: 320px) {
     .ui.footer.form-page { /* Increased specificity for SO snippet priority */
-      position: fixed;
+      position: absolute;
       bottom: 0;
       width: 100%; 
       /* padding-right: 5%; */
       background-color: transparent;
     }
 }
+/* position:fixed */
 
 #links {
 align-items: center;

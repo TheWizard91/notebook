@@ -1,16 +1,30 @@
-import React, {useRef, useState} from "react"
-
+// import from react
+import React, {useRef, useState, useEffect} from "react"
 import {useNavigate, Link} from "react-router-dom"
-import {useAuth, logout} from "../contexts/AuthContext"
+
+// import for database
+import ref from "../firebase/Storage"
+import realtimeDB from '../firebase/realtimeDatabase';
+import {firestore, collection, query, where, getDock} from "../firebase/firestore"
+import db from "../firebase/firestore"
+import {useAuth, logout, signOut} from "../contexts/AuthContext"
+
+// import for this component
 import Note from "./Note"
 import Dashboard from "./Dashboard"
 import LogIn from "./LogIn"
+import UpdateProfile from "./UpdateProfile"
+import NotificationsPage from "./NotificationsPage"
 
-function LoadPage ({page}) {
-    const [error, setError] = useState("")
-    const [loading, setLoading] = useState(false)
-    const navigate = useNavigate()
-    const {currentUser,logout} = useAuth()
+function LoadPage ({page, firstname, lastname, profile_image, id_of_current_user}) {
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+    const {logout} = useAuth();
+
+    useEffect(() => {
+        // console.log(page,firstname,lastname,profile_image,id_of_current_user);
+    })
 
     async function logginout () {
 
@@ -29,12 +43,12 @@ function LoadPage ({page}) {
     switch (page) {
         case "home":
             return (
-                <Note />
+                <NotificationsPage />
             )
             break;
-        case "dashboard":
+        case "settings":
             return (
-                <Dashboard />
+                <UpdateProfile />
             )
         case "logout":
             return (
@@ -43,12 +57,17 @@ function LoadPage ({page}) {
                         {logginout()}
                     </h1>
                 </div>
+                // {logout()}
             )
     
         default:
             return (
-                // <div><h1>Nothing to see</h1></div>
-                <Note />
+                <Note 
+                    u_firstname = {firstname}
+                    u_lastname = {lastname}
+                    u_profile_image = {profile_image}
+                    u_id = {id_of_current_user}/>
+                // <Note />
             )
             break;
     }
