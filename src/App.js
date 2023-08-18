@@ -22,6 +22,8 @@ import LoadPage from "./components/LoadPage"
 import LoadPosts from "./components/LoadPosts"
 import New from "./components/New"
 import Hamburger from 'hamburger-react'
+import Navigation from "./components/Navigation"
+import StartAppNav from "./components/StartAppNav"
 
 function App () {
 /**TODO: Fix sizes for mobile (i.e. Iphone Pro 12 and responsive are different!) */
@@ -36,9 +38,10 @@ function App () {
           id = "AppId">
             <div>
                 <Router>
+                  <StartAppNav />
                   <AuthProvider>
                     <Routes>
-                      <Route path = "/dashboard" element = {<Dashboard />} />
+                      <Route path = "/dashboard" element = {<Dashboard/>} />
                       <Route path = '/' element = {<PrivateRoute/>} >
                         <Route exact = {true} path = '/' element = {<LogIn/>} />
                       </Route>
@@ -49,10 +52,10 @@ function App () {
                       <Route path = "/note" element = {<Note/>} />
                       <Route path = "/mainpage" element = {<MainPage/>} />
                       <Route path = "/new" element = {<New/>}/>
-                      <Route path = "/update-profile" element = {<UpdateProfile />} />
-                      <Route path = "/notifications-page" element = {<NotificationsPage />} />
-                      <Route path = "/images" element = {<Images />} />
-                      <Route path = "/image-uploader" element = {<ImageUploader />} />
+                      <Route path = "/update-profile" element = {<UpdateProfile/>} />
+                      <Route path = "/notifications-page" element = {<NotificationsPage/>} />
+                      <Route path = "/images" element = {<Images/>} />
+                      <Route path = "/image-uploader" element = {<ImageUploader/>} />
                     </Routes>
                   </AuthProvider>
                 </Router>
