@@ -158,7 +158,8 @@ function Navigation() {
                         name = "large ui circular icon"
                         style = {{marginLeft:"0",
                                 borderColor:"red", 
-                                color:white_ghost.current,backgroundColor:ash_gray.current}}>
+                                // color:white_ghost.current,
+                                backgroundColor:"#d4d6bf"}}> {/**ash_gray.current */}
                         EA
                     </Icon>
                 </Grid.Column>  {/**Logo*/}

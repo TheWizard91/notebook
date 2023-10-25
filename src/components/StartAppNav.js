@@ -17,25 +17,22 @@ function StartAppNav() {
     }
     return (
         <header id="navHeader">
-            <div className="left">
+            <div>{/**className="left" */}
                 <h3 id="name">
-                <Link to = "/login" element = { <LogIn/> }>Start The App</Link>
-                    {/* <Link 
-                        to="/login" 
-                        element={<LogIn/>}
-                        onClick={toggleVisibility}>Emmanuel K. Agyapong</Link> */}
-                    {/* <Transition 
-                        visible={visible} 
-                        animation="scale" 
-                        duiation={500}>
-                        <Button
-                            content={visible ? 'Hide' : 'Show'}
-                            onClick={toggleVisibility}>
-                            <Link 
-                                to="/login"
-                                element={<LogIn/>}>Start The App</Link>
-                        </ Button>
-                    </Transition> */}
+                {/* <Link to = "/login" element = { <LogIn/> }>Start The App</Link> */}
+                <Transition 
+                    visible={visible} 
+                    animation="scale" 
+                    duiation={500}>
+                    <Button
+                        content={visible ? 'Hide' : 'Show'}
+                        onClick={toggleVisibility}
+                        color = {"#c0d8c4"}>
+                        <Link 
+                            to="/login"
+                            element={<LogIn/>}>Start The App</Link>
+                    </ Button>
+                </Transition>
                 </h3>
             </div>
         </header>

@@ -41,6 +41,7 @@ function Note({u_firstname, u_lastname, u_profile_image, u_id}) {
   const [user_id, setUserId] = useState({user_id:u_id});
   const [postsDictionary, setPostDictionary] = useState({postsDictionary:{}});
   const [postsFromFirebase, setPostsFromFirebase] = useState({postsFromFirebase:[]});
+  const [number_of_posts, setNumberOfPosts] = useState();
   const postURI = uuid();
 
   // Window
@@ -106,6 +107,10 @@ function Note({u_firstname, u_lastname, u_profile_image, u_id}) {
   const rose_white = useRef("#FFFAFA");
   const white_dove = useRef("#F0EFE7");
 
+  const [note,setNoteObject] = useState();
+  const [desktop_button, setDesktopButtonObject] = useState();
+  const [load_posts, setLoadPostsObject] = useState();
+
   const handleItemInTextMenuClicks = (e, {name, value, active}) => {
     // console.log("clicked: "+name)
     switch (name) {
@@ -131,6 +136,8 @@ function Note({u_firstname, u_lastname, u_profile_image, u_id}) {
       case "P":
         setPhotoColor(dodger_blue.current);
         break;
+      default:
+        break;
     }
   }
   
@@ -138,7 +145,11 @@ function Note({u_firstname, u_lastname, u_profile_image, u_id}) {
     // console.log("uuser_firstname",u_firstname);
     var window_width = width.current;
     var window_height = height.current;
-    
+    console.log("In notes")
+
+    // setNoteObject(myTextArea())
+    // setDesktopButtonObject(buttonForDesktop());
+
     if(window_width < (window_height+200)) {
       setDisplayMobileButton("inline");
       setDsplayDesktopButton("none");
@@ -175,6 +186,12 @@ function Note({u_firstname, u_lastname, u_profile_image, u_id}) {
         querySnapshot.forEach((doc) => {
           postsDictionary[doc.id] = doc.data()
     })
+
+    console.log("In notes2")
+
+    // const collection_ref = db.collection("posts");
+    // const snapshot = collection_ref.count().get();
+    // console.log("n = ");
 
     setPostDictionary(postsDictionary)
 
@@ -218,13 +235,24 @@ function Note({u_firstname, u_lastname, u_profile_image, u_id}) {
           setUserLastname(current_user_lastname);
           setUserProfileImage(current_user_profile_image);
           setUserId(current_user_id);
+
+          // TODO:https://devtrium.com/posts/async-functions-useeffect
+          const collection_ref = db.collection("posts");
+          let snapshot = "";
+          const snapshotFunction = async () => {
+            snapshot = await collection_ref.count().get();
+          }
+          console.log("n = ",snapshot.data().count)
           }
         })
       }).catch((error) => {
     })
     // Can't set the values here
+
+    // setLoadPostsObject(loadPosts());
   },[postsFromFirebase])
 
+  const snapshotFunction = () => {}
   const sendPost = (e) => {
     e.preventDefault()
     /**Send the new post in Firebase Database. */
@@ -258,7 +286,6 @@ function Note({u_firstname, u_lastname, u_profile_image, u_id}) {
     setUserLastname(user_lastname);
     setUserId(user_id);
     // setProfileImage
-
 
     console.log("p"+JSON.stringify(postsFromFirebase));
 
@@ -295,6 +322,194 @@ function Note({u_firstname, u_lastname, u_profile_image, u_id}) {
     })
   }
 
+  const myTextArea = () => {
+    return (
+      <div
+        id = "notebook-element">  
+        <h2 className = "text-center mb-2">
+          <h3 className = {header.current}>
+            <i className = {inputHint.current}></i>
+            Write what comes to mind!
+          </h3>
+        </h2>
+        {/* TODO: Menu for text area. */}
+        {/* <Menu
+          position = "center"
+          incon = "labeled"
+          fluid 
+          widths = {10}
+          secondary 
+          // pointing
+          >
+          <Menu.Item
+            className = "item"
+            style = {{color:bold_color,backgroundColor:white_dove.current}}
+            active = {activeItemInTextMenu === "B"}
+            onClick = {handleItemInTextMenuClicks}
+            name = "B"
+            icon = "bold"
+            // color = "backgroundColor"
+            value = {is_bold_active}
+            data-tooltip = "Bold." 
+            data-position = "top center" >
+              <Icon name = "bold" />
+            </Menu.Item>
+          <Menu.Item
+            active = {activeItemInTextMenu === "I"}
+            onClick = {handleItemInTextMenuClicks}
+            style = {{color:italic_color}}
+            name = "I"
+            value = {is_italic_active}
+            activeItemInTextMenu = "I"
+            icon = "italic"
+            data-tooltip = "Italic." 
+            data-position = "top center" >
+              <Icon name = "italic" />
+          </Menu.Item>
+          <Menu.Item
+            active = {activeItemInTextMenu === "Q"}
+            onClick = {handleItemInTextMenuClicks}
+            style = {{color:quotes_color}}
+            name = "Q"
+            value = {is_quotes_active}
+            activeItemInTextMenu = "Q"
+            icon = "quote right"
+            data-tooltip = "Add quote." 
+            data-position = "top center" >
+              <Icon name = "quote right" />
+          </Menu.Item>
+          <Menu.Item
+            active = {activeItemInTextMenu === "L"}
+            onClick = {handleItemInTextMenuClicks}
+            style = {{color:link_color}}
+            name = "L"
+            value = {is_link_active}
+            activeItemInTextMenu = "L"
+            icon = "linkify right"
+            data-tooltip = "Add a Link." 
+            data-position = "top center" >
+              <Icon name = "linkify right" />
+          </Menu.Item>
+          <Menu.Item 
+            active = {activeItemInTextMenu === "C"}
+            onClick = {handleItemInTextMenuClicks}
+            style = {{color:user_color}}
+            name = "C"
+            value = {is_user_active}
+            activeItemInTextMenu = "C"
+            icon = "users right"
+            data-tooltip = "Mentions Someone." 
+            data-position = "top center" >
+              <Icon name = "users right" />
+          </Menu.Item>
+          <Menu.Item
+            active = {activeItemInTextMenu === "P"}
+            onClick = {handleItemInTextMenuClicks}
+            style = {{color:photo_color}}
+            name = "P"
+            value = {is_photo_active}
+            activeItemInTextMenu = "P"
+            icon = "image right"
+            data-tooltip = "Add an Image." 
+            data-position = "top center" >
+              <Icon name = "image right" />
+          </Menu.Item>
+        </Menu> */}
+        <Grid>
+          <Grid.Row 
+            columns = {2}>
+            <Grid.Column 
+              width = {13}> {/**for full 18 */}
+                  <textarea
+                    rows = "10"
+                    id = "input-element"
+                    className = "ui segment"
+                    type = "text"
+                    size = "big"
+                    ref = {inputRef}
+                    name = "message"
+                    style = {{height:text_area_height, width:text_area_width, 
+                              borderTopLeftRadius:text_area_radius,
+                              borderTopRightRadius:text_area_radius,
+                              borderBottomLeftRadius:text_area_radius,
+                              borderBottomRightRadius:text_area_radius
+                            }}
+                    onChange = {handleChange}
+                    placeholder = 'Type anything...'>
+                  </textarea> {/**Text area */}
+              {/* </div> *Text area + Star */}
+            </Grid.Column>
+            <Grid.Column 
+              width = {3}
+              style = {{paddingLeft:"0px"}}>
+              <div 
+                id = "mobile-button" >
+                <Button 
+                  className = "ui circular plus icon purple button"
+                  type = "submit"
+                  value = {time_stamp}
+                  onClick = {sendPost}
+                  style = {{color:rose_white, //dodger-blue: #1E90FF, ivory:#FFFFF0 ....a28089
+                            width:"fit-content", 
+                            height:"fit-content", 
+                            marginLeft:"0%", 
+                            marginTop:"100%",
+                            display:display_mobile_button}}
+                  data-tooltip = "Press to send note to save on database." 
+                  data-position = "top center"
+                  > <i className = {buttonSize+" plus icon"}></i>
+                </Button>
+              </div>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </div>
+    )
+  }
+
+  const buttonForDesktop = () => {
+    return (
+      <Button 
+        className = "ui circular plus icon red button"
+        type = "submit"
+        value = {time_stamp}
+        onClick = {sendPost}
+        style = {{color:"white",
+                width:"fit-content", 
+                height:"fir-content", 
+                marginLeft:"0%",
+                display:display_desktop_button}}
+        data-tooltip = "Press to send note to save on database." 
+        data-position = "top center"
+        ><i className = {buttonSize+" plus icon"}></i>
+      </Button>
+    )
+  }
+
+  const loadPosts = () => {
+    return (
+      <Segment style = {{backgroundColor:"#F3FDFE"}}> {/**Segment where the posts are being displayed.*/}
+        {postsFromFirebase["postsFromFirebase"] // collective of posts in db.
+          .map(entry => {if(entry.post != null && entry.time != null) // map through the db to fetch the posts.
+            return (
+              <div style = {{marginTop:"15px"}}>
+                <LoadPosts // populate the segment with the posts using the Loadposts component.
+                  post = {entry.post} 
+                  time = {entry.time}
+                  post_id = {entry.post_id}
+                  likes = {entry.likes}
+                  favorites = {entry.favorites}
+                  firstname = {entry.firstname}
+                  lastname = {entry.lastname}
+                  profile_image = {entry.profile_image}/>
+              </div>
+            )
+          }
+        )}
+      </Segment>
+    )
+  }
+
   return (
     <Grid 
       columns = {numberOfColumns} 
@@ -313,6 +528,7 @@ function Note({u_firstname, u_lastname, u_profile_image, u_id}) {
         >
         <Grid.Column width = {gravityWidthOfColumnOne}>
           <Segment style = {{height:segmentOneHeight.current}}>
+            {/* {note} */}
             <div
               id = "notebook-element">  
               <h2 className = "text-center mb-2">
@@ -321,6 +537,7 @@ function Note({u_firstname, u_lastname, u_profile_image, u_id}) {
                   Write what comes to mind!
                 </h3>
               </h2>
+              {/* TODO: Menu for text area. */}
               {/* <Menu
                 position = "center"
                 incon = "labeled"
@@ -451,9 +668,10 @@ function Note({u_firstname, u_lastname, u_profile_image, u_id}) {
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
-            </div>{/**"notebook-element"*/}
+            </div>
           </Segment>
           <div id = "desktop_button">
+            {/* {desktop_button} */}
             <Button 
               className = "ui circular plus icon red button"
               type = "submit"
@@ -475,21 +693,24 @@ function Note({u_firstname, u_lastname, u_profile_image, u_id}) {
           style = {{height:"100%",
                   overflow:'scroll', 
                   maxHeight:columnTwoMaxHeight}}>
-          <Segment style = {{backgroundColor:"#F3FDFE"}}>
-              {postsFromFirebase["postsFromFirebase"]
-              .map(entry => {if(entry.post != null && entry.time != null)
-              return (
-                <div style = {{marginTop:"15px"}}>
-                  <LoadPosts 
-                    post = {entry.post} 
-                    time = {entry.time}
-                    post_id = {entry.post_id}
-                    likes = {entry.likes}
-                    favorites = {entry.favorites}
-                    firstname = {entry.firstname}
-                    lastname = {entry.lastname}
-                    profile_image = {entry.profile_image}/>
-                </div>)}
+          {/* {load_posts} */}
+          <Segment style = {{backgroundColor:"#F3FDFE"}}> {/**Segment where the posts are being displayed.*/}
+            {postsFromFirebase["postsFromFirebase"] // collective of posts in db.
+              .map(entry => {if(entry.post != null && entry.time != null) // map through the db to fetch the posts.
+                return (
+                  <div style = {{marginTop:"15px"}}>
+                    <LoadPosts // populate the segment with the posts using the Loadposts component.
+                      post = {entry.post} 
+                      time = {entry.time}
+                      post_id = {entry.post_id}
+                      likes = {entry.likes}
+                      favorites = {entry.favorites}
+                      firstname = {entry.firstname}
+                      lastname = {entry.lastname}
+                      profile_image = {entry.profile_image}/>
+                  </div>
+                )
+              }
             )}
           </Segment>
         </Grid.Column>

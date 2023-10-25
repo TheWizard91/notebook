@@ -57,7 +57,6 @@ function LoadPage ({page, firstname, lastname, profile_image, id_of_current_user
                         {logginout()}
                     </h1>
                 </div>
-                // {logout()}
             )
     
         default:
@@ -67,7 +66,6 @@ function LoadPage ({page, firstname, lastname, profile_image, id_of_current_user
                     u_lastname = {lastname}
                     u_profile_image = {profile_image}
                     u_id = {id_of_current_user}/>
-                // <Note />
             )
             break;
     }

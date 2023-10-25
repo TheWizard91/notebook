@@ -46,8 +46,6 @@ function MainPage() {
             setIconsSize("larger");
         }
 
-        console.log("message",setRealUserIdToUser());
-
         setFirstname("emmanuel");
         setLastname("agyapong");
         setProfileImage("None yet");
@@ -92,7 +90,7 @@ function MainPage() {
     return (
         <div id = "mainPageContainer">
             <div id = "body">
-                {/* <Navigation /> */}
+                <Navigation />
                 <div id = "subContainer">
                     <LoadPage 
                         page = {active_item}

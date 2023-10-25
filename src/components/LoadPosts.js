@@ -1,16 +1,18 @@
-import React,{useState,useEffect,useRef} from "react"
-import {Card,Button,Grid,Segment,Divider,Transition,Image} from "semantic-ui-react"
+import React, {useState, useEffect, useRef} from "react"
+import {Card, Button, Grid, Segment, Divider, Transition, Image} from "semantic-ui-react"
 import {Link, useNavigate} from "react-router-dom"
 import db from "../firebase/firestore"
-import {doc,setDoc,updateDoc} from "firebase/firestore"
+import {doc, setDoc, updateDoc, deleteDoc} from "firebase/firestore"
 import imageUploader from "./ImageUploader"
 
 function LoadPosts ({post, time, post_id, post_image, likes, favorites, current_user_firstname, current_user_lastname, current_user_profile_image, current_user_id}) {
     
+    // TODO: handleOnDelete works but need to find a way to refresh the page to see the updated secontion.
     // 
     const [postID, setPostID] = useState({postID: []})
     const [visible, setVisibility] = useState({visible: false})
     const [editTextValue,setEditTextValue] = useState()
+    const [reply_text, setReplyText] = useState();
     const userProfileImagePath = useRef("https://emmanuelcodes.netlify.app/profile_image.7e798b21.jpg")
 
     // Firebase Database
@@ -22,7 +24,7 @@ function LoadPosts ({post, time, post_id, post_image, likes, favorites, current_
     const [user_firstname, setUserFisrstname] = useState(current_user_firstname);
     const [uset_lastname, setUserLastname] = useState(current_user_lastname);
     const [user_profile_image, setUserProfileImage] = useState(current_user_profile_image);
-    const [user_id, setUserId] = useState(user_id);
+    const [user_id, setUserId] = useState(current_user_id);
     const [postIdInFirestoreDatabase, setPostIdInFirestoreDatabase] = useState(post_id);
     const docRef = doc(db, "posts", post_id);
     
@@ -34,7 +36,6 @@ function LoadPosts ({post, time, post_id, post_image, likes, favorites, current_
     const dark_sand = useRef("#a28089");
     const ice_cold = useRef("#a0d2eb");
     const white_ivory = useRef("#FFFFF0");
-
 
     // Edit post or textarea
     const [editPostClicks, seteditPostClicks] = useState(1)
@@ -62,10 +63,10 @@ function LoadPosts ({post, time, post_id, post_image, likes, favorites, current_
      * the 
      */
     
-    const handleOnClck = (e, {name, value}) => {
+    const handleOnClick = (e, {name, value}) => {
         switch (name) {
-            case "setting_image":
-                handleOnClickSetting();
+            case "delete":
+                handleOnClickDelete();
                 break;
             case "likes":
                 handleOnClickLikes();
@@ -78,13 +79,15 @@ function LoadPosts ({post, time, post_id, post_image, likes, favorites, current_
                 break;
         }
     }
-
-    const handleOnClickSetting = () => {
-        console.log("setting clicked!");
+      
+    async function handleOnClickDelete () {
+        console.log("delete button is clicked!");
+        await deleteDoc(docRef);
     }
+
     const handleOnClickFavorites = () => {
         setCountFavoriteClicks(countFavoriteClicks+1)
-        console.log("before: "+countFavoriteClicks)
+        // console.log("before: "+countFavoriteClicks)
         if((countFavoriteClicks%2) == 1) {
             setFavoritesColor(greenRef.current)
             setFavoriteInFirestoreDatabase(favoritesInFirestoreDatabase+1)
@@ -142,7 +145,20 @@ function LoadPosts ({post, time, post_id, post_image, likes, favorites, current_
         },{
             merge:true
         }).then(()=>console.log("post updated"))
-    }  
+    }
+
+    const handleReplyPost = (e) => {
+        e.preventDefault();
+        console.log("reply");
+        if ((reply_text%2) == 0){
+            setPostInFirestoreDatabase(e.target.value)
+        }
+        updateDoc(docRef,{
+            post:e.target.value
+        },{
+            merge:true
+        }).then(()=>console.log("post updated"))
+    }
 
     const initializeLikesColor = () => {
         // console.log("initializeLikesColor: "+favoritesInFirestoreDatabase)
@@ -164,7 +180,7 @@ function LoadPosts ({post, time, post_id, post_image, likes, favorites, current_
     }
 
     const handleOnClickUser = () => {
-        console.log("user clicked!");
+        // console.log("user clicked!");
         navigate("image-uploader");
     }
 
@@ -174,7 +190,7 @@ function LoadPosts ({post, time, post_id, post_image, likes, favorites, current_
          * set, becuase the has been fetched from the data from the database;
          * which is why I had the info passed as parameters in the very brggining.
         */
-        console.log("user_profile_image_ref: ",user_profile_image_ref);
+        // console.log("user_profile_image_ref: ",user_profile_image_ref);
         setVisibility(false)
         initializeFavoritesColor()
         initializeLikesColor()
@@ -191,48 +207,57 @@ function LoadPosts ({post, time, post_id, post_image, likes, favorites, current_
                         borderColor:"red",
                         backgroundColor:"#e5eaf5"}}>
                 <div className = "content">
-                    {/* <Button
-                        name = "setting_image"//profile_image
-                        value = "setting_button" // user_profile_image
-                        className = "right floated ui circular settings pastel gray icon button" //right floated ui circular pastel gray icon button
+                    {/* TODO: Delete button must be included ones I fugure out how to update the local screen besides the db. */}
+                    <Button
+                        name = "delete"//profile_image
+                        value = "del" // user_profile_image
+                        className = "right floated ui circular times pastel gray icon button" //right floated ui circular pastel gray icon button
+                        data-tooltip = "Delete." 
+                        data-position = "top center"
                         style = {{color:userColor, 
                                 backgroundColor:dark_sand.current}}
-                        onClick = {handleOnClck}>
-                        <i className = "setting icon" //circle outline
+                        onClick = {handleOnClick}>
+                        <i className = "times icon" //circle outline
                         > 
                         </i>
-                    </Button> */}
+                    </Button>
                     <Button 
                         name = "likes"
                         value = "heart"
                         className = "right floated ui circular pastel gray icon button"
+                        data-tooltip = "Like." 
+                        data-position = "top center"
                         style = {{color:likesColor,
                                 backgroundColor:medium_purple.current}}
-                        onClick = {handleOnClck}>
+                        onClick = {handleOnClick}>
                         <i className = "like icon"></i>
                     </Button>
                     <Button 
                         name = "star"
                         value = "favorites"
                         className = "right floated ui circular pastel gray icon button"
+                        data-tooltip = "Favorite." 
+                        data-position = "top center"
                         style = {{color:favoritesColor, 
                                 backgroundColor:dusty_white.current}}
                         onClick = {handleOnClickFavorites}>
                         <i className = "star icon"></i>
                     </Button>
-                    {/* <Image
-                        // className = "ui image tiny avatar" 
+                    {/* <image
+                        className = "ui big image"
                         avatar
                         src = {user_profile_image_ref} /> */}
                     {/* <Button 
                         name = "user"
                         value = "user_name"
                         className = "left floated ui circular pastel gray icon button"
-                        style = {{color:white_ivory.current, 
-                                backgroundColor:"black"}}
-                        onClick = {handleOnClck}>
+                        style = {{color:white_ivory.current,
+                            backgroundColor:"black"
+                            }}
+                        onClick = {handleOnClick}>
                         <i className = "user icon"></i>
                     </Button> */}
+                    {/* TODO: Add name and say User on {date}: */}
                     <div 
                         className = "ui left floated text"//ui left floated header
                         style = {{width: "fit-content"}}
@@ -284,7 +309,7 @@ function LoadPosts ({post, time, post_id, post_image, likes, favorites, current_
                                 color:"#1E90FF", // dodger-blue:1E90FF,a white:f5f5f5
                                 marginBottom:"10px"}}
                         value = {postIdInFirestoreDatabase}
-                        onClick = {editPost}
+                        onClick = {handleReplyPost}
                         data-tooltip = "Reply." 
                         data-position = "top center"
                         content = {visible ? 'Hide' : 'Show'}>
