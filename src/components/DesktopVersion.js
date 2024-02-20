@@ -24,7 +24,7 @@ function DesktopVersion () {
                 {/* <StartAppNav /> */}
                 <AuthProvider>
                     <Routes>
-                        <Route path = "/dashboard" element = {<Dashboard/>} />
+                        <Route path = "/login" element = {<Dashboard/>} />
                         <Route path = '/' element = {<PrivateRoute/>} >
                             <Route exact = {true} path = '/' element = {<MainPage/>} />
                         </Route>
