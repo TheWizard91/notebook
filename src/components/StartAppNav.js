@@ -8,9 +8,9 @@ import "../styles/navigation.css"
 
 function StartAppNav() {
 
-    const [visible,setVisibility]=useState({visible:true})
+    const [visible,setVisibility] = useState({visible:true})
 
-    const toggleVisibility =(e)=>{
+    const toggleVisibility = (e) =>{
         e.preventDefault()
         setVisibility(!visible)
 
@@ -18,19 +18,19 @@ function StartAppNav() {
     return (
         <header id="navHeader">
             <div>{/**className="left" */}
-                <h3 id="name">
+                <h3 id = "name">
                 {/* <Link to = "/login" element = { <LogIn/> }>Start The App</Link> */}
                 <Transition 
-                    visible={visible} 
-                    animation="scale" 
-                    duiation={500}>
+                    visible = {visible} 
+                    animation = "scale" 
+                    duiation = {500}>
                     <Button
-                        content={visible ? 'Hide' : 'Show'}
-                        onClick={toggleVisibility}
+                        content = {visible ? 'Hide' : 'Show'}
+                        onClick = {toggleVisibility}
                         color = {"#c0d8c4"}>
                         <Link 
-                            to="/login"
-                            element={<LogIn/>}>Start The App</Link>
+                            to = "/login"
+                            element = {<LogIn/>}>Start The App</Link>
                     </ Button>
                 </Transition>
                 </h3>

@@ -17,7 +17,7 @@ import MainPage from "../components/MainPage"
 import New from "../components/New"
 import StartAppNav from "../components/StartAppNav"
 
-function AppOfMobile () {
+function MobileVersion () {
     return (
         <Grid 
           columns = {1}
@@ -27,12 +27,12 @@ function AppOfMobile () {
           id = "AppId">
             <div>
               <Router>
-                <StartAppNav />
+                {/* <StartAppNav /> */}
                 <AuthProvider>
                   <Routes>
-                    <Route path = "/dashboard" element = {<Dashboard/>} />
+                    <Route path = "/login" element = {<Dashboard/>} />
                     <Route path = '/' element = {<PrivateRoute/>} >
-                      <Route exact = {true} path = '/' element = {<LogIn/>} />
+                      <Route exact = {true} path = '/' element = {<MainPage/>} />
                     </Route>
                     <Route path = '/update-profile' element = {<UpdateProfile/>} />
                     <Route path = "/signup" element = {<SignUp/> } />
@@ -53,4 +53,4 @@ function AppOfMobile () {
     )
 }
 
-export default AppOfMobile;
+export default MobileVersion;

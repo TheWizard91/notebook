@@ -100,7 +100,6 @@ function MainPage() {
                         id_of_current_user = {currentUser.uid} />
                 </div>
             </div>
-            {/* TODO: here is where you can fix the footer. */}
             <Footer/>
         </div>
     )

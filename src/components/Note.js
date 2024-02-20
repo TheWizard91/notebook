@@ -21,7 +21,7 @@ import LoadPosts from "./LoadPosts"
 //import uuid v4
 import {v4 as uuid} from 'uuid';
 
-function Note({u_firstname, u_lastname, u_profile_image, u_id}) {
+function Note({u_firstname, u_lastname, u_profile_image, u_id, pass_height}) {
 
   /**TODO: Need to add the username for post and user id as well as the made up id. */
   const [error, setError] = useState("");
@@ -54,9 +54,9 @@ function Note({u_firstname, u_lastname, u_profile_image, u_id}) {
 
   // outer row
   const outerRowClassName = useRef("row");
-  const heightOfOuterRow = useRef("400px"); // 400px I had to reduce it to accomodate 
+  // const heightOfOuterRow = useRef("300px"); // 400px I had to reduce it to accomodate "600px"  pass_height
   const paddingTopOfOuterRow = useRef("5%");
-  
+  const [heigthOfOuterRow, setHeigthOfOuterRow] = useState();  
   const header = useRef("ui center aligned icon header")
   const inputHint = useRef("sticky note outline")
   // const columnTwoMaxHeight=useRef("200px")
@@ -146,11 +146,11 @@ function Note({u_firstname, u_lastname, u_profile_image, u_id}) {
     var window_width = width.current;
     var window_height = height.current;
     console.log("In notes")
+    console.log("w: "+window_width+" h: "+window_height);
 
     // setNoteObject(myTextArea())
     // setDesktopButtonObject(buttonForDesktop());
-
-    if(window_width < (window_height+200)) {
+    if(window_width < (window_height + 50)) {//w: 764 h: 752   w: 1528 h: 752
       setDisplayMobileButton("inline");
       setDsplayDesktopButton("none");
       setNumberOfColumns(1);
@@ -160,6 +160,7 @@ function Note({u_firstname, u_lastname, u_profile_image, u_id}) {
       setTextAreaHeight("90%");
       setTextAreaWidth("100%");
       setTextAreaRadius("20px");
+      setHeigthOfOuterRow("400px")
       // setAsteriskHeight("100%");
       // setAsteriskWidth("100%");
     } else {
@@ -175,6 +176,7 @@ function Note({u_firstname, u_lastname, u_profile_image, u_id}) {
       setTextAreaHeight("90%");
       setTextAreaWidth("100%");
       setTextAreaRadius("20px");
+      setHeigthOfOuterRow("500px")
       // setAsteriskHeight("100%");
       // setAsteriskWidth("100%");
     }
@@ -202,7 +204,7 @@ function Note({u_firstname, u_lastname, u_profile_image, u_id}) {
      */
     Object.keys(postsDictionary)
       .forEach(async function (key, index) {
-        if(index != 0) {
+        if(index !== 0) {
           // console.log("key: ",key," index: ",index)
           /** Storing data gathered from firebase database to
             local variables. */
@@ -242,7 +244,6 @@ function Note({u_firstname, u_lastname, u_profile_image, u_id}) {
           const snapshotFunction = async () => {
             snapshot = await collection_ref.count().get();
           }
-          console.log("n = ",snapshot.data().count)
           }
         })
       }).catch((error) => {
@@ -252,7 +253,6 @@ function Note({u_firstname, u_lastname, u_profile_image, u_id}) {
     // setLoadPostsObject(loadPosts());
   },[postsFromFirebase])
 
-  const snapshotFunction = () => {}
   const sendPost = (e) => {
     e.preventDefault()
     /**Send the new post in Firebase Database. */
@@ -514,15 +514,14 @@ function Note({u_firstname, u_lastname, u_profile_image, u_id}) {
     <Grid 
       columns = {numberOfColumns} 
       reversed = "mobile"
-      stackable 
-      >
+      stackable>
       <link 
         rel = "stylesheet" 
         href = "/home/emmanuel/Desktop/ReactJSProjects/Diary/frontend/src/styles/notebookComponent.css"/>
       <Grid.Row
         id = "outerRow"
         style = {{paddingTop:paddingTopOfOuterRow.current, 
-                  height:heightOfOuterRow.current}}
+                  height:heigthOfOuterRow}}
         stretched 
         // divided
         >
@@ -670,8 +669,8 @@ function Note({u_firstname, u_lastname, u_profile_image, u_id}) {
               </Grid>
             </div>
           </Segment>
+          {/* {desktop_button} */}
           <div id = "desktop_button">
-            {/* {desktop_button} */}
             <Button 
               className = "ui circular plus icon red button"
               type = "submit"

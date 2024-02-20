@@ -13,6 +13,7 @@ function LogIn() {
    * so that you could use their attributes to make the 
    * app better.
    */
+  // https://reflectoring.io/build-responsive-web-apps-with-springboot-and-react-tutorial/#:~:text=In%20this%20article%2C%20we'll,with%20a%20React%20frontend%20application.
 
   const [emailRef, setEmailRef] = React.useState("");
   const [passwordRef, setPasswordRef] = React.useState("");
@@ -28,7 +29,7 @@ function LogIn() {
   // console.log(window.innerWidth,window.innerHeight)
   const [formWidth, setFormWidth] = useState()
   const [formHeight, setFormHeight] = useState()
-  const [screenSize, setScreenSize] = useState()
+  const [screen_type, setScreenType] = useState()
   // const is_component_active = true;
 
   const adjust_horizontal_position = useRef("+50%");
@@ -42,18 +43,21 @@ function LogIn() {
     let height_original_lenght = window.innerHeight
     // console.log("width: "+width_original_lenght," height: "+height_original_lenght)
 
+    // Mobile
     if(height_original_lenght > (width_original_lenght + 100)) {
       let width_length_to_set = width_original_lenght * (400/width_original_lenght)
       let height_length_to_set = height_original_lenght * (400/height_original_lenght)
       // console.log("width_length_to_set: "+width_length_to_set+" height_length_to_set: "+height_length_to_set);
       setFormWidth(width_length_to_set+"px")
-      setFormHeight(height_length_to_set+"px")
+      setFormHeight(height_length_to_set+"px");
+      setScreenType("Mobile");
     } else {
       let width_length_to_set = width_original_lenght * (600/width_original_lenght)
       let height_length_to_set = height_original_lenght * (400/height_original_lenght)
       // console.log("width_length_to_set: "+width_length_to_set+" height_length_to_set: "+height_length_to_set);
-      setFormWidth(width_length_to_set+"px")
-      setFormHeight(height_length_to_set+"px")
+      setFormWidth(width_length_to_set+"px");
+      setFormHeight(height_length_to_set+"px");
+      setScreenType("Desktop");
     }
   }, [])
 
@@ -91,7 +95,7 @@ function LogIn() {
     <div id = "loginId">
       <Grid 
         style = {{borderColor: "red", transform: "translate("+adjust_vertical_postion.current+","+adjust_horizontal_position.current+")"}}
-        className= {screenSize}
+        className= {screen_type}
         textAlign = "center"
         verticalAlign = 'middle'
         >
@@ -146,7 +150,7 @@ function LogIn() {
               </div>
             </Card>
             <div className = "w-100 text-center mt-2">
-            Need an account? <Link to = "/signup" element = {<SignUp l = {l.current}/>}>Sign Up</Link>
+              Need a account? <Link to = "/signup" element = {<SignUp l = {l.current}/>}>Sign Up</Link>
             </div>
           </Grid.Column>
         </Grid.Row>

@@ -42,7 +42,7 @@ function LoadPosts ({post, time, post_id, post_image, likes, favorites, current_
     // const greenColor=useRef("")
 
     // User
-    const [userColor, setUserColor] = useState("black")
+    const [user_color] = useState("#000000")
 
     // Likes starting from 1 becuase 0%2==0, and if we start from 0,
     // get false because when we startt handleOn.....
@@ -77,6 +77,8 @@ function LoadPosts ({post, time, post_id, post_image, likes, favorites, current_
             case "user":
                 handleOnClickUser();
                 break;
+            default:
+                break;
         }
     }
       
@@ -88,20 +90,20 @@ function LoadPosts ({post, time, post_id, post_image, likes, favorites, current_
     const handleOnClickFavorites = () => {
         setCountFavoriteClicks(countFavoriteClicks+1)
         // console.log("before: "+countFavoriteClicks)
-        if((countFavoriteClicks%2) == 1) {
+        if((countFavoriteClicks % 2) === 1) {
             setFavoritesColor(greenRef.current)
             setFavoriteInFirestoreDatabase(favoritesInFirestoreDatabase+1)
-            updateDoc(docRef,{
+            updateDoc(docRef, {
                 favorites:1//favoritesInFirestoreDatabase
-            },{
+            }, {
                 merge:true
             }).then(() => console.log("favorites updated"))
         } else {   
             setFavoritesColor(blackRef.current)
             setFavoriteInFirestoreDatabase(favoritesInFirestoreDatabase-1)
-            updateDoc(docRef,{
+            updateDoc(docRef, {
                 favorites:0//favoritesInFirestoreDatabase
-            },{
+            }, {
                 merge:true
             }).then(() => console.log("favorites updated"))
         }
@@ -109,7 +111,7 @@ function LoadPosts ({post, time, post_id, post_image, likes, favorites, current_
 
     const handleOnClickLikes = () => {
         setCountLikesClicks(countLikesClicks+1)
-        if((countLikesClicks%2) == 1) {
+        if((countLikesClicks%2) === 1) {
             setLikesColor(greenRef.current)
             setLikesInFirestoreDatabase(likesInFirestoreDatabase+1)
             updateDoc(docRef,{
@@ -137,7 +139,7 @@ function LoadPosts ({post, time, post_id, post_image, likes, favorites, current_
 
     const handleEditTextChange = (e) =>{
         e.preventDefault()
-        if ((editPostClicks%2) == 0){
+        if ((editPostClicks%2) === 0){
             setPostInFirestoreDatabase(e.target.value)
         }
         updateDoc(docRef,{
@@ -150,7 +152,7 @@ function LoadPosts ({post, time, post_id, post_image, likes, favorites, current_
     const handleReplyPost = (e) => {
         e.preventDefault();
         console.log("reply");
-        if ((reply_text%2) == 0){
+        if ((reply_text % 2) === 0){
             setPostInFirestoreDatabase(e.target.value)
         }
         updateDoc(docRef,{
@@ -184,7 +186,7 @@ function LoadPosts ({post, time, post_id, post_image, likes, favorites, current_
         navigate("image-uploader");
     }
 
-    useEffect (()=>{
+    useEffect (() =>{
 
         /**Only for initial values. When the app starts the likes and favorites are 
          * set, becuase the has been fetched from the data from the database;
@@ -194,7 +196,7 @@ function LoadPosts ({post, time, post_id, post_image, likes, favorites, current_
         setVisibility(false)
         initializeFavoritesColor()
         initializeLikesColor()
-    },[])
+    },[0])
 
     return (
         <div>
@@ -214,7 +216,7 @@ function LoadPosts ({post, time, post_id, post_image, likes, favorites, current_
                         className = "right floated ui circular times pastel gray icon button" //right floated ui circular pastel gray icon button
                         data-tooltip = "Delete." 
                         data-position = "top center"
-                        style = {{color:userColor, 
+                        style = {{color:user_color, 
                                 backgroundColor:dark_sand.current}}
                         onClick = {handleOnClick}>
                         <i className = "times icon" //circle outline
@@ -243,11 +245,7 @@ function LoadPosts ({post, time, post_id, post_image, likes, favorites, current_
                         onClick = {handleOnClickFavorites}>
                         <i className = "star icon"></i>
                     </Button>
-                    {/* <image
-                        className = "ui big image"
-                        avatar
-                        src = {user_profile_image_ref} /> */}
-                    {/* <Button 
+                    <Button 
                         name = "user"
                         value = "user_name"
                         className = "left floated ui circular pastel gray icon button"
@@ -256,7 +254,7 @@ function LoadPosts ({post, time, post_id, post_image, likes, favorites, current_
                             }}
                         onClick = {handleOnClick}>
                         <i className = "user icon"></i>
-                    </Button> */}
+                    </Button>
                     {/* TODO: Add name and say User on {date}: */}
                     <div 
                         className = "ui left floated text"//ui left floated header
@@ -302,7 +300,7 @@ function LoadPosts ({post, time, post_id, post_image, likes, favorites, current_
                         content = {visible ? 'Hide' : 'Show'}>
                         <i className = "edit icon"></i>
                     </Button>{/**myBlue#89CFF0 iceCold:#a0d2eb*/}
-                    {/* <Button
+                    <Button
                         className = "ui circular icon button"
                         style = {{backgroundColor:ice_cold.current,
                                 width:"fit-item",
@@ -314,7 +312,7 @@ function LoadPosts ({post, time, post_id, post_image, likes, favorites, current_
                         data-position = "top center"
                         content = {visible ? 'Hide' : 'Show'}>
                         <i className = "reply icon"></i>
-                    </Button> */}
+                    </Button>
                     {/**myBlue#89CFF0 iceCold:#a0d2eb*/}
                 </div>
             </Card>

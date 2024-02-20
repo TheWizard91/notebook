@@ -22,8 +22,20 @@ function LoadPage ({page, firstname, lastname, profile_image, id_of_current_user
     const navigate = useNavigate();
     const {logout} = useAuth();
 
+    const [h, setHeight] = useState("0px")
+
+    const width_of_page = useRef(window.innerWidth);
+    const height_of_page = useRef(window.innerHeight);
+
     useEffect(() => {
         // console.log(page,firstname,lastname,profile_image,id_of_current_user);
+        if (((width_of_page.current + 400) > height_of_page.current) && (height_of_page.current > 700)) {
+            setHeight("600px")
+        } else if (((width_of_page.current + 400) < height_of_page.current) && (height_of_page.current > 700)) {
+            setHeight("300px")
+        } else if (((width_of_page.current + 400) < height_of_page.current) && (height_of_page.current < 700)) {
+            setHeight("250px")
+        }
     })
 
     async function logginout () {
@@ -65,9 +77,9 @@ function LoadPage ({page, firstname, lastname, profile_image, id_of_current_user
                     u_firstname = {firstname}
                     u_lastname = {lastname}
                     u_profile_image = {profile_image}
-                    u_id = {id_of_current_user}/>
+                    u_id = {id_of_current_user}
+                    height = {h} />
             )
-            break;
     }
 }
 

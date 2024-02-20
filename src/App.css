@@ -22,7 +22,8 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
-@media all and (max-width: 400px) {
+
+@media all and (max-width: 300px) {
   #notebook-element {
     height: 250px;
     width: 400px;
