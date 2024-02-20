@@ -1,8 +1,8 @@
 import {Grid} from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css'
 import 'semantic-ui-react';
-import {AuthProvider} from "../contexts/AuthContext"
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
+import { AuthProvider } from "../contexts/AuthContext"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import SignUp from "../components/SignUp"
 import Dashboard from "../components/Dashboard"
 import LogIn from "../components/LogIn"
@@ -26,7 +26,7 @@ function MobileVersion () {
           vertical
           id = "AppId">
             <div>
-              <Router>
+              <Router basename = { process.env.PUBLIC_URL }>
                 {/* <StartAppNav /> */}
                 <AuthProvider>
                   <Routes>

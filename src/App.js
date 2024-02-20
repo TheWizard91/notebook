@@ -1,7 +1,7 @@
-import React, {useRef} from 'react';
+import React, { useRef } from 'react';
 // import logo from './logo.svg';
 // import ReactDOM from 'react-dom'
-import {Segment, Container} from 'semantic-ui-react';
+import { Segment, Container } from 'semantic-ui-react';
 import { isMobile } from 'react-device-detect'
 import DesktopVersion from "./components/DesktopVersion"
 import MobileVersion from "./components/MobileVersion" 

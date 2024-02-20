@@ -20,7 +20,7 @@ import StartAppNav from "../components/StartAppNav"
 function DesktopVersion () {
     return (
         <div>
-            <Router>
+            <Router basename = { process.env.PUBLIC_URL }>
                 {/* <StartAppNav /> */}
                 <AuthProvider>
                     <Routes>
